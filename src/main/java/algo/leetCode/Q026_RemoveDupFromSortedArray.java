@@ -17,7 +17,7 @@ public class Q026_RemoveDupFromSortedArray {
         int len = 1;
         for (int i = 1; i < arr.length; i++) {
             if (arr[i] != arr[i-1]){ // 当相邻二个不相等时，
-                if (arr[i] != arr[len])   // 当i不是最后一个下标值时
+                if (arr[i] != arr[len])   // 当下标i的元素 不等于 下标len的元素时
                     arr[len] = arr[i];
                 len++;
             }
