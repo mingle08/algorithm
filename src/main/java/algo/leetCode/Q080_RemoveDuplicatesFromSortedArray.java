@@ -17,7 +17,7 @@ public class Q080_RemoveDuplicatesFromSortedArray {
         int len=1; 
         int cnt=1; 
         for(int i=1;i<nums.length;i++){
-            if(nums[i]!=nums[len-1]){ 
+            if(nums[i] != nums[len-1]){ 
                 cnt=1;
                 nums[len++]=nums[i]; 
             } else{ 
