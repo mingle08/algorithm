@@ -1,4 +1,4 @@
-package algo.Sword;
+package algo.swordToOffer;
 
 /**
  * 利用二分的思想，将数组值1~n分割为1~mid的n1，mid+1 ~ n的n2;

@@ -1,4 +1,4 @@
-package algo.Sword;
+package algo.swordToOffer;
 
 public class Q03_01_DuplicationInArray {
 

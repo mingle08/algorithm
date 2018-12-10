@@ -13,7 +13,7 @@ public class Q083_RemoveDupFromSortedList {
         headNode.add(5);
 
 //        ListNode newNode = solution.deleteDuplicates(headNode.head);
-        ListNode newNode = solution.removeDuplicates(headNode.head);
+        ListNode newNode = solution.removeDuplicates(headNode.first);
 
         System.out.println(newNode.val);
 
