@@ -3,6 +3,7 @@ package algo.leetCode;
 public class Q083_RemoveDupFromSortedList {
     public static void main(String[] args) {
         Q083_RemoveDupFromSortedList solution = new Q083_RemoveDupFromSortedList();
+
         NodeList headNode = new NodeList();
         headNode.add(1);
         headNode.add(1);

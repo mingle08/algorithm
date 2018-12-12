@@ -6,7 +6,6 @@ package algo.swordToOffer;
  * 如果count > mid,那么重复的数字就在该半个数组中(n1)，否者在n2；
  * 直到end = start,找到重复的。时间复杂度为O(nlogn);
  *
-
  */
 public class Q03_02_DuplicationInArray {
     public int getDup(int[] nums, int length){

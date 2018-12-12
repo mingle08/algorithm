@@ -31,6 +31,7 @@ public class Q03_01_DuplicationInArray {
         return false;
     }
 
+
     public static void main(String[] args){
         int[] arr = {2,3,1,0,2,5,3};
         for (int i = 0; i < arr.length; i++) {
