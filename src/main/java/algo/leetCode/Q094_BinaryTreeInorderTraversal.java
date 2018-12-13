@@ -1,8 +1,11 @@
 package algo.leetCode;
 
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Stack;
+/**
+ * 二叉树的中序遍历
+ * 附上前序，后序遍历
+ */
+
+import java.util.*;
 
 /**
  *                         1
@@ -13,40 +16,7 @@ import java.util.Stack;
  */
 public class Q094_BinaryTreeInorderTraversal {
 
-    // 中序 递归
-    public void inorderRecursive(TreeNode node){
-        inorderRecursive(node.left);
-        System.out.println(node.val);
-        inorderRecursive(node.right);
-    }
-
-    // 中序   非递归
-    public void inorderTraversal(TreeNode node){
-        if(node == null) {
-            return;
-        }
-        Stack<TreeNode> stack = new Stack<TreeNode>();
-        //
-        Queue<Integer> q = new LinkedList<Integer>();
-        TreeNode pCur = node;
-        TreeNode outNode = null;
-        while(pCur != null){
-            stack.push(pCur);
-            pCur=pCur.left;    // 遍历到左边叶节点时，pCur.left == null， 才进入下一步while
-
-            // 上一步遍历左子树到底之后，再没有左子节点了，pCur.left为null
-            while(pCur == null && !stack.isEmpty()){
-                pCur = stack.peek();
-                outNode = stack.pop();
-                q.add(outNode.val);//
-//               System.out.println(outNode.getData());
-                pCur = pCur.right;
-            }
-        }
-        for(Integer i : q)
-            System.out.print(i+" ");
-    }
-
+    // 创建二叉树
     public TreeNode createBinaryTree() {
         TreeNode nodeA = new TreeNode(1);
         TreeNode nodeB = new TreeNode(2);
@@ -65,12 +35,75 @@ public class Q094_BinaryTreeInorderTraversal {
         return nodeA;
     }
 
+    public static void printTreeNode(TreeNode node){
+        System.out.print(node.val + " ");
+
+    }
+
+    // 前序  非递归
+    public void preOrderTraversal(TreeNode root){
+
+        Stack<TreeNode> stack = new Stack<>();
+        TreeNode node = root;
+        while (node != null || stack.size() > 0){
+            // 将所有左孩子压栈
+            if (node != null){
+                printTreeNode(node);    // 访问
+                stack.push(node);    // 压栈
+                node = node.left;
+            } else {
+                node = stack.pop();    // 出栈
+                node = node.right;
+            }
+        }
+    }
+
+    // 中序  非递归
+    public void inOrderTraversal(TreeNode root){
+        Stack<TreeNode> stack = new Stack<>();
+        TreeNode node = root;
+        while (node != null || stack.size() > 0){
+            if (node != null){
+                stack.push(node);  // 压栈
+                node = node.left;
+            } else {
+                node = stack.pop();  // 出栈
+                printTreeNode(node);  // 访问
+                node = node.right;
+            }
+        }
+    }
+
+    // 后序  非递归
+    public void nonRecPostOrder(TreeNode root){
+        Stack<TreeNode> stack = new Stack<TreeNode>();
+        Stack<TreeNode> output = new Stack<TreeNode>();  //按出栈顺序将元素装入此栈中
+        TreeNode node = root;
+        while(node != null || stack.size()>0){
+            if(node != null){
+                output.push(node);
+                stack.push(node);    // 压栈
+                node = node.right;
+            }else{
+                node = stack.pop();  // 出栈
+                node = node.left;
+            }
+        }
+
+        // 访问
+        while(output.size()>0){
+            TreeNode out = output.pop();
+            System.out.print(out.val + " ");
+        }
+    }
+
     public static void main(String[] args){
         Q094_BinaryTreeInorderTraversal solution = new Q094_BinaryTreeInorderTraversal();
         TreeNode root = solution.createBinaryTree();
 
-        solution.inorderTraversal(root);
+        solution.inOrderTraversal(root);
     }
 
 
 }
+
