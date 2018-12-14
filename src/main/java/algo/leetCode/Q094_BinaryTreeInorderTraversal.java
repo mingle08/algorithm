@@ -8,22 +8,22 @@ package algo.leetCode;
 import java.util.*;
 
 /**
- *                         1
+ *                         4
  *
- *                   2          3
+ *                   2          6
  *
- *              4      5     6       7
+ *              1      3     5       7
  */
 public class Q094_BinaryTreeInorderTraversal {
 
     // 创建二叉树
     public TreeNode createBinaryTree() {
-        TreeNode nodeA = new TreeNode(1);
+        TreeNode nodeA = new TreeNode(4);
         TreeNode nodeB = new TreeNode(2);
-        TreeNode nodeC = new TreeNode(3);
-        TreeNode nodeD = new TreeNode(4);
-        TreeNode nodeE = new TreeNode(5);
-        TreeNode nodeF = new TreeNode(6);
+        TreeNode nodeC = new TreeNode(6);
+        TreeNode nodeD = new TreeNode(1);
+        TreeNode nodeE = new TreeNode(3);
+        TreeNode nodeF = new TreeNode(5);
         TreeNode nodeG = new TreeNode(7);
         nodeA.left = nodeB;
         nodeA.right = nodeC;
