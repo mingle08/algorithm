@@ -3,7 +3,7 @@ package algo.leetCode;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Q002_TwoSum {
+public class Q001_TwoSum {
 
     public int[] findTwoSum(int[] nums, int target){
         Map<Integer, Integer> map = new HashMap<>();
@@ -24,7 +24,7 @@ public class Q002_TwoSum {
     }
 
     public static void main(String[] args){
-        Q002_TwoSum solution = new Q002_TwoSum();
+        Q001_TwoSum solution = new Q001_TwoSum();
         int[] arr = {2, 4, 7, 11, 15};
         int[] index = solution.findTwoSum(arr, 9);
         System.out.println(index[0] + ", " + index[1]);
