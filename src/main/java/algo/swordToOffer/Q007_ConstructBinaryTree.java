@@ -7,8 +7,9 @@ import algo.util.TreeNode;
  */
 public class Q007_ConstructBinaryTree {
 
-    public static TreeNode constructe(int[] preOrder, int[] inOrder) {
-        if (preOrder == null || inOrder == null || preOrder.length == 0 || inOrder.length == 0 || preOrder.length != inOrder.length) {
+    public static TreeNode construct(int[] preOrder, int[] inOrder) {
+        if (preOrder == null || inOrder == null || preOrder.length == 0
+                || inOrder.length == 0 || preOrder.length != inOrder.length) {
             return null;
         }
 
@@ -18,9 +19,7 @@ public class Q007_ConstructBinaryTree {
         root.right = null;
         // 左子树的个数
         int leftNum = 0;
-        for (int i = 0;
-             i < inOrder.length;
-             i++) {
+        for (int i = 0; i < inOrder.length; i++) {
             if (root.val == inOrder[i]) {
                 break;
             } else {
@@ -34,14 +33,12 @@ public class Q007_ConstructBinaryTree {
             int[] leftPreOrder = new int[leftNum];
             //左子树的中序序列
             int[] leftInOrder = new int[leftNum];
-            for (int i = 0;
-                 i < leftNum;
-                 i++) {
+            for (int i = 0; i < leftNum; i++) {
                 leftPreOrder[i] = preOrder[i + 1];
                 leftInOrder[i] = inOrder[i];
             }
             // 递归构建左子树
-            TreeNode leftRoot = constructe(leftPreOrder, leftInOrder);
+            TreeNode leftRoot = construct(leftPreOrder, leftInOrder);
 
             root.left = leftRoot;
         }
@@ -51,14 +48,12 @@ public class Q007_ConstructBinaryTree {
             int[] rightPreOrder = new int[rightNum];
             //右子树的中序序列
             int[] rightInOrder = new int[rightNum];
-            for (int i = 0;
-                 i < rightNum;
-                 i++) {
+            for (int i = 0;  i < rightNum; i++) {
                 rightPreOrder[i] = preOrder[leftNum + 1 + i];
                 rightInOrder[i] = inOrder[leftNum + 1 + i];
             }
             // 递归构建右子树
-            TreeNode rightRoot = constructe(rightPreOrder, rightInOrder);
+            TreeNode rightRoot = construct(rightPreOrder, rightInOrder);
 
             root.right = rightRoot;
         }
@@ -80,7 +75,7 @@ public class Q007_ConstructBinaryTree {
         // 中序序列
         int[] inOrder = {4, 7, 2, 1, 5, 3, 8, 6};
 
-        TreeNode root = constructe(preOrder, inOrder);
+        TreeNode root = construct(preOrder, inOrder);
 
         System.out.println(root.val);
 
