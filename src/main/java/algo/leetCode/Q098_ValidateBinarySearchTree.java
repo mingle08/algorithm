@@ -1,5 +1,7 @@
 package algo.leetCode;
 
+import algo.util.TreeNode;
+
 import java.util.Stack;
 
 public class Q098_ValidateBinarySearchTree {

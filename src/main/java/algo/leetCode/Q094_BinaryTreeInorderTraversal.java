@@ -5,7 +5,9 @@ package algo.leetCode;
  * 附上前序，后序遍历
  */
 
-import java.util.*;
+import algo.util.TreeNode;
+
+import java.util.Stack;
 
 /**
  *                         4
