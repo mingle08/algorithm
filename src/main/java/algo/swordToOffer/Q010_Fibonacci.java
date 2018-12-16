@@ -33,15 +33,23 @@ public class Q010_Fibonacci {
         if(n < 2){
             return res[n];
         }
-        long fib1 = 1;
-        long fib2 = 0;
+        long fib1 = 0;
+        long fib2 = 1;
         long fibN = 0;
         for (int i = 2; i <= n; i++) {
             fibN = fib1 + fib2;
-            fib2 = fib1;
-            fib1 = fibN;
+            fib1 = fib2;
+            fib2 = fibN;
         }
 
         return fibN;
+    }
+
+    public static void main(String[] args){
+        Q010_Fibonacci solution = new Q010_Fibonacci();
+
+        long res1 = solution.fibonacci1(20);
+        long res2 = solution.fibonacci2(20);
+        System.out.println(res1 + ", " + res2);
     }
 }
