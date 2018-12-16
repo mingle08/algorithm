@@ -1,4 +1,8 @@
 package algo.leetCode;
+
+import algo.util.ListNode;
+import algo.util.MyLinkList;
+
 /**
  * Definition for singly-linked list.
  * public class ListNode {

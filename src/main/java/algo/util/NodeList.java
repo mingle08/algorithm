@@ -1,4 +1,4 @@
-package algo.leetCode;
+package algo.util;
 
 public class NodeList {
 

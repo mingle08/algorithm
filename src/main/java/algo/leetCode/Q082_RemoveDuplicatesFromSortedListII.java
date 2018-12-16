@@ -1,5 +1,7 @@
 package algo.leetCode;
 
+import algo.util.ListNode;
+
 public class Q082_RemoveDuplicatesFromSortedListII {
     public static void main(String[] args) {
         Q082_RemoveDuplicatesFromSortedListII solution = new Q082_RemoveDuplicatesFromSortedListII();

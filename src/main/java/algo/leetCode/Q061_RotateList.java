@@ -1,9 +1,11 @@
 package algo.leetCode;
 
-public class Q061_RatateList {
+import algo.util.ListNode;
+
+public class Q061_RotateList {
 
     public static void main(String[] args) {
-        Q061_RatateList solution = new Q061_RatateList();
+        Q061_RotateList solution = new Q061_RotateList();
         ListNode node1 = new ListNode(1);
         ListNode node2 = new ListNode(2);
         ListNode node3 = new ListNode(3);

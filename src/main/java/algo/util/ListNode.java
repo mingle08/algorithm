@@ -1,4 +1,4 @@
-package algo.leetCode;
+package algo.util;
 /**
  * 链表
  * 
@@ -10,9 +10,9 @@ package algo.leetCode;
  */
 public class ListNode {
 
-    int val;
-    ListNode next;
-    ListNode(int x){
+    public int val;
+    public ListNode next;
+    public ListNode(int x){
         val = x;
     }
 }

@@ -1,5 +1,8 @@
 package algo.leetCode;
 
+import algo.util.ListNode;
+import algo.util.NodeList;
+
 public class Q083_RemoveDupFromSortedList {
     public static void main(String[] args) {
         Q083_RemoveDupFromSortedList solution = new Q083_RemoveDupFromSortedList();
