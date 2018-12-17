@@ -1,5 +1,7 @@
 package algo.leetCode;
 
+import algo.util.TreeNode;
+
 /**
  * 判断一棵树是不是对称的：
  * 1. 树是空的，true。
