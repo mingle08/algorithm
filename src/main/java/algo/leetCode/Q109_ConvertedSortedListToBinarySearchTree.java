@@ -1,7 +1,11 @@
 package algo.leetCode;
 
+import algo.util.ListNode;
 import algo.util.TreeNode;
 
+/**
+ * 有序的链表，转换成搜索二叉树
+ */
 public class Q109_ConvertedSortedListToBinarySearchTree {
 
     public TreeNode sortedListToBST(ListNode head) {

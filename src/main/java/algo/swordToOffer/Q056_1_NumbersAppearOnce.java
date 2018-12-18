@@ -1,7 +1,11 @@
 package algo.swordToOffer;
 
+/**
+ * 有二个数只出现一次，其它数都出现二次
+ * 异或：a ^ a = 0
+ */
 public class Q056_1_NumbersAppearOnce {
-    public boolean fidnNumbersAppearOnce(int[] data, int[] num1, int[] num2){
+    public boolean findNumbersAppearOnce(int[] data, int[] num1, int[] num2){
         if (data == null || data.length < 2)
             return false;
 
@@ -22,6 +26,7 @@ public class Q056_1_NumbersAppearOnce {
 
     }
 
+    // 找出从右到左数第一个1的索引
     private int findFirstIndexOf1(int num){
         int indexBit = 0;
         while ((num & 1) == 0 && indexBit < 32){
@@ -31,6 +36,7 @@ public class Q056_1_NumbersAppearOnce {
         return indexBit;
     }
 
+    // 是否是二进制的1
     private boolean isBit1(int num, int indexBit){
         num = num >> indexBit;
         return (num & 1) == 1;
@@ -42,7 +48,7 @@ public class Q056_1_NumbersAppearOnce {
         int[] data = {2, 4, 3, 6, 3, 2, 5, 5};
         int[] num1 = new int[1];
         int[] num2 = new int[1];
-        boolean canFind = solution.fidnNumbersAppearOnce(data, num1, num2);
+        boolean canFind = solution.findNumbersAppearOnce(data, num1, num2);
         if (canFind){
             System.out.println(num1[0]);
             System.out.println(num2[0]);
