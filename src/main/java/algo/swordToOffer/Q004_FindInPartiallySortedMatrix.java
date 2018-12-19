@@ -1,10 +1,10 @@
-package algo.Sword;
+package algo.swordToOffer;
 
 /**
  * 二维数组：每一行的数是从左到右递增的，每一列的数是从上到下递增的
  * 思路：每次选取右上角（或左下角）的元素
  */
-public class Q04_FindInPartiallySortedMatrix {
+public class Q004_FindInPartiallySortedMatrix {
 
     public boolean find(int[][] matrix, int num){
         int rows = matrix.length;
@@ -29,7 +29,7 @@ public class Q04_FindInPartiallySortedMatrix {
     }
 
     public static void main(String[] args){
-        Q04_FindInPartiallySortedMatrix solution = new Q04_FindInPartiallySortedMatrix();
+        Q004_FindInPartiallySortedMatrix solution = new Q004_FindInPartiallySortedMatrix();
 
         int[][] nums = {{1, 2, 8, 9},
                         {2, 4, 9, 12},

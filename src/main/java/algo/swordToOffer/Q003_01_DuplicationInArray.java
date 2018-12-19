@@ -1,6 +1,6 @@
 package algo.swordToOffer;
 
-public class Q03_01_DuplicationInArray {
+public class Q003_01_DuplicationInArray {
 
     public static boolean duplicate(int[] nums, int length, int duplication){
         if(nums == null || length < 0){

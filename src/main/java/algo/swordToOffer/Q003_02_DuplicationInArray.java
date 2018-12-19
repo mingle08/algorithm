@@ -7,7 +7,7 @@ package algo.swordToOffer;
  * 直到end = start,找到重复的。时间复杂度为O(nlogn);
  *
  */
-public class Q03_02_DuplicationInArray {
+public class Q003_02_DuplicationInArray {
     public int getDup(int[] nums, int length){
         if(nums == null || length < 0){
             return -1;
@@ -48,7 +48,7 @@ public class Q03_02_DuplicationInArray {
 
 
     public static void main(String[] args){
-        Q03_02_DuplicationInArray solution = new Q03_02_DuplicationInArray();
+        Q003_02_DuplicationInArray solution = new Q003_02_DuplicationInArray();
         int[] arr = {2,3,5,4,3,2,6,7};
         int dup = solution.getDup(arr, 8);
         System.out.println(dup);

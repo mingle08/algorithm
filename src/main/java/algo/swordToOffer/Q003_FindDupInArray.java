@@ -6,7 +6,7 @@ package algo.swordToOffer;
  * 之后再遇到相同的数时，会发现对应位上的数已经大于等于n了，那么直接返回这个数即可。
  * 时间复杂度为O(n)，空间复杂度为O(1)，不需要辅助空间。
  */
-public class Q03_FindDupInArray {
+public class Q003_FindDupInArray {
 
     public static int findDup(int[] arr, int length){
         if(length < 0)
