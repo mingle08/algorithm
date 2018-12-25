@@ -2,6 +2,16 @@ package algo.leetCode;
 
 import algo.util.TreeNode;
 
+/**
+ * 题意及分析：一个二叉树，求以父子节点关系连接起来的最大路径。
+ * 取当前点和左右边加和，当前点的值中最大的作为本层返回值。并在全局维护一个max。
+ * 若路径经过一个点，那么对于当前点有四种情况，
+ * (1) 一种是只经过该点就截止，
+ * (2) 一种是该点加上左子节点的最大值，
+ * (3) 另一种是该点加上右子节点的值，
+ * (4) 最后一种是该点左右子树加上该点的值，
+ * 比较四种情况就能得到在该点能取得的最大值，最后与全局的最大值比较。终能得到的结果就是最大值。
+ */
 public class Q124_BinaryTreeMaximumPathSum {
     public int maxPathSum(TreeNode root) {
         if(root == null)
