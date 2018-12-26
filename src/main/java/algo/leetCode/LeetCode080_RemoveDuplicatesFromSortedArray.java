@@ -1,5 +1,16 @@
 package algo.leetCode;
 
+/**
+ * Follow up for "Remove Duplicates":
+ * What if duplicates are allowed at most twice?
+ *
+ * For example,
+ * Given sorted array nums = [1,1,1,2,2,3],
+ *
+ * Your function should return length = 5, with the first five elements of nums
+ * being 1, 1, 2, 2 and 3. It doesn't matter what you leave beyond the new length.
+ *
+ */
 public class LeetCode080_RemoveDuplicatesFromSortedArray {
     public static void main(String[] args) {
 //        LeetCode080_RemoveDuplicatesFromSortedArray solution = new LeetCode080_RemoveDuplicatesFromSortedArray();

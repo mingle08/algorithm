@@ -4,6 +4,23 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * 给出一个数组，数组中的元素各不相同，找到该集合的所有子集（包括空集和本身）
+ * 举例说明：
+ * int []nums={1,2,3}
+ * 返回结果如下：
+ *
+ * [
+ *   [3],
+ *   [1],
+ *   [2],
+ *   [1,2,3],
+ *   [1,3],
+ *   [2,3],
+ *   [1,2],
+ *   []
+ * ]
+ */
 public class LeetCode078_Subsets {
 
     public static void main(String[] args) {
