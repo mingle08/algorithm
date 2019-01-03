@@ -9,7 +9,6 @@ public class LeetCode006_ZigZagConversion {
      * C   G   K
      * 然后一行一行的读取：“AEIBDFHJCGK”
      */
-
     public static String convert(String str, int numRows){
         if(str == null || str.length() == 0 || numRows <= 1){
             return str;
