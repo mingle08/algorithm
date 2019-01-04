@@ -163,5 +163,13 @@ public class BinarySearchOfCollections {
         System.out.println(endTime2 - endTime1);
         System.out.println("indexOf=" + index1);   // indexOf=222219
         System.out.println("binarySearch=" + index2);   // binarySearch=222219
+        
+        
+        int left = Integer.MAX_VALUE;
+        int right = Integer.MAX_VALUE;
+        int mid1 = (left + right) >> 1;
+        int mid2 = left + ((right - left) >> 1);
+        int mid3 = (left + right) >>> 1;
+        System.out.println("mid1=" + mid1 + ", mid2=" + mid2 + ", mid3=" + mid3); // mid1=-1, mid2=2147483647, mid3=2147483647
     }
 }
