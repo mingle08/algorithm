@@ -6,7 +6,8 @@ public class BinarySearchOfCollections {
     private static final int BINARYSEARCH_THRESHOLD   = 5000;
 
     // 三个参数
-    public static <T> int binarySearch(List<? extends T> list, T key, Comparator<? super T> c) {
+    public static <T> 
+    int binarySearch(List<? extends T> list, T key, Comparator<? super T> c) {
         if (c==null)
             return binarySearch((List<? extends Comparable<? super T>>) list, key);
 
@@ -112,7 +113,8 @@ public class BinarySearchOfCollections {
         return -(low + 1);  // key not found
     }
 
-    private static <T> T get(ListIterator<? extends T> i, int index) {
+    private static <T> 
+    T get(ListIterator<? extends T> i, int index) {
         T obj = null;
         int pos = i.nextIndex();
         if (pos <= index) {
@@ -164,7 +166,9 @@ public class BinarySearchOfCollections {
         System.out.println("indexOf=" + index1);   // indexOf=222219
         System.out.println("binarySearch=" + index2);   // binarySearch=222219
         
-        
+        /**
+         * 无符号右移>>>
+         */
         int left = Integer.MAX_VALUE;
         int right = Integer.MAX_VALUE;
         int mid1 = (left + right) >> 1;
