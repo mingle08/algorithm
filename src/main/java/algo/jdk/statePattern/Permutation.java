@@ -1,4 +1,4 @@
-package algo.jdk;
+package algo.jdk.statePattern;
 
 import java.util.ArrayList;
 import java.util.List;

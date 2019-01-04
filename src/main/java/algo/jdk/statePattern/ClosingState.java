@@ -1,4 +1,4 @@
-package study.statePattern;
+package algo.jdk.statePattern;
 
 public class ClosingState extends LiftState {
     //电梯门关了再打开，逗你玩呢，但这个允许呀

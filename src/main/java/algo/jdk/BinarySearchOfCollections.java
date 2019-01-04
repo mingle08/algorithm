@@ -1,4 +1,4 @@
-package jdk.BinarySearchOfCollections;
+package algo.jdk;
 
 import java.util.*;
 

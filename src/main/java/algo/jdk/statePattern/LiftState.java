@@ -1,4 +1,4 @@
-package study.statePattern;
+package algo.jdk.statePattern;
 
 public abstract class LiftState {
 
