@@ -1,4 +1,4 @@
-package IOCDemo1;
+package IOCdemo;
 
 public class Car {
     private String name;
