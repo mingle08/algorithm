@@ -1,4 +1,4 @@
-package IOCDemo1;
+package IOCdemo;
 
 import org.junit.Test;
 
