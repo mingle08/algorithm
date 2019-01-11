@@ -3,70 +3,72 @@ package algo.swordToOffer;
 import algo.util.TreeNode;
 
 import java.util.LinkedList;
+import java.util.Stack;
 
 public class Q054_KthNodeInBST {
-    /*private LinkedList<TreeNode> list = new LinkedList<TreeNode>();
-    public TreeNode findKthNode(TreeNode root, int k){
-        findKthNodeCore(root);
-        if(list.size() < k || k < 1) return null;
-        else {
-            return list.get(k-1);
+
+    /**
+     *  此方法用递归是错误的，只是恰巧第3大的是4，第4大的应该是5，但是得出的是2
+     *  剑指offer 用递归，是因为参数k取的是地址  unsigned int& k
+     */
+    /*int index = 0;
+    public TreeNode kthNode(TreeNode root, int k){
+        if(root != null){ //中序遍历寻找第k个
+            TreeNode node = kthNode(root.left,k);
+            if(node != null)
+                return node;
+
+            index ++;
+            if(index == k)
+                return root;
+
+            node = kthNode(root.right,k);
+            if(node != null)
+                return node;
+
         }
-    }
-
-    private void findKthNodeCore(TreeNode root){
-        TreeNode target = null;
-        if (root.left != null)
-            findKthNodeCore(root.left);
-
-        list.add(root);
-
-        if (root.right != null)
-            findKthNodeCore(root.right);
-
+        return null;
     }*/
 
     public TreeNode findKthNode(TreeNode root, int k){
-        if (root == null || k == 0)
+        //栈顶元素保证一直是cur的父节点
+        if(root==null || k<0)
             return null;
-
-        return doFindKthNode(root, 3);
-    }
-
-    private TreeNode doFindKthNode(TreeNode root, int k){
-        TreeNode target = null;
-        if (root.left != null)
-            target = doFindKthNode(root.left, k);
-
-        if (target != null)
-            return target;
-
-        /**
-         * 每进入一层递归，k减1，因为如果是找第3个数，就是下一层递归的第2个数，再下一层递归的第1个数
-         * 当k等于1时，这个数就是目标值
-         */
-
-        k--;
-        if (k == 1)
-            target = root;
-
-        if (target == null && root.right != null)
-            target = doFindKthNode(root.right, k);
-
-        return target;
+        Stack<TreeNode> stack = new Stack<>();
+        TreeNode cur = root;
+        int count = 0;
+        while (!stack.isEmpty()||cur!=null){
+            if(cur!=null){
+                stack.push(cur);
+                cur = cur.left;
+            } else {
+                cur = stack.pop();
+                count++;
+                if(count==k)
+                    return cur;
+                cur = cur.right;
+            }
+        }
+        return null;
     }
 
     public static void main(String[] args){
         Q054_KthNodeInBST solution = new Q054_KthNodeInBST();
         TreeNode root = new TreeNode(5);
         root.left = new TreeNode(3);
-        root.right = new TreeNode(7);
         root.left.left = new TreeNode(2);
         root.left.right = new TreeNode(4);
+        root.right = new TreeNode(7);
         root.right.left = new TreeNode(6);
         root.right.right = new TreeNode(8);
 
-        TreeNode target = solution.findKthNode(root, 3);
-        System.out.println(target.val);
+//        System.out.println(solution.kthNode(root, 3).val);  // 4
+//        System.out.println(solution.kthNode(root, 4).val);  // 2
+//        System.out.println(solution.kthNode(root, 6).val);  // 3
+
+        System.out.println(solution.findKthNode(root, 3).val);  // 4
+        System.out.println(solution.findKthNode(root, 4).val);  // 5
+        System.out.println(solution.findKthNode(root, 6).val);  // 7
+
     }
 }
