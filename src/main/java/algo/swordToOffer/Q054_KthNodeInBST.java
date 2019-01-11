@@ -32,20 +32,21 @@ public class Q054_KthNodeInBST {
 
     public TreeNode findKthNode(TreeNode root, int k){
         //栈顶元素保证一直是cur的父节点
-        if(root==null || k<0)
+        if(root == null || k < 0)
             return null;
         Stack<TreeNode> stack = new Stack<>();
         TreeNode cur = root;
         int count = 0;
-        while (!stack.isEmpty()||cur!=null){
-            if(cur!=null){
+        while (!stack.isEmpty() || cur != null){
+            if(cur != null){
                 stack.push(cur);
                 cur = cur.left;
             } else {
                 cur = stack.pop();
                 count++;
-                if(count==k)
+                if(count == k)
                     return cur;
+
                 cur = cur.right;
             }
         }
