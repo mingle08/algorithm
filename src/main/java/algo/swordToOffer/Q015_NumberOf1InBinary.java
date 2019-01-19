@@ -32,9 +32,17 @@ public class Q015_NumberOf1InBinary {
         while (num != 0){
             count++;
             //num & (num - 1) ： 可以将num二进制表示中最右边的1变为0
-            num = num & (num - 1);
+//            num = num & (num - 1);  //  等价于下面这句
+            num &= (num - 1);
         }
 
         return count;
+    }
+
+    public static void main(String[] args){
+        Q015_NumberOf1InBinary solution = new Q015_NumberOf1InBinary();
+        int number = 9;
+        int cnt = solution.numOf1(number);
+        System.out.println(cnt);
     }
 }
