@@ -1,8 +1,5 @@
 package algo.BeautyOfProgramming;
 
-/**
- * 矩阵相乘
- */
 public class Q2_09_Fibonacci {
     // 单位矩阵
     private static final int[][] UNIT = {{1,1}, {1,0}};
