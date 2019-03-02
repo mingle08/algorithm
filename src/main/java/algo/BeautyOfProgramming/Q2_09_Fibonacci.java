@@ -43,40 +43,43 @@ public class Q2_09_Fibonacci {
     /**
      * 方法2：用一维数组模拟矩阵
      */
-    final  static int[] A={1,1,1,0};
-    static int fibonacci2(int n){
-        if(n==0)return 0;
-        if(n==1)return 1;
-        if(n>1){
-            int[] re=power(n-1);
-            return re[0];//矩阵乘积的第00项为所求
+    final static int[] A = {1, 1, 1, 0};
+    public int fibonacci2(int n){
+        if (n == 0)
+            return 0;
+
+        if (n == 1)
+            return 1;
+
+        if (n > 1){
+            int[] re = power(n-1);
+            return re[0];// 矩阵乘积的第00项为所求
         }
         return -1;
     }
 
-    //a^n=a^(n/2)*a^(n/2)   or   a^n=a^(n/2)*a^(n/2)*a
-    static int[] power(int n){
-        int[] a=new int[4];
-        if(n==1){
-            a=A;
-        }
-        else if(n%2==0){
-            a=matixMultiply(power(n/2),power(n/2));
-        }else if(n%2==1){
-            int[] temp=matixMultiply(power(n/2),power(n/2));
-            a=matixMultiply(A,temp);
+    // a^n = a^(n/2) * a^(n/2)   or   a^n = a^(n/2) * a^(n/2) * a
+    private int[] power(int n){
+        int[] a = new int[4];
+        if (n == 1){
+            a = A;
+        } else if (n % 2 == 0){
+            a = matrixMultiply(power(n/2),power(n/2));
+        } else if (n % 2 == 1){
+            int[] temp = matrixMultiply(power(n/2), power(n/2));
+            a = matrixMultiply(A, temp);
         }
         return a;
     }
 
     //矩阵乘法
-    // return A*B
-    static int[] matixMultiply(int[] a,int [] b){
-        int[] re=new int[4];
-        re[0]=a[0]*b[0]+a[1]*b[2];
-        re[1]=a[0]*b[1]+a[1]*b[3];
-        re[2]=a[2]*b[0]+a[3]*b[2];
-        re[3]=a[2]*b[1]+a[3]*b[3];
+    // return A * B
+    private int[] matrixMultiply(int[] a,int [] b){
+        int[] re = new int[4];
+        re[0] = a[0] * b[0] + a[1] * b[2];
+        re[1] = a[0] * b[1] + a[1] * b[3];
+        re[2] = a[2] * b[0] + a[3] * b[2];
+        re[3] = a[2] * b[1] + a[3] * b[3];
         return re;
     }
 
@@ -84,7 +87,7 @@ public class Q2_09_Fibonacci {
         Q2_09_Fibonacci solution = new Q2_09_Fibonacci();
         int num = 20;
         int res = solution.fibo(num);
-        int res2 = fibonacci2(num);
+        int res2 = solution.fibonacci2(num);
         System.out.println(res);
         System.out.println(res2);
     }
