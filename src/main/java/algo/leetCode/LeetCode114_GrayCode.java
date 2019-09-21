@@ -3,7 +3,7 @@ package algo.leetCode;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Q089_GrayCode {
+public class LeetCode114_GrayCode {
 
     public static List<Integer> grayCode(int n) {
         List<Integer> res = new ArrayList<Integer>(1 << n);
