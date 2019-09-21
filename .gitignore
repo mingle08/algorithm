@@ -1,6 +1,8 @@
-*/target
+# Created by .ignore support plugin (hsz.mobi)
+
 *.iml
 /.idea
+*/target
 *.class
 target/
 .project
