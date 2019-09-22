@@ -5,7 +5,7 @@ package algo.swordToOffer;
  * 例如：把9表示成二进制是1001，有两位是2，如果输入9.则输出2.
  */
 public class Q015_NumberOf1InBinary {
-    public int numberOf1(int num){
+    private int numberOf1(int num){
         int count = 0;
         int flag = 1;
         while (num != 0){
@@ -27,7 +27,7 @@ public class Q015_NumberOf1InBinary {
      * @param num
      * @return
      */
-    public int numOf1(int num){
+    private int numOf1(int num){
         int count = 0;
         while (num != 0){
             count++;
