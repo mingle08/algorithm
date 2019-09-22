@@ -21,8 +21,16 @@ public class Q023_EntryNodeInListLoop {
             if (pFast == pSlow)
                 return pFast;
 
+            // 慢指针走一步
             pSlow = pSlow.next;
+            /**
+             * 快指针走二步
+             * 1， 先走一步
+             * 2， 判断当前快指针不是null，再走一步
+             */
+            // 1, 先走一步
             pFast = pFast.next;
+            // 2, 快指针不是null，再走一步
             if (pFast != null)
                 pFast = pFast.next;
         }
@@ -49,7 +57,7 @@ public class Q023_EntryNodeInListLoop {
             pNode1 = pNode1.next;
         }
 
-        // 再移动pNode1和pNode2
+        // 再移动pNode1和pNode2：相同的速度
         ListNode pNode2 = head;
         while (pNode1 != pNode2){
             pNode1 = pNode1.next;
@@ -57,5 +65,26 @@ public class Q023_EntryNodeInListLoop {
         }
 
         return pNode1;
+    }
+
+    public static void main(String[] args) {
+        Q023_EntryNodeInListLoop solution = new Q023_EntryNodeInListLoop();
+        ListNode root = new ListNode(1);
+        ListNode node2 = new ListNode(2);
+        ListNode node3 = new ListNode(3);
+        ListNode node4 = new ListNode(4);
+        ListNode node5 = new ListNode(5);
+        ListNode node6 = new ListNode(6);
+        root.next = node2;
+        node2.next = node3;
+        node3.next = node4;
+        node4.next = node5;
+        node5.next = node6;
+        node6.next = node3;
+
+        ListNode meet = solution.meetingNode(root);
+        System.out.println(meet.val);
+        ListNode entry = solution.entryNodeOfLoop(root);
+        System.out.println("环的入口为：" + entry.val);
     }
 }
