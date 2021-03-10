@@ -9,23 +9,22 @@ package algo.swordToOffer;
  */
 public class Q003_01_DuplicationInArray {
 
-    public static boolean duplicate(int[] nums, int length, int duplication){
-        if(nums == null || length < 0){
-            return false;
+    public static int duplicate(int[] nums){        
+        if(nums == null || nums.length < 0){
+            return -1;
         }
-        for (int i = 0; i < length; i++) {
-            if(nums[i] < 0 || nums[i] > length - 1){
-                return false;
+        for (int i = 0; i < nums.length; i++) {
+            if(nums[i] < 0 || nums[i] > nums.length - 1){
+                return -1;
             }
 
         }
 
         // 多次循环，交换之后，数组变成{0,1,2,3,2,5,3}
-        for (int i = 0; i < length; i++) {
+        for (int i = 0; i < nums.length; i++) {
             while (nums[i] != i){// 当i为4时，nums[4] == 2,
                 if(nums[i] == nums[nums[i]]){// 比较nums[4] 与nums[nums[4]]（即nums[2] == 2）
-                    duplication = nums[i];
-                    return true;
+                    return nums[i];
                 }
 
                 // 交换nums[i] 与 nums[nums[i]]
@@ -35,15 +34,14 @@ public class Q003_01_DuplicationInArray {
             }
         }
 
-        return false;
+        return -1;
     }
 
 
     public static void main(String[] args){
         int[] arr = {2,3,1,0,2,5,3};
-        for (int i = 0; i < arr.length; i++) {
-            boolean dup = duplicate(arr, 7, arr[i]);
-        }
+        int dup = duplicate(arr);
+        System.out.println("重复的数据为：" + dup);
     }
 
 
