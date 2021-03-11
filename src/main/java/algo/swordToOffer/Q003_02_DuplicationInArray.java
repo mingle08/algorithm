@@ -8,7 +8,7 @@ package algo.swordToOffer;
  * 
  * 思路：利用二分的思想，将数组值1~n分割为1~mid的n1，mid+1 ~ n的n2;
  * 从头开始遍历一遍数组， 统计在1~mid范围内数组中值的个数count，
- * 如果count > mid,那么重复的数字就在该半个数组中(n1)，否者在n2；
+ * 如果count > mid,那么重复的数字就在该半个数组中(n1)，否则在n2；
  * 直到end = start,找到重复的。时间复杂度为O(nlogn);
  *
  */

@@ -8,19 +8,19 @@ package algo.swordToOffer;
  */
 public class Q003_FindDupInArray {
 
-    public static int findDup(int[] arr, int length){
-        if(length < 0)
+    public static int findDup(int[] arr){
+        if(arr.length == 0)
             return -1;    // 若数组为空，则返回-1
 
-        for (int i = 0; i < length; i++) {
+        for (int i = 0; i < arr.length; i++) {
             int index = arr[i];    // 记录当前数值
-            if(length <= index){  // 当前数值大于数组长度，则将其数值减去数组长度
-                index -= length;
+            if(arr.length <= index){  // 当前数值大于数组长度，则将其数值减去数组长度
+                index -= arr.length;
             }
-            if (length <= arr[index])  // 以当前数值为下标的数值大于或等于数组长度，则返回当前数值
+            if (arr.length <= arr[index])  // 以当前数值为下标的数值大于或等于数组长度，则返回当前数值
                 return index;
 
-            arr[index] += length;   // 将以当前数组为下标的数值加上数组长度
+            arr[index] += arr.length;   // 将以当前数组为下标的数值加上数组长度
         }
 
         return -1;
@@ -29,7 +29,7 @@ public class Q003_FindDupInArray {
 
     public static void main(String[] args){
         int[] nums = {2,3,1,0,2,5,3};
-        int num = findDup(nums, 7);
+        int num = findDup(nums);
         System.out.println(num);
     }
 }
