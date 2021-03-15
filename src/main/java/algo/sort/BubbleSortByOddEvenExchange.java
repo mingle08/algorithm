@@ -4,9 +4,9 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class BubbleSort {
+public class BubbleSortByOddEvenExchange {
 
-    static int[] arr = {25,48,65,87,123,233,456,666,777,8999,55555};
+    static int[] arr = {25, 48, 65, 87, 12, 3, 22, 33, 45, 6, 67, 26, 72, 89, 99, 53, 155, 85};
 
     static ExecutorService pool = Executors.newCachedThreadPool();
 
@@ -17,7 +17,7 @@ public class BubbleSort {
     }
 
     public static synchronized void setExchFlag(int exchFlag) {
-        BubbleSort.exchFlag = exchFlag;
+        BubbleSortByOddEvenExchange.exchFlag = exchFlag;
     }
 
     public static void pOddEvenSort(int[] arr) throws InterruptedException {

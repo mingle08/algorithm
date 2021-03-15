@@ -1,4 +1,4 @@
-package jdk;
+package algo.jdk;
 
 import java.util.ArrayList;
 import java.util.Vector;

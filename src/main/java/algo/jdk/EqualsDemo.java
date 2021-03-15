@@ -1,4 +1,4 @@
-package jdk;
+package algo.jdk;
 
 /**
  * Java中为什么字符串的比较常量放前面好？

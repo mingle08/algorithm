@@ -1,4 +1,4 @@
-package jdk;
+package algo.jdk;
 
 import java.util.Arrays;
 import java.util.List;

@@ -1,4 +1,4 @@
-package jdk;
+package algo.jdk;
 
 public class Outter {
     static class Inner {

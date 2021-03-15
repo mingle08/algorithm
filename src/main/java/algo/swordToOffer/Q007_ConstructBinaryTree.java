@@ -19,12 +19,13 @@ public class Q007_ConstructBinaryTree {
         root.right = null;
         // 左子树的个数
         int leftNum = 0;
-        for (int i = 0; i < inOrder.length; i++) {
-            if (root.val == inOrder[i]) {
+        for (int j : inOrder) {
+            if (root.val == j) {
                 break;
             } else {
                 leftNum++;
-            } }
+            }
+        }
         // 右子树的个数
         int rightNum = inOrder.length - 1 - leftNum;
         // 重建左子树

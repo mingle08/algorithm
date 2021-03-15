@@ -51,17 +51,18 @@ public class ComparisonSort {
      */
     public static void shellSort(int[] arr) {
         int length = arr.length;
-        int h = 1;
-        while (h < length / 3) h = 3 * h + 1;
+        int step = 1;
+        while (step < length / 3) step = 3 * step + 1;
 
-        for (; h >= 1; h /= 3) {
-            for (int i = 0; i < arr.length - h; i += h) {
-                for (int j = i + h; j > 0; j -= h) {
-                    if (arr[j] < arr[j - h]) {
-                        swap(arr, j, j - h);
+        while (step >= 1) {
+            for (int i = step; i < arr.length; i++) {// 从索引step开始往后依次找分组，所以是i++
+                for (int j = i; j - step >= 0; j -= step) {// 根据后面的索引j，找它前面的组员j-step
+                    if (arr[j] < arr[j - step]) {
+                        swap(arr, j, j - step);
                     }
                 }
             }
+            step /= 3;
         }
     }
 
@@ -70,7 +71,7 @@ public class ComparisonSort {
      * （1）基本思想：每一次从待排序的数据元素中选出最小（或最大）的一个元素，存放在序列的起始位置，直到全部待排序的数据元素排完。
      * （2）时间复杂度 O(n^2)。
      * （3）不稳定的排序方法。
-     */
+      */
 
     public static void selectionSort(int[] arr) {
         for (int a = 0; a < arr.length - 1; a++) {
@@ -157,7 +158,7 @@ public class ComparisonSort {
      *  （1）基本思想：持续比较相邻的元素。如果第一个比第二个大，就交换他们两个。直到没有任何一对数字需要比较。
      *  （2）冒泡排序最好的时间复杂度为O(n)。冒泡排序的最坏时间复杂度为O(n^2)。因此冒泡排序总的平均时间复杂度为O(n^2)。
      *  （3）算法适用于少量数据的排序，是稳定的排序方法。
-     */
+      */
     public static void bubbleSort(int[] arr) {
         for (int a = 0; a < arr.length - 1; a++) {
             for (int b = 0; b < arr.length - 1 - a; b++) {
@@ -176,7 +177,7 @@ public class ComparisonSort {
      *      c, 递归：对两个子序列进行快排，直到序列为空或者只有一个元素。
      * （2）平均时间复杂度为O(nlogn)，最坏情况为O(n^2)，n越大，速度越快。
      * （3）不是稳定的排序算法。
-     */
+      */
 
     public static void quickSort(int[] arr, int low, int high) {
         if (low > high) {
@@ -284,9 +285,9 @@ public class ComparisonSort {
 //        bubbleSort(nums);
 //        selectionSort(nums);
 //        insertSort(nums);
-//        shellSort(nums);
+        shellSort(nums);
 //        heapSort(nums);
-        mergeSort(nums, 0, nums.length - 1);
+//        mergeSort(nums, 0, nums.length - 1);
         for (int num : nums) {
             System.out.print(num + "\t");
         }

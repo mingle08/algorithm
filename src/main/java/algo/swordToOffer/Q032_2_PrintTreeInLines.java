@@ -1,4 +1,4 @@
-package algo.Sword;
+package algo.swordToOffer;
 
 
 import algo.util.TreeNode;
@@ -9,9 +9,9 @@ import java.util.Queue;
 /**
  * 分行从上到下打印二叉树
  */
-public class Q032_2_PrintTreesInLines {
+public class Q032_2_PrintTreeInLines {
 
-    public void printInLines(TreeNode root){
+    public void print(TreeNode root){
 
         if (root == null)
             return ;
@@ -43,7 +43,7 @@ public class Q032_2_PrintTreesInLines {
     }
 
     public static void main(String[] args){
-        Q032_2_PrintTreesInLines solution = new Q032_2_PrintTreesInLines();
+        Q032_2_PrintTreeInLines solution = new Q032_2_PrintTreeInLines();
 
         TreeNode root = new TreeNode(8);
         root.left = new TreeNode(6);
@@ -53,6 +53,6 @@ public class Q032_2_PrintTreesInLines {
         root.right.left = new TreeNode(9);
         root.right.right = new TreeNode(11);
 
-        solution.printInLines(root);
+        solution.print(root);
     }
 }

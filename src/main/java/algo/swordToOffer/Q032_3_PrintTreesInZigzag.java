@@ -1,4 +1,4 @@
-package algo.Sword;
+package algo.swordToOffer;
 
 import algo.util.TreeNode;
 
