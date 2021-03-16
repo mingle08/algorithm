@@ -101,64 +101,70 @@ public class BinaryTree {
 			System.out.println("postOrder data: " + node.getData());
 		}
 	}
-	
-	
+
+
 	// 前序  非递归
-    public void nonRecPreOrder(TreeNode root){
+	public void nonRecPreOrder(TreeNode root) {
+		Stack<TreeNode> stack = new Stack<>();
+		TreeNode cur = root;
+		stack.push(cur);
+		while (!stack.isEmpty()) {
+			cur = stack.pop();
+			printTreeNode(cur);
+			// 先存 右孩子
+			if (cur.rightChild != null) {
+				stack.push(cur.rightChild);
+			}
+			// 再存 左孩子
+			if (cur.leftChild != null) {
+				stack.push(cur.leftChild);
+			}
+		}
+	}
 
-        Stack<TreeNode> stack = new Stack<>();
-        TreeNode node = root;
-        while (node != null || stack.size() > 0){
-            // 将所有左孩子压栈
-            if (node != null){
-                printTreeNode(node);    // 访问
-                stack.push(node);    // 压栈                                                       
-                node = node.leftChild;
-            } else {
-                node = stack.pop();    // 出栈
-                node = node.rightChild;
-            }
-        }
-    }
+	// 中序  非递归
+	public void nonRecInOrder (TreeNode root) {
+		Stack<TreeNode> stack = new Stack<>();
+		TreeNode cur = root;
+		TreeNode node = null;
+		while (!stack.isEmpty() || cur != null) {
+			while (cur != null) {
+				stack.push(cur);
+				cur = cur.leftChild;
+			}
+			// 注意，这里用一个新节点来接收pop出来的
+			node = stack.pop();
+			printTreeNode(node);
+			if (node.rightChild != null) {
+				cur = node.rightChild;
+			}
+		}
+	}
 
-    // 中序  非递归
-    public void inOrderTraversal(TreeNode root){
-        Stack<TreeNode> stack = new Stack<>();
-        TreeNode node = root;
-        while (node != null || stack.size() > 0){
-            if (node != null){
-                stack.push(node);  // 压栈
-                node = node.leftChild;
-            } else {
-                node = stack.pop();  // 出栈
-                printTreeNode(node);  // 访问
-                node = node.rightChild;
-            }
-        }
-    }
+	// 后序  非递归
+	public void nonRecPostOrder(TreeNode root) {
+		Stack<TreeNode> stack = new Stack<TreeNode>();
+		Stack<TreeNode> output = new Stack<TreeNode>();  //按出栈顺序将元素装入此栈中
+		TreeNode cur = root;
+		stack.push(cur);
+		while (!stack.isEmpty()) {
+			cur = stack.pop();
+			output.push(cur);
+			if (cur.leftChild != null) {
+				stack.push(cur.leftChild);
+			}
+			if (cur.rightChild != null) {
+				stack.push(cur.rightChild);
+			}
+		}
 
-    // 后序  非递归
-    public void nonRecPostOrder(TreeNode root){
-        Stack<TreeNode> stack = new Stack<TreeNode>();
-        Stack<TreeNode> output = new Stack<TreeNode>();  //按出栈顺序将元素装入此栈中
-        TreeNode node = root;
-        while(node != null || stack.size()>0){
-            if(node != null){
-                output.push(node);
-                stack.push(node);    // 压栈
-                node = node.rightChild;
-            }else{
-                node = stack.pop();  // 出栈
-                node = node.leftChild;
-            }
-        }
-
-        // 访问
-        while(output.size()>0){
-            TreeNode out = output.pop();
-            System.out.print(out.data + " ");
-        }
-    }
+		// 访问
+		TreeNode out = null;
+		while (output.size() > 0) {
+			out = output.pop();
+			System.out.print(out.data + " ");
+		}
+	}
 	
 	
 	
