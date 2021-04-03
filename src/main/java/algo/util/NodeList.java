@@ -3,7 +3,7 @@ package algo.util;
 public class NodeList {
 
     public ListNode first;
-    private ListNode last;
+    public ListNode last;
 
     public NodeList(){
         first = null;

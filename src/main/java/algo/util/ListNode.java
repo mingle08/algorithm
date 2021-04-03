@@ -1,9 +1,7 @@
 package algo.util;
 /**
- * 链表
- * 
  * @ClassName ListNode
- * @Description TODO()
+ * @Description 单向链表
  * @author Administrator
  * @Date 2018年11月15日上午11:51:49
  * @version 1.0.0

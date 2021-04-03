@@ -20,8 +20,8 @@ public class QuickSort {
 	/**
 	 * 快速排序核心方法
 	 * @param arr
-	 * @param i
-	 * @param j
+	 * @param low
+	 * @param high
 	 */
 	private static void quickSort(int[] arr, int low, int high) {
 		if(low >= high) {
@@ -42,24 +42,24 @@ public class QuickSort {
 	 * @return
 	 */
 	private static int getMiddle(int[] arr, int low, int high) {
-		int temp = arr[low];  // 以temp为基数
+		int pivot = arr[low];  // 以temp为基数
 		while(low < high) {
 			// 1. 如果arr[high]大于temp, high指针往左移
-			while(low < high && arr[high] >= temp) {
+			while(low < high && arr[high] >= pivot) {
 				high--;
 			}
 			// 2. 否则，如果arr[high] <= temp，把小的值存在arr[low]
 			arr[low] = arr[high];
 			
 			// 3. 如果arr[low] < temp，low指针往右移
-			while(low < high && arr[low] <= temp) {
+			while(low < high && arr[low] <= pivot) {
 				low++;
 			}
 			// 4. 否则，如果arr[low] >= temp, 把大的值存在arr[high]
 			arr[high] = arr[low];
 			
 		}
-		arr[high] = temp;
+		arr[high] = pivot;
 		return high;
 	}
 

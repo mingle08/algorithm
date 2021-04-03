@@ -1,6 +1,6 @@
 package algo.search;
 
-import algoDemo.sort.BasicSort;
+import algo.sort.BasicSort;
 
 public class BinarySearch {
 

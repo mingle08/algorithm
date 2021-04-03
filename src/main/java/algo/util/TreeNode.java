@@ -1,5 +1,8 @@
 package algo.util;
 
+/**
+ * 有指向父节点的指针
+ */
 public class TreeNode {
 
     public int val;

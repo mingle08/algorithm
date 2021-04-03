@@ -42,6 +42,38 @@ public class NonComparativeSort {
     /**
      * 基数排序
      * @param arr
+     * int[] nums = {23, 10, 16, 5, 6, 39, 28, 46, 7};
+     *
+     * bucket索引                         0  1  2  3  4  5  6  7  8  9
+     * bucket的值                         1  0  0  1  0  1  3  1  1  1
+     * bucket转换后的值                    1  1  1  2  2  3  6  7  8  9
+     *                                                                                                                         0   1   2   3   4   5   6   7   8
+     * 遍历个位时，i= 8,  arr[i]= 7,                        (arr[i]/len)%10 = 7, bucket[(arr[i]/len)%10] = 7, temp[6] = 7 即                            7
+     * bucket转换后的值                    1  1  1  2  2  3  6  6  8  9
+     *
+     *           7,          46,                                             6,                           6, temp[5] = 46                          46  7
+     * bucket转换后的值                    1  1  1  2  2  3  5  6  8  9
+     *
+     *           6,          28,                                            8,                           8, temp[7] = 28                           46  7  28
+     * bucket转换后的值                    1  1  1  2  2  3  5  6  7  9
+     *
+     *           5,          39,                                            9,                           9, temp[8] = 39                           46  7  28  39
+     * bucket转换后的值                    1  1  1  2  2  3  5  6  7  8
+     *
+     *           4,          6,                                             6,                           5, temp[4] = 6                         6  46  7  28  39
+     * bucket转换后的值                    1  1  1  2  2  3  4  6  7  8
+     *
+     *           3,          5,                                             5,                           3, temp[2] = 5                5        6  46  7  28  39
+     * bucket转换后的值                    1  1  1  2  2  3  4  6  7  8
+     *
+     *           2,          16,                                            6,                           4, temp[3] = 16               5   16   6   46  7  28  39
+     * bucket转换后的值                    1  1  1  2  2  3  4  6  7  8
+     *
+     *           1,          10,                                            0,                           1, temp[0] = 10      10       5   16   6   46  7  28  39
+     * bucket转换后的值                    0  1  1  2  2  3  4  6  7  8
+     *
+     *           0,          23,                                            3,                           2, temp[1] = 23      10  23   5   16   6   46  7  28  39
+     * bucket转换后的值                    0  0  1  2  2  3  4  6  7  8
      */
     public static void radixSort(int[] arr) {
         int max = arr[0];
@@ -88,7 +120,7 @@ public class NonComparativeSort {
 //        int[] nums = {2, 8, 4, 6, 5, 9, 8, 3, 7, 2, 8, 4, 6, 9};
 //        countSort(nums);
 //        int[] nums = {23, 3, 37, 124, 100, 42, 31, 156, 16, 29, 156, 144, 137, 82, 62, 49, 113, 192, 70};
-        int[] nums = {23, 3, 37, 124, 17, 31, 42};
+        int[] nums = {23, 10, 16, 5, 6, 39, 28, 46, 7};
         radixSort(nums);
         for (int num : nums) {
             System.out.print(num + "\t");

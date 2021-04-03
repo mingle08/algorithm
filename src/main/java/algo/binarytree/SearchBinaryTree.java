@@ -3,8 +3,8 @@ package algo.binarytree;
 
 /**
  * 查找二叉树
- * @author huxm
  *
+ * @author huxm
  */
 public class SearchBinaryTree {
 
@@ -16,36 +16,36 @@ public class SearchBinaryTree {
 
     /**
      * 创建查找二叉树
-     * @author huxm
      *
+     * @author huxm
      */
     public TreeNode put(int data) {
         TreeNode node = null;
         TreeNode parent = null;
         // 如果树是空的,则把此数字构建成一个节点，作为根
-        if(root == null) {
-            node = new TreeNode(0,data);
+        if (root == null) {
+            node = new TreeNode(0, data);
             root = node;
             return root;
         }
         // 将根节点赋值给node，从根开始判断
         node = root;
-        while(node != null) {
+        while (node != null) {
             // 父节点
             parent = node;
-            if(data > node.data) {
+            if (data > node.data) {
                 node = node.rightChild;
-            }else if(data < node.data){
+            } else if (data < node.data) {
                 node = node.leftChild;
-            }else {
+            } else {
                 return node;
             }
         }
         // 表示将此结点添加到相应的位置
         node = new TreeNode(0, data);
-        if(data < parent.data) {
+        if (data < parent.data) {
             parent.leftChild = node;
-        }else {
+        } else {
             parent.rightChild = node;
         }
         node.parent = parent;
@@ -57,9 +57,9 @@ public class SearchBinaryTree {
      */
     public void deleteNode(int key) throws Exception {
         TreeNode node = searchNode(key);
-        if(node == null) {
+        if (node == null) {
             throw new Exception("该结点无法找到！");
-        }else {
+        } else {
             // 删除该结点
             delete(node);
         }
@@ -70,13 +70,13 @@ public class SearchBinaryTree {
      */
     private TreeNode searchNode(int key) {
         TreeNode node = root;
-        if(node == null) {
+        if (node == null) {
             return null;
-        }else {
-            while(node != null && key != node.data) {
-                if(key < node.data) {
+        } else {
+            while (node != null && key != node.data) {
+                if (key < node.data) {
                     node = node.leftChild;
-                }else {
+                } else {
                     node = node.rightChild;
                 }
             }
@@ -86,35 +86,35 @@ public class SearchBinaryTree {
     }
 
     private void delete(TreeNode node) throws Exception {
-        if(node == null) {
+        if (node == null) {
             throw new Exception("该结点无法找到！");
         }
         TreeNode parent = node.parent;
         // 被删除的节点是叶子节点：无左也无右孩子
-        if(node.leftChild == null && node.rightChild == null) {
-            if(parent.leftChild == node) {
+        if (node.leftChild == null && node.rightChild == null) {
+            if (parent.leftChild == node) {
                 parent.leftChild = null;
-            }else {
+            } else {
                 parent.rightChild = null;
             }
             return;
         }
 
         // 被删除的节点只有左孩子，无右
-        if(node.leftChild != null && node.rightChild == null) {
-            if(parent.leftChild == node) {
+        if (node.leftChild != null && node.rightChild == null) {
+            if (parent.leftChild == node) {
                 parent.leftChild = node.leftChild;
-            }else {
+            } else {
                 parent.rightChild = node.leftChild;
             }
             return;
         }
 
         // 被删除的节点只有右孩子，无左
-        if(node.leftChild == null && node.rightChild != null) {
-            if(parent.leftChild == node) {
+        if (node.leftChild == null && node.rightChild != null) {
+            if (parent.leftChild == node) {
                 parent.leftChild = node.rightChild;
-            }else {
+            } else {
                 parent.rightChild = node.rightChild;
             }
             return;
@@ -130,15 +130,15 @@ public class SearchBinaryTree {
     }
 
     private TreeNode getNextNode(TreeNode node) {
-        if(node == null) {
+        if (node == null) {
             return null;
         }
-        if(node.rightChild != null) {
+        if (node.rightChild != null) {
             // 找某人上结点最小关键字结点
             return getMinTreeNode(node.rightChild);
-        }else {
+        } else {
             TreeNode parent = node.parent;
-            while(parent != null && node == parent.rightChild) {
+            while (parent != null && node == parent.rightChild) {
                 node = parent;
                 parent = parent.parent;
             }
@@ -147,10 +147,10 @@ public class SearchBinaryTree {
     }
 
     private TreeNode getMinTreeNode(TreeNode node) {
-        if(node == null) {
+        if (node == null) {
             return null;
         }
-        while(node.leftChild != null) { // 如果左孩子为空，就跳出此循环
+        while (node.leftChild != null) { // 如果左孩子为空，就跳出此循环
             node = node.leftChild;
         }
         return node;
@@ -160,7 +160,7 @@ public class SearchBinaryTree {
      * 前序遍历
      */
     public void preOrder(TreeNode node) {
-        if(node == null) {
+        if (node == null) {
             return;
         }
         System.out.println(node.data);
@@ -172,9 +172,9 @@ public class SearchBinaryTree {
      * 中序遍历
      */
     public void midOrder(TreeNode node) {
-        if(node == null) {
+        if (node == null) {
             return;
-        }else {
+        } else {
             midOrder(node.leftChild);
             System.out.println(node.data);
             midOrder(node.rightChild);
@@ -183,10 +183,11 @@ public class SearchBinaryTree {
 
     /**
      * 内部类：TreeNode
-     * @author huxm
      *
+     * @author huxm
      */
-    class TreeNode{
+    class TreeNode {
+
         private int key;
         private int data;
         private TreeNode leftChild;
@@ -202,33 +203,43 @@ public class SearchBinaryTree {
             this.rightChild = null;
             this.parent = null;
         }
+
         public int getKey() {
             return key;
         }
+
         public void setKey(int key) {
             this.key = key;
         }
+
         public TreeNode getLeftChild() {
             return leftChild;
         }
+
         public void setLeftChild(TreeNode leftChild) {
             this.leftChild = leftChild;
         }
+
         public TreeNode getRightChild() {
             return rightChild;
         }
+
         public void setRightChild(TreeNode rightChild) {
             this.rightChild = rightChild;
         }
+
         public TreeNode getParent() {
             return parent;
         }
+
         public void setParent(TreeNode parent) {
             this.parent = parent;
         }
+
         public int getData() {
             return data;
         }
+
         public void setData(int data) {
             this.data = data;
         }
@@ -236,8 +247,8 @@ public class SearchBinaryTree {
 
     public static void main(String[] args) {
         SearchBinaryTree bt = new SearchBinaryTree();
-        int[] intArr = new int[]{50,30,20,44,88,33,87,16,7,77};
-        for(int i : intArr) {
+        int[] intArr = new int[]{50, 30, 20, 44, 88, 33, 87, 16, 7, 77};
+        for (int i : intArr) {
             bt.put(i);
         }
         bt.midOrder(bt.root);
