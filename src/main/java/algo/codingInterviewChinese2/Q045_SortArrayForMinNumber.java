@@ -11,8 +11,8 @@ import java.util.List;
  * 字能排成的最小数字321323。
  */
 public class Q045_SortArrayForMinNumber {
-    public String printMinNumber(int[] num){
-        if (num == null || num.length == 0 )
+    public String printMinNumber(int[] num) {
+        if (num == null || num.length == 0)
             return null;
 
         List<String> res = new ArrayList<>();
@@ -42,7 +42,7 @@ public class Q045_SortArrayForMinNumber {
         return sb.toString();
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
         Q045_SortArrayForMinNumber solution = new Q045_SortArrayForMinNumber();
         int[] arr = {3, 32, 321};
         String str = solution.printMinNumber(arr);

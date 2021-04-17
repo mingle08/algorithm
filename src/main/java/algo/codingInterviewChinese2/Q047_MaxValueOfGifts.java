@@ -1,8 +1,8 @@
 package algo.codingInterviewChinese2;
 
 public class Q047_MaxValueOfGifts {
-    public int getMaxValue1(int[][] grid, int rows, int cols){
-        if (grid == null || rows <=0 || cols <= 0)
+    public int getMaxValue1(int[][] grid, int rows, int cols) {
+        if (grid == null || rows <= 0 || cols <= 0)
             return 0;
 
         int[][] maxVal = new int[rows][cols];
@@ -32,7 +32,7 @@ public class Q047_MaxValueOfGifts {
      * 而之后的数字分别保存前面第i-1行n-j个格子礼物的最大价值
      */
 
-    public int getMaxValue2(int[][] grid, int rows, int cols){
+    public int getMaxValue2(int[][] grid, int rows, int cols) {
         if (grid == null || rows <= 0 || cols <= 0)
             return 0;
 
@@ -53,12 +53,12 @@ public class Q047_MaxValueOfGifts {
         return maxVal[cols - 1];
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
         Q047_MaxValueOfGifts solution = new Q047_MaxValueOfGifts();
         int[][] grid = {{1, 10, 3, 8},
-                        {12, 2, 9, 6},
-                        {5, 7, 4, 11},
-                        {3, 7, 16, 5}};
+                {12, 2, 9, 6},
+                {5, 7, 4, 11},
+                {3, 7, 16, 5}};
         int rows = grid.length;
         int cols = grid[0].length;
         int maxValue1 = solution.getMaxValue1(grid, rows, cols);

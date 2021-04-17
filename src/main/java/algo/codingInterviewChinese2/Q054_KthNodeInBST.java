@@ -4,11 +4,22 @@ import algo.util.TreeNode;
 
 import java.util.Stack;
 
+/**
+ * 二叉搜索树的第K大节点
+ * 题目：给定一棵二叉搜索树，请找出其中第K大节点。
+ * 例如，在下图中的二叉搜索树里，按节点数值大小顺序，第三大节点的值是
+ *
+ *
+ *                 5
+ *           3             7
+ *      2       4      8        9
+ */
 public class Q054_KthNodeInBST {
 
     /**
-     *  此方法用递归是错误的，只是恰巧第3大的是4，第4大的应该是5，但是得出的是2
-     *  剑指offer 用递归，是因为参数k取的是地址  unsigned int& k
+     *  以下这个注释掉的方法，是仿照剑指offer书上的代码写的。
+     *  如果仿照书上的方法，用java写成下面这样，是错误的。只是恰巧第3大的是4，第4大的应该是5，但是得出的是2
+     *  但剑指offer书上是正确的，因为它是用C#写的，方法的第二个参数k取的是地址  unsigned int& k
      */
     /*int index = 0;
     public TreeNode kthNode(TreeNode root, int k){
@@ -54,21 +65,28 @@ public class Q054_KthNodeInBST {
 
     public static void main(String[] args){
         Q054_KthNodeInBST solution = new Q054_KthNodeInBST();
-        TreeNode root = new TreeNode(5);
-        root.left = new TreeNode(3);
-        root.left.left = new TreeNode(2);
-        root.left.right = new TreeNode(4);
-        root.right = new TreeNode(7);
-        root.right.left = new TreeNode(6);
-        root.right.right = new TreeNode(8);
+        TreeNode node1 = new TreeNode(5);
+        TreeNode node2 = new TreeNode(3);
+        TreeNode node3 = new TreeNode(7);
+        TreeNode node4 = new TreeNode(2);
+        TreeNode node5 = new TreeNode(4);
+        TreeNode node6 = new TreeNode(6);
+        TreeNode node7 = new TreeNode(8);
+
+        node1.left = node2;
+        node1.right = node3;
+        node2.left = node4;
+        node2.right = node5;
+        node3.left = node6;
+        node3.right = node7;
 
 //        System.out.println(solution.kthNode(root, 3).val);  // 4
 //        System.out.println(solution.kthNode(root, 4).val);  // 2
 //        System.out.println(solution.kthNode(root, 6).val);  // 3
 
-        System.out.println(solution.findKthNode(root, 3).val);  // 4
-        System.out.println(solution.findKthNode(root, 4).val);  // 5
-        System.out.println(solution.findKthNode(root, 6).val);  // 7
+        System.out.println(solution.findKthNode(node1, 3).val);  // 4
+        System.out.println(solution.findKthNode(node1, 4).val);  // 5
+        System.out.println(solution.findKthNode(node1, 6).val);  // 7
 
     }
 }

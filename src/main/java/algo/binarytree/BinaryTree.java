@@ -12,7 +12,11 @@ public class BinaryTree {
     }
 
     /**
-     * 构建二叉树（C没有左子树） A B         C D     E         G
+     * 构建二叉树（C没有左子树）
+     *
+     *                  A
+     *             B         C
+     *         D     E          G
      */
     public void createBinaryTree() {
         TreeNode nodeB = new TreeNode(2, "B");
@@ -124,18 +128,15 @@ public class BinaryTree {
     public void nonRecInOrder (TreeNode root) {
         Stack<TreeNode> stack = new Stack<>();
         TreeNode cur = root;
-        TreeNode node = null;
         while (!stack.isEmpty() || cur != null) {
             while (cur != null) {
                 stack.push(cur);
                 cur = cur.leftChild;
             }
-            // 注意，这里用一个新节点来接收pop出来的
-            node = stack.pop();
-            printTreeNode(node);
-            if (node.rightChild != null) {
-                cur = node.rightChild;
-            }
+
+            cur = stack.pop();
+            printTreeNode(cur);
+            cur = cur.rightChild;
         }
     }
 
@@ -166,8 +167,12 @@ public class BinaryTree {
 
 
     /**
-     * ͨ构建二叉树 A B            C D        E   #           F #     #  #     #        #       #
-     * <p>
+     * ͨ构建二叉树
+     *                     A
+     *               B           C
+     *          D        E     #       F
+     *      #     #   #    #        #       #
+     *
      * ABD##E##C#F##
      */
     public void createBinaryTreePre(ArrayList<String> data) {
@@ -251,7 +256,7 @@ public class BinaryTree {
 //		System.out.println("�������" + num);
 //		bt.preOrder(bt.root);
 //		System.out.println("====================");
-//		bt.midOrder(bt.root);
+		bt.midOrder(bt.root);
 //		System.out.println("====================");
 //		bt.postOrder(bt.root);
 //		bt.nonRecPreOrder(bt.root);
@@ -265,8 +270,8 @@ public class BinaryTree {
 		bt.createBinaryTreePre(data);*/
 //		bt.nonRecPreOrder(bt.root);
 //		bt.midOrder(bt.root);
-//		bt.nonRecInOrder(bt.root);
-        bt.nonRecPostOrder(bt.root);
+		bt.nonRecInOrder(bt.root);
+//        bt.nonRecPostOrder(bt.root);
     }
 
 }

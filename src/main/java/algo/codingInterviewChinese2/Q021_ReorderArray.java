@@ -9,6 +9,11 @@ package algo.codingInterviewChinese2;
  */
 public class Q021_ReorderArray {
 
+    /**
+     *  不能保持相对位置不变
+     * @param arr
+     * @param len
+     */
     public void reorderOddEvent(int[] arr, int len){
         reorder(arr);
     }
@@ -38,6 +43,36 @@ public class Q021_ReorderArray {
 
     }
 
+    /**
+     * 保持相对位置不变
+     * 也可以先遍历一遍，得出奇数的个数 n，第二次遍历的时候，遇到偶数，从 n 位开始保存
+     * 都是要遍历2次数组，跟以下方法无差别
+     * @param num
+     * @return
+     */
+    private int[] reorder2(int[] num){
+        if (num == null || num.length == 0)
+            return null;
+
+        int start = 0, oddCount = 0;
+        int end = num.length - 1;
+        int[] arr = new int[num.length];
+        for (int j : num) {
+            // 1, 是奇数，向后遍历
+            if (!isEven(j)) {
+                arr[start++] = j;
+            }
+        }
+        for (int i = num.length - 1; i >= 0; i--) {
+            // 是偶数，向前遍历
+            if (isEven(num[i])) {
+                arr[end--] = num[i];
+            }
+        }
+        return arr;
+    }
+
+
     // 判断是否偶数
     private boolean isEven(int a) {
         return (a & 1) == 0;
@@ -47,8 +82,13 @@ public class Q021_ReorderArray {
         Q021_ReorderArray solution = new Q021_ReorderArray();
 
         int[] arr = {10, 6, 4, 5, 2, 7, 8, 3, 9};
-        solution.reorder(arr);
-        for (int num : arr) {
+//        solution.reorder(arr);
+//        for (int num : arr) {
+//            System.out.print(num + "\t");
+//        }
+//        System.out.println();
+        int[] newArr = solution.reorder2(arr);
+        for (int num : newArr) {
             System.out.print(num + "\t");
         }
     }
