@@ -3,6 +3,19 @@ package jdk8.stream;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+   stream()方法 在 Collection 接口中
+
+    // Since: 1.8
+    default Stream<E> stream() {
+        return StreamSupport.stream(spliterator(), false);
+    }
+
+    // @since 1.8
+    default Stream<E> parallelStream(){
+        return StreamSupport.stream(spliterator(),true);
+    }
+ */
 public class LambdaDemo {
 
     public static void main(String[] args) {
