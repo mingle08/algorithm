@@ -106,3 +106,6 @@ private void write(String s) {
 
 ![1620373643311](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\1620373643311.png)
 
+四、HashMap 1.7和1.8的区别之一
+
+​    1.7是头插法，1.8是尾插法
