@@ -3,7 +3,7 @@
 
 
 
-jdk源码中类似的代码：
+一、jdk源码中类似的代码：
 
 1，HashMap中的tableSizeFor方法
 
@@ -67,4 +67,42 @@ i >>> 1     0000 0111  (7)
 i - (i >>> 1) 得到
 	        0000 1000  (8) 
 即15 - 7 = 8
+
+二、System.out.print()方法，带有synchronized锁
+
+```java
+public final static PrintStream out = null;    // System类中
+
+// PrintStream类
+public void print(String s) {
+    if (s == null) {
+        s = "null";
+    }
+    write(s);
+}
+
+// write方法带有synchronized
+private void write(String s) {
+    try {
+        synchronized (this) {
+            ensureOpen();
+            textOut.write(s);
+            textOut.flushBuffer();
+            charOut.flushBuffer();
+            if (autoFlush && (s.indexOf('\n') >= 0))
+                out.flush();
+        }
+    }
+    catch (InterruptedIOException x) {
+        Thread.currentThread().interrupt();
+    }
+    catch (IOException x) {
+        trouble = true;
+    }
+}
+```
+
+三、java.util包中有一个Objects工具类
+
+![1620373643311](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\1620373643311.png)
 
