@@ -1,5 +1,11 @@
 package algo.codingInterviewChinese2;
 
+/**
+ * 一维数组 int[] cols = new int[8]
+ * 每一个下标表示一列，模拟二维数组
+ * 例如 cols[0] = 7
+ * 表示第1列，皇后放在第7行
+ */
 public class Q038_3_EightQueens {
 
     private static int total = 0;
