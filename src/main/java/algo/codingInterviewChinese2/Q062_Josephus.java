@@ -1,6 +1,6 @@
-package algo.josephus;
+package algo.codingInterviewChinese2;
 
-public class Josephus {
+public class Q062_Josephus {
 
 	public static int N = 20;
 	public static int M = 5; // 数到M就kill一个人
@@ -32,8 +32,8 @@ public class Josephus {
 		System.out.println("最后这个幸运儿是： " + x.val);
 	}
 	public static void main(String[] args) {
-		Josephus josephus = new Josephus();
-		josephus.killNode();
+		Q062_Josephus q062Josephus = new Q062_Josephus();
+		q062Josephus.killNode();
 
 	}
 

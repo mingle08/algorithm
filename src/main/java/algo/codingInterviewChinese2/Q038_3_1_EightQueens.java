@@ -6,7 +6,7 @@ package algo.codingInterviewChinese2;
  * 例如 cols[0] = 7
  * 表示第1列，皇后放在第7行
  */
-public class Q038_3_EightQueens {
+public class Q038_3_1_EightQueens {
 
     private static int total = 0;
 
@@ -63,7 +63,7 @@ public class Q038_3_EightQueens {
     }
 
     public static void main(String[] args) {
-        Q038_3_EightQueens solution = new Q038_3_EightQueens();
+        Q038_3_1_EightQueens solution = new Q038_3_1_EightQueens();
 
         solution.eightQueen();
 

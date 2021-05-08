@@ -1,13 +1,13 @@
-package algo.chessBoard;
+package algo.codingInterviewChinese2;
 
-public class ChessBoardProblem {
+public class Q038_3_3_EightQueen {
 
 	private int[][] board; // 棋盘
 	private int specialRow; // 特殊点的行下标
 	private int specialCol; // 特殊点的列下标
 	private int size;
 	private int type = 0;
-	public ChessBoardProblem(int specialRow, int specialCol, int size) {
+	public Q038_3_3_EightQueen(int specialRow, int specialCol, int size) {
 		super();
 		this.board = new int[size][size];
 		this.specialRow = specialRow;
@@ -85,7 +85,7 @@ public class ChessBoardProblem {
 		int size = 4;
 		int specialRow = 0;
 		int specialCol = 1;
-		ChessBoardProblem problem = new ChessBoardProblem(specialRow, specialCol, size);
+		Q038_3_3_EightQueen problem = new Q038_3_3_EightQueen(specialRow, specialCol, size);
 		problem.printBoard(specialRow, specialCol, size);
 
 	}
