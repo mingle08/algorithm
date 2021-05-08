@@ -17,7 +17,6 @@ static final int tableSizeFor(int cap) {
     n |= n >>> 16;
     return (n < 0) ? 1 : (n >= MAXIMUM_CAPACITY) ? MAXIMUM_CAPACITY : n + 1;
 }
-```
 
 例如，十进制的13：
 13    0000 1101
@@ -34,6 +33,7 @@ static final int tableSizeFor(int cap) {
 经过多次右移之后再进制 | 运算，结果是最右边四位都是1
 n = 15
 n + 1 = 16
+```
 
 2，Integer中的highestOneBit方法
 
@@ -47,9 +47,6 @@ public static int highestOneBit(int i) {
     i |= (i >> 16);
     return i - (i >>> 1);
 }
- 
-```
-
 例如，十进制的13：
 13    0000 1101
 >>1     0000 0110
@@ -60,13 +57,13 @@ public static int highestOneBit(int i) {
 >>|=    0000 1111    (15)
 >>8     0000 0000
 >>|=    0000 1111    (15)
-
 经过多次右移之后再进制 | 运算，结果是最右边四位都是1
 i               0000 1111  (15)
 i >>> 1     0000 0111  (7)
 i - (i >>> 1) 得到
-	        0000 1000  (8) 
+0000 1000  (8)
 即15 - 7 = 8
+```
 
 二、System.out.print()方法，带有synchronized锁
 
@@ -103,8 +100,19 @@ private void write(String s) {
 ```
 
 三、java.util包中有一个Objects工具类
+有equals, deepEquals, hashCode, hash, toString, compare等方法
+```aidl
 
-![1620373643311](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\1620373643311.png)
+public static int hashCode(Object o) {
+	return o != null ? o.hashCode() : 0;
+}
+
+public static int hash(Object... values) {
+	return Arrays.hashCode(values);
+}
+
+
+```
 
 四、HashMap 1.7和1.8的区别之一
 
