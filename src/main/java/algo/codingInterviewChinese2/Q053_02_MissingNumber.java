@@ -13,18 +13,11 @@ public class Q053_02_MissingNumber {
         while (left <= right){
             int mid = (left + right) >> 1;
             if (num[mid] != mid){
-                if (mid == 0 || num[mid - 1] == mid - 1)
-                    return mid;
-
                 right = mid - 1;
             } else
                 left = mid + 1;
         }
 
-        if (left == len)
-            return len;
-
-        // 无效输入
-        return -1;
+        return left;
     }
 }
