@@ -44,8 +44,8 @@ public class ComparisonSort {
         */
 
         // 参考Arrays归并排序时 当length < INSERTIONSORT_THRESHOLD， 则用插入排序
-        for (int i = 1; i < arr.length; i++)
-            for (int j = i; j >= 1 && arr[j - 1] > arr[j]; j--)
+        for (int i = 1; i < arr.length; i++)    // 拿第2张牌，跟第1张牌比较，下次循环拿第3张牌跟前面的2张牌比较，下次拿第4张牌与前面的3张牌比较，依次类推
+            for (int j = i; j >= 1 && arr[j - 1] > arr[j]; j--)    // 只有要排序的牌小于前面的牌，才交换
                 swap(arr, j, j - 1);
 
     }
