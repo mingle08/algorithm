@@ -5,20 +5,20 @@ package algo.sort;
  * 1，内部排序：使用内存
  * 1.1 比较排序
  * （1）插入排序
- *      a, 简单插入排序
- *      b, 希尔排序
+ * a, 简单插入排序
+ * b, 希尔排序
  * （2）选择排序
- *      a, 简单选择排序
- *      b, 堆排序
+ * a, 简单选择排序
+ * b, 堆排序
  * （3）交换排序
- *      a, 冒泡排序
- *      b, 快速排序
+ * a, 冒泡排序
+ * b, 快速排序
  * （4）归并排序
  * 1.2 非比较排序
  * （1）计数排序
  * （2）桶排序
  * （3）基数排序
- *
+ * <p>
  * 2，外部排序：内存和外存相结合
  */
 public class ComparisonSort {
@@ -31,6 +31,7 @@ public class ComparisonSort {
      */
 
     public static void insertSort(int[] arr) {
+        /*
         for(int i = 1;i < arr.length;i++) {
             int tmp = arr[i];   // 手中待插入的牌
             int index = i-1;
@@ -40,12 +41,19 @@ public class ComparisonSort {
             }
             arr[index + 1] = tmp;
         }
+        */
+
+        // 参考Arrays归并排序时 当length < INSERTIONSORT_THRESHOLD， 则用插入排序
+        for (int i = 1; i < arr.length; i++)
+            for (int j = i; j >= 1 && arr[j - 1] > arr[j]; j--)
+                swap(arr, j, j - 1);
+
     }
 
     /**
      * 2, 希尔排序
      * （1）基本思想：将待排序数组按照步长gap进行分组，然后将每组的元素利用直接插入排序的方法进行排序；每次再将gap折半减小，
-     *      循环上述操作；当gap=1时，利用直接插入，完成排序。
+     * 循环上述操作；当gap=1时，利用直接插入，完成排序。
      * （2）时间复杂度 平均时间 O(nlogn) 最差时间O(n^2)
      * （3）不稳定
      */
@@ -71,7 +79,7 @@ public class ComparisonSort {
      * （1）基本思想：每一次从待排序的数据元素中选出最小（或最大）的一个元素，存放在序列的起始位置，直到全部待排序的数据元素排完。
      * （2）时间复杂度 O(n^2)。
      * （3）不稳定的排序方法。
-      */
+     */
 
     public static void selectionSort(int[] arr) {
         for (int a = 0; a < arr.length - 1; a++) {
@@ -100,7 +108,7 @@ public class ComparisonSort {
      */
     public static void heapSort(int[] arr) {
         int n = arr.length;
-        int i,tmp;
+        int i, tmp;
         /*
          从(n/2-1) --> 0逐次遍历。遍历之后，得到的数组实际上是一个(最大)二叉堆。
          为什么i设置为n/2-1，因为堆是按照数组的下标顺序，从上到下，从左至右来建堆的，所以靠下靠右的索引比较大。
@@ -120,16 +128,16 @@ public class ComparisonSort {
              交换后，arr[i]是arr[0...i]中最大的。arr[i]不再放在堆中，剩下的i-1个数再调节成最大堆
              为什么start为0？ 因为其它部分都满足父结点大于子结点，刚换上来的0索引的数要调整，使堆还是大顶堆
              */
-            swim(arr, 0, i-1);
+            swim(arr, 0, i - 1);
         }
     }
 
     /**
      * 注：数组实现的堆中，第N个节点的左孩子的索引值是(2N+1)，右孩子的索引是(2N+2)。
-     *     其中，N为数组下标索引值，如数组中第1个数对应的N为0。
-     *
-     *     start -- 被下调节点的起始位置(一般为0，表示从第1个开始)
-     *     end   -- 截至范围(一般为数组中最后一个元素的索引)
+     * 其中，N为数组下标索引值，如数组中第1个数对应的N为0。
+     * <p>
+     * start -- 被下调节点的起始位置(一般为0，表示从第1个开始)
+     * end   -- 截至范围(一般为数组中最后一个元素的索引)
      */
     public static void swim(int[] arr, int start, int end) {
         int parent = start;            // 当前(parentent)节点的位置
@@ -145,7 +153,7 @@ public class ComparisonSort {
                 break;        // 调整结束
             else {            // 交换值
                 arr[parent] = arr[leftChild];
-                arr[leftChild]= tmp;
+                arr[leftChild] = tmp;
                 parent = leftChild;
                 leftChild = 2 * leftChild + 1;
             }
@@ -155,10 +163,10 @@ public class ComparisonSort {
 
     /**
      * 5, 冒泡排序
-     *  （1）基本思想：持续比较相邻的元素。如果第一个比第二个大，就交换他们两个。直到没有任何一对数字需要比较。
-     *  （2）冒泡排序最好的时间复杂度为O(n)。冒泡排序的最坏时间复杂度为O(n^2)。因此冒泡排序总的平均时间复杂度为O(n^2)。
-     *  （3）算法适用于少量数据的排序，是稳定的排序方法。
-      */
+     * （1）基本思想：持续比较相邻的元素。如果第一个比第二个大，就交换他们两个。直到没有任何一对数字需要比较。
+     * （2）冒泡排序最好的时间复杂度为O(n)。冒泡排序的最坏时间复杂度为O(n^2)。因此冒泡排序总的平均时间复杂度为O(n^2)。
+     * （3）算法适用于少量数据的排序，是稳定的排序方法。
+     */
     public static void bubbleSort(int[] arr) {
         for (int a = 0; a < arr.length - 1; a++) {
             for (int b = 0; b < arr.length - 1 - a; b++) {
@@ -172,12 +180,12 @@ public class ComparisonSort {
     /**
      * 6, 快速排序
      * （1）基本思想：
-     *      a, 选择基准值：在待排序列中，按照某种方式挑出一个元素，作为基准值。
-     *      b, 分割操作：以该基准值在序列中的实际位置，把序列分成两个子序列，一边是比它大的值，另外一边是比它小的值。
-     *      c, 递归：对两个子序列进行快排，直到序列为空或者只有一个元素。
+     * a, 选择基准值：在待排序列中，按照某种方式挑出一个元素，作为基准值。
+     * b, 分割操作：以该基准值在序列中的实际位置，把序列分成两个子序列，一边是比它大的值，另外一边是比它小的值。
+     * c, 递归：对两个子序列进行快排，直到序列为空或者只有一个元素。
      * （2）平均时间复杂度为O(nlogn)，最坏情况为O(n^2)，n越大，速度越快。
      * （3）不是稳定的排序算法。
-      */
+     */
 
     public static void quickSort(int[] arr, int low, int high) {
         if (low > high) {
@@ -190,12 +198,12 @@ public class ComparisonSort {
         int pivot = arr[left];
         while (left < right) {
             // 1, 从右指针往左遍历，如果大于基准，不处理，指针往左走，直到找到小于基准的数
-            while(left < right && arr[right] > pivot) {
+            while (left < right && arr[right] > pivot) {
                 right--;
             }
 
             // 2, 左指针往右遍历，如果小于基准，不处理，指针往右走，直到遇到大于基准的数
-            while(left < right && arr[left] < pivot) {
+            while (left < right && arr[left] < pivot) {
                 left++;
             }
 
@@ -235,11 +243,11 @@ public class ComparisonSort {
                 ② 将上述序列再次归并，形成floor(n/4)个序列，每个序列包含四个元素
                 ③ 重复步骤②，直到所有元素排序完毕
      */
-    public static void mergeSort(int[] arr,int low,int high){
+    public static void mergeSort(int[] arr, int low, int high) {
         int mid = (low + high) / 2;
-        if(low < high){
+        if (low < high) {
             mergeSort(arr, low, mid);
-            mergeSort(arr,mid + 1, high);
+            mergeSort(arr, mid + 1, high);
             //归并
             merge(arr, low, mid, high);
         }
@@ -259,19 +267,18 @@ public class ComparisonSort {
             }
         }
         // 把左边剩余的数移入临时数组
-        while(left <= mid){
+        while (left <= mid) {
             temp[k++] = arr[left++];
         }
         // 把右边剩余的数移入临时数组
-        while(right <= high){
+        while (right <= high) {
             temp[k++] = arr[right++];
         }
         // 用临时数组中的数覆盖原数组
-        for (int i = 0; i < temp.length; i++){
+        for (int i = 0; i < temp.length; i++) {
             arr[i + low] = temp[i];
         }
     }
-
 
 
     private static void swap(int[] arr, int m, int n) {
@@ -284,8 +291,8 @@ public class ComparisonSort {
         int[] nums = {25, 48, 65, 17, 12, 22, 33, 45, 6};
 //        bubbleSort(nums);
 //        selectionSort(nums);
-//        insertSort(nums);
-        shellSort(nums);
+        insertSort(nums);
+//        shellSort(nums);
 //        heapSort(nums);
 //        mergeSort(nums, 0, nums.length - 1);
         for (int num : nums) {
