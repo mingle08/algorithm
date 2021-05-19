@@ -117,3 +117,24 @@ public static int hash(Object... values) {
 四、HashMap 1.7和1.8的区别之一
 
 ​    1.7是头插法，1.8是尾插法
+
+五、jdk中的Array类
+1，在Arrays中有使用Array.newInstance方法
+```aidl
+    public static <T,U> T[] copyOf(U[] original, int newLength, Class<? extends T[]> newType) {
+        @SuppressWarnings("unchecked")
+        T[] copy = ((Object)newType == (Object)Object[].class)
+            ? (T[]) new Object[newLength]
+            : (T[]) Array.newInstance(newType.getComponentType(), newLength);
+        System.arraycopy(original, 0, copy, 0,
+                         Math.min(original.length, newLength));
+        return copy;
+    }
+```
+2，Array.class在反射包(java.lang.reflect)中
+```aidl
+    public static Object newInstance(Class<?> componentType, int length)
+        throws NegativeArraySizeException {
+        return newArray(componentType, length);
+    }
+```
