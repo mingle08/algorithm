@@ -138,3 +138,47 @@ public static int hash(Object... values) {
         return newArray(componentType, length);
     }
 ```
+
+六、jad反编译工具
+1，下载：https://varaneckas.com/jad/
+2，解压，不需其它安装操作
+3，使用：打开cmd，切换到jad所在路径，执行命令：jad  D:\study\gitcode\algo\target\classes\jdk\ListArray.class
+    注意是.class文件，得到一个.jad文件，用记事本打开就行
+```aidl
+// Decompiled by Jad v1.5.8g. Copyright 2001 Pavel Kouznetsov.
+// Jad home page: http://www.kpdus.com/jad.html
+// Decompiler options: packimports(3) 
+// Source File Name:   ListArray.java
+
+package jdk;
+
+import java.io.PrintStream;
+import java.util.Arrays;
+import java.util.List;
+
+public class ListArray
+{
+
+    public ListArray()
+    {
+    }
+
+    public static void main(String args[])
+    {
+        int test[] = {
+            1, 2, 3, 4
+        };
+        // 这里入参是一个二维数组，而且是一个1行三列的二维数组，所以size为1
+        List list = Arrays.asList(new int[][] {
+            test
+        });
+        System.out.println(list.size());
+        Integer test2[] = {
+            Integer.valueOf(1), Integer.valueOf(2), Integer.valueOf(3), Integer.valueOf(4)
+        };
+        List list2 = Arrays.asList(test2);
+        System.out.println(list2.size());
+    }
+}
+
+```

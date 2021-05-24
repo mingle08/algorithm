@@ -3,15 +3,15 @@ package jdk;
 import java.util.*;
 
 public class BinarySearchOfCollections {
-    private static final int BINARYSEARCH_THRESHOLD   = 5000;
+    private static final int BINARYSEARCH_THRESHOLD = 5000;
 
     // 三个参数
-    public static <T> 
+    public static <T>
     int binarySearch(List<? extends T> list, T key, Comparator<? super T> c) {
-        if (c==null)
+        if (c == null)
             return binarySearch((List<? extends Comparable<? super T>>) list, key);
 
-        if (list instanceof RandomAccess || list.size()<BINARYSEARCH_THRESHOLD)
+        if (list instanceof RandomAccess || list.size() < BINARYSEARCH_THRESHOLD)
             return indexedBinarySearch(list, key, c);
         else
             return iteratorBinarySearch(list, key, c);
@@ -20,7 +20,7 @@ public class BinarySearchOfCollections {
     // 二个参数
     public static <T>
     int binarySearch(List<? extends Comparable<? super T>> list, T key) {
-        if (list instanceof RandomAccess || list.size()<BINARYSEARCH_THRESHOLD)
+        if (list instanceof RandomAccess || list.size() < BINARYSEARCH_THRESHOLD)
             return indexedBinarySearch(list, key);
         else
             return iteratorBinarySearch(list, key);
@@ -30,7 +30,7 @@ public class BinarySearchOfCollections {
     private static <T>
     int indexedBinarySearch(List<? extends Comparable<? super T>> list, T key) {
         int low = 0;
-        int high = list.size()-1;
+        int high = list.size() - 1;
 
         while (low <= high) {
             int mid = (low + high) >>> 1;
@@ -49,10 +49,9 @@ public class BinarySearchOfCollections {
 
     // 二个参数
     private static <T>
-    int iteratorBinarySearch(List<? extends Comparable<? super T>> list, T key)
-    {
+    int iteratorBinarySearch(List<? extends Comparable<? super T>> list, T key) {
         int low = 0;
-        int high = list.size()-1;
+        int high = list.size() - 1;
         ListIterator<? extends Comparable<? super T>> i = list.listIterator();
 
         while (low <= high) {
@@ -74,7 +73,7 @@ public class BinarySearchOfCollections {
     private static <T>
     int indexedBinarySearch(List<? extends T> l, T key, Comparator<? super T> c) {
         int low = 0;
-        int high = l.size()-1;
+        int high = l.size() - 1;
 
         while (low <= high) {
             int mid = (low + high) >>> 1;
@@ -95,7 +94,7 @@ public class BinarySearchOfCollections {
     private static <T>
     int iteratorBinarySearch(List<? extends T> l, T key, Comparator<? super T> c) {
         int low = 0;
-        int high = l.size()-1;
+        int high = l.size() - 1;
         ListIterator<? extends T> i = l.listIterator();
 
         while (low <= high) {
@@ -113,7 +112,7 @@ public class BinarySearchOfCollections {
         return -(low + 1);  // key not found
     }
 
-    private static <T> 
+    private static <T>
     T get(ListIterator<? extends T> i, int index) {
         T obj = null;
         int pos = i.nextIndex();
@@ -129,7 +128,7 @@ public class BinarySearchOfCollections {
         return obj;
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
         int num = 1200000;
         List<String> cities = new ArrayList<>();
         for (int i = 0; i < num; i++) {
@@ -150,7 +149,7 @@ public class BinarySearchOfCollections {
         Collections.sort(cities);
         // 打印前50个数，每10个数换行
         for (int i = 0; i < 50; i++) {
-            if(i%10 == 0)
+            if (i % 10 == 0)
                 System.out.println();
 
             System.out.print(cities.get(i) + ", ");
@@ -165,7 +164,7 @@ public class BinarySearchOfCollections {
         System.out.println(endTime2 - endTime1);
         System.out.println("indexOf=" + index1);   // indexOf=222219
         System.out.println("binarySearch=" + index2);   // binarySearch=222219
-        
+
         /**
          * 无符号右移>>>
          */
