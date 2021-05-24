@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
     <beans>
-        <bean id="wheel" class="IOCdemo.Wheel">
+        <bean id="wheel" class="spring.IOCdemo.Wheel">
             <property name="brand" value="Michelin" />
             <property name="specification" value="265/60 R18" />
         </bean>
 
-        <bean id="car" class="IOCdemo.Car">
+        <bean id="car" class="spring.IOCdemo.Car">
             <property name="name" value="Mercedes Benz G 500"/>
             <property name="length" value="4717mm"/>
             <property name="width" value="1855mm"/>

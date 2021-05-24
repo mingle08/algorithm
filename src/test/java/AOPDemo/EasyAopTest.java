@@ -1,6 +1,6 @@
 package AOPDemo;
 
-import AOP.EasyAop.*;
+import spring.AOP.EasyAop.*;
 import org.junit.Test;
 
 public class EasyAopTest {
