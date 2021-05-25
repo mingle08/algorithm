@@ -102,13 +102,72 @@ public class ComparisonSort {
         }
     }
 
-    /*
-     * 4, 堆排序
+    /**
+     *  4, 堆排序
      * （1）基本思想：在排序过程中，将R[l..n]看成是一棵完全二叉树的顺序存储结构，利用完全二叉树中双亲结点和孩子结点之间的内在关系【参见二叉树的顺序存储结构】，在当前无序区中选择关键字最大(或最小)的记录。堆排序利用了大根堆(或小根堆)堆顶记录的关键字最大(或最小)这一特征，使得在当前无序区中选取最大(或最小)关键字的记录变得简单。
      * （2）是一种选择排序,其时间复杂度为O(nlogn)。
      * （3）不稳定
      *
      * 调整最大堆，交换根元素和最后一个元素。
+     *
+     * /
+
+     /**
+    参考jdk中的PriorityQueue
+     private void siftDown(int k, E x) {
+        if (comparator != null)
+            siftDownUsingComparator(k, x);
+        else
+            siftDownComparable(k, x);
+    }
+
+    @SuppressWarnings("unchecked")
+    private void siftDownComparable(int k, E x) {
+        Comparable<? super E> key = (Comparable<? super E>)x;
+        int half = size >>> 1;        // loop while a non-leaf
+        while (k < half) {
+            int child = (k << 1) + 1; // assume left child is least
+            Object c = queue[child];
+            int right = child + 1;
+            if (right < size &&
+                ((Comparable<? super E>) c).compareTo((E) queue[right]) > 0)
+                c = queue[child = right];
+            if (key.compareTo((E) c) <= 0)
+                break;
+            queue[k] = c;
+            k = child;
+        }
+        queue[k] = key;
+    }
+
+    @SuppressWarnings("unchecked")
+    private void siftDownUsingComparator(int k, E x) {
+        int half = size >>> 1;
+        while (k < half) {
+            int child = (k << 1) + 1;
+            Object c = queue[child];
+            int right = child + 1;
+            if (right < size &&
+                comparator.compare((E) c, (E) queue[right]) > 0)
+                c = queue[child = right];
+            if (comparator.compare(x, (E) c) <= 0)
+                break;
+            queue[k] = c;
+            k = child;
+        }
+        queue[k] = x;
+    }
+
+    /**
+     * Establishes the heap invariant (described above) in the entire tree,
+     * assuming nothing about the order of the elements prior to the call.
+     */
+    /**
+    @SuppressWarnings("unchecked")
+    private void heapify() {
+        for (int i = (size >>> 1) - 1; i >= 0; i--)
+            siftDown(i, (E) queue[i]);
+    }
      */
     public static void heapSort(int[] arr) {
         int n = arr.length;
