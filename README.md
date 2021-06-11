@@ -182,3 +182,11 @@ public class ListArray
 }
 
 ```
+
+七、两个质数1231与1237
+在Boolean.java中发现其hashCode方法的返回值，true返回1231，false返回1237，为什么选这两个质数？
+```aidl
+    public static int hashCode(boolean value) {
+        return value ? 1231 : 1237;
+    }
+```
