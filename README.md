@@ -18,7 +18,7 @@ static final int tableSizeFor(int cap) {
     return (n < 0) ? 1 : (n >= MAXIMUM_CAPACITY) ? MAXIMUM_CAPACITY : n + 1;
 }
 
-例如，十进制的13：
+例如，参数cap为十进制的14，n就是13：
 13      0000 1101
 
 >>>1    0000 0110
@@ -47,7 +47,7 @@ public static int highestOneBit(int i) {
     i |= (i >> 16);
     return i - (i >>> 1);
 }
-例如，十进制的13：
+例如，i为十进制的13：
 13      0000 1101
 >>1     0000 0110
 |=      0000 1111
@@ -58,7 +58,7 @@ public static int highestOneBit(int i) {
 >>8     0000 0000
 |=      0000 1111    (15)
 经过多次右移之后再进制 | 运算，结果是最右边四位都是1
-i               0000 1111  (15)
+i           0000 1111  (15)
 i >>> 1     0000 0111  (7)
 i - (i >>> 1) 得到
 0000 1000  (8)
