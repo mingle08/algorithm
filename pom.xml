@@ -40,6 +40,14 @@
       <version>5.2.12.RELEASE</version>
     </dependency>
 
+    <!-- 如果带上<scope>provided</scope>，测试会报错 -->
+    <dependency>
+      <groupId>org.openjdk.jol</groupId>
+      <artifactId>jol-core</artifactId>
+      <version>0.16</version>
+    </dependency>
+
+
 
   </dependencies>
 
