@@ -30,12 +30,12 @@ public class DeadLock {
                 System.out.println(Thread.currentThread().getName() + " I get a");
                 try {
                     TimeUnit.SECONDS.sleep(2);
-                    System.out.println(Thread.currentThread().getName() + " I want get b");
-                    synchronized (b) {
-                        System.out.println("I get b");
-                    }
                 } catch (Exception e) {
                     e.printStackTrace();
+                }
+                System.out.println(Thread.currentThread().getName() + " I want get b");
+                synchronized (b) {
+                    System.out.println("I get b");
                 }
             }
 
@@ -47,12 +47,12 @@ public class DeadLock {
                 System.out.println(Thread.currentThread().getName() + " I get b");
                 try {
                     TimeUnit.SECONDS.sleep(2);
-                    System.out.println(Thread.currentThread().getName() + " I wanna get a");
-                    synchronized (a) {
-                        System.out.println("I get a");
-                    }
                 } catch (Exception e) {
                     e.printStackTrace();
+                }
+                System.out.println(Thread.currentThread().getName() + " I wanna get a");
+                synchronized (a) {
+                    System.out.println("I get a");
                 }
             }
 
