@@ -221,3 +221,69 @@ public class ListArray
 2NF:唯一性 一个表只说明一个事物;
 
 3NF:每列都与主键有直接关系，不存在传递依赖;
+
+十、线程池
+
+```java
+/** 
+FixedThreadPool和SingleThreadPool使用的队列是LinkedBlockingQueue,这是无界队列，允许请求的最大长度为：Integer.MAX_VALUE，
+可能会堆积大量的请求，从而导致OOM
+*/
+public static ExecutorService newFixedThreadPool(int nThreads) {
+    return new ThreadPoolExecutor(nThreads, nThreads, 
+                                  0L, TimeUnit.MILLISECONDS, 
+                                  new LinkedBlockingQueue<Runnable>());
+}
+
+public static ExecutorService newSingleThreadExecutor() {
+    return new FinalizableDelegatedExecutorService
+        (new ThreadPoolExecutor(1, 1,
+                                0L, TimeUnit.MILLISECONDS,
+                                new LinkedBlockingQueue<Runnable>()));
+}
+
+/**
+看看LinkedBlockingQueue的容量大小：Integer.MAX_VALUE
+*/
+public LinkedBlockingQueue() {
+    this(Integer.MAX_VALUE);
+}
+
+
+
+/**
+CachedThreadPool和ScheduleThreadPool允许的创建线程数量为：Integer.MAX_VALUE，可能会创建大量的线程，从而导致OOM
+*/
+public static ExecutorService newCachedThreadPool() {
+    return new ThreadPoolExecutor(0, Integer.MAX_VALUE,
+                                      60L, TimeUnit.SECONDS,
+                                      new SynchronousQueue<Runnable>());
+}
+
+public static ScheduledExecutorService newScheduledThreadPool(int corePoolSize) {
+    return new ScheduledThreadPoolExecutor(corePoolSize);
+}
+
+// ScheduledThreadPoolExecutor类
+public ScheduledThreadPoolExecutor(int corePoolSize) {
+    super(corePoolSize, Integer.MAX_VALUE, 0, NANOSECONDS,
+          new DelayedWorkQueue());
+}
+
+/**
+线程池参数分析
+corePoolSize : 核心线程数
+maximumPoolSize : 最大线程数
+keepAliveTime : 非核心线程的超时时长,如果非核心线程闲置时间超过keepAliveTime之后，就会被回收。如果设置allowCoreThreadTimeOut为true，则该参数也表示				核心线程的超时时长
+unit : 超时时长单位
+workQueue : 线程池中的任务队列，该队列主要用来存储已经被提交但是尚未执行的任务
+handler : 拒绝策略
+*/
+public ThreadPoolExecutor(int corePoolSize,
+        int maximumPoolSize,
+        long keepAliveTime,
+        TimeUnit unit,
+        BlockingQueue<Runnable> workQueue,
+        RejectedExecutionHandler handler)
+```
+
