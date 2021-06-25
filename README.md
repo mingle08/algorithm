@@ -408,3 +408,83 @@ public LinkedHashMap(int initialCapacity,
 }
 ```
 
+十二、BeanFactory与FactoryBean
+1，BeanFactory 是接口，提供了IOC容器最基本的形式，给具体的IOC容器的实现提供了规范，功能非常复杂。
+2，FactoryBean 也是接口，为IOC容器中Bean的实现提供了更加灵活的方式，FactoryBean在IOC容器的基础上给Bean的实现加上了一个简单的
+工厂模式和装饰模式 ，我们可以在getObject()方法中灵活配置.
+
+如果我们想要编写一些比较复杂点儿的逻辑就会触及到其他一些不必要的接口，或者只是想简单的去构造Bean，不希望实现IOC容器原有的大量方法，这时候就可以使用FactoryBean
+
+3，FactoryBean的实际应用
+
+（1）使用MyBatis时就用到了FactoryBean
+
+```xml
+<!-- SqlSessionFactory -->
+<bean id="dgSqlSessionFactory"  class="org.mybatis.spring.SqlSessionFactoryBean">
+    <property name="dataSource" ref="dgDataSource"/>
+    <!-- mybatis配置文件路径-->
+    <property name="configLocation"  value="classpath:mybatis-config.xml"/>   
+    <!-- 实体类映射文件路径-->
+    <property name="mapperLocations" value="classpath*:query-mapping/**/*.xml"/>
+</bean>
+```
+
+
+
+```java
+package org.mybatis.spring;
+
+// 省略imports
+
+public class SqlSessionFactoryBean implements FactoryBean<SqlSessionFactory>, InitializingBean, ApplicationListener<ApplicationEvent> {
+    private static final Log LOGGER = LogFactory.getLog(SqlSessionFactoryBean.class);
+    private Resource configLocation;
+    private Resource[] mapperLocations;
+    private DataSource dataSource;
+    private TransactionFactory transactionFactory;
+    private Properties configurationProperties;
+    private SqlSessionFactoryBuilder sqlSessionFactoryBuilder = new SqlSessionFactoryBuilder();
+    private SqlSessionFactory sqlSessionFactory;
+    
+    // 中间省略很多代码
+    
+    public SqlSessionFactory getObject() throws Exception {
+        if (this.sqlSessionFactory == null) {
+            this.afterPropertiesSet();
+        }
+
+        return this.sqlSessionFactory;
+    }
+
+    public Class<? extends SqlSessionFactory> getObjectType() {
+        return this.sqlSessionFactory == null ? SqlSessionFactory.class : this.sqlSessionFactory.getClass();
+    }
+
+    public boolean isSingleton() {
+        return true;
+    }
+    
+}
+```
+
+（2）quartz定时器
+
+```java
+package org.springframework.scheduling.quartz;
+
+// 省略imports
+
+public class SchedulerFactoryBean extends SchedulerAccessor implements FactoryBean<Scheduler>, BeanNameAware, ApplicationContextAware, InitializingBean, DisposableBean, SmartLifecycle {
+    public static final String PROP_THREAD_COUNT = "org.quartz.threadPool.threadCount";
+    public static final int DEFAULT_THREAD_COUNT = 10;
+    private static final ThreadLocal<ResourceLoader> configTimeResourceLoaderHolder = new ThreadLocal();
+    private static final ThreadLocal<Executor> configTimeTaskExecutorHolder = new ThreadLocal();
+    private static final ThreadLocal<DataSource> configTimeDataSourceHolder = new ThreadLocal();
+    private static final ThreadLocal<DataSource> configTimeNo
+        
+    // 省略代码    
+        
+}
+```
+
