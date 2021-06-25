@@ -488,3 +488,22 @@ public class SchedulerFactoryBean extends SchedulerAccessor implements FactoryBe
 }
 ```
 
+十三、Spring的事务传播机制
+REQUIRED: Spring默认的事务传播类型，如果当前没有事务，就自己创建一个事务，如果当前存在事务，就加入到该事务中
+SUPPORTS: 当前存在事务，则加入当前事务，如果不存在事务，就以非事务方法执行
+MANDATORY: 当前存在事务，则加入当前事务，如果当前事务不存在，则抛异常
+REQUIRES_NEW: 创建一个新事务，如果存在当前事务，则挂起该事务
+NOT_SUPPORTED: 以非事务方式执行，如果当前存在事务，则挂起该事务
+NEVER: 不使用事务，如果当前事务存在，则抛出异常
+NESTED: 如果当前事务存在，则在嵌套事务中执行，否则开启一个事务
+
+十四、Spring事务什么时候会失效
+    Spring事务的原理是AOP，进行了切面增强，那么失效的根本原因就是这个AOP不起作用了。常见情况有以下几种：
+1，自调用
+   类里面使用this调用本类的方法（this通常省略），此时这个this对象不是代理类，而是对象本身
+   解决方法很简单，使用代理类调用该方法
+2，方法不是public
+   @Transactional只能用于public方法上，否则事务不会生效，如果偏要用在非public方法上，可以开启AspectJ代理模式
+3，数据库不支持事务
+4，没有被Spring管理
+5，异常被吃掉，事务不会回滚（或者抛出的异常没有被定义，默认为RuntimeException）
