@@ -287,3 +287,124 @@ public ThreadPoolExecutor(int corePoolSize,
         RejectedExecutionHandler handler)
 ```
 
+
+
+十一、HashMap中能保证元素有序的是哪个Map？
+
+![image-20210625205908982](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20210625205908982.png)
+
+
+
+怎么保证有序？
+
+查看源码，我们也会发现，linkedHashMap只是维护了一个链表，并没有put、remove方法的具体实现。
+
+```java
+/**
+The iteration ordering method for this linked hash map: true for access-order, false for insertion-order.
+true 访问顺序，false 插入顺序
+*/
+final boolean accessOrder;
+```
+
+添加元素要调用父类的put方法：
+
+![image-20210625210433596](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20210625210433596.png)
+
+而linkedHashMap重写了newNode方法：
+
+```java
+/**
+先new一个节点，然后调用linkNodeLast，将新的节点加到链表末尾
+*/
+Node<K,V> newNode(int hash, K key, V value, Node<K,V> e) {
+    LinkedHashMap.Entry<K,V> p =
+        new LinkedHashMap.Entry<K,V>(hash, key, value, e);
+    linkNodeLast(p);
+    return p;
+}
+
+/**
+link at the end of list
+原来的尾指向p，p指向原来的尾，双向链表
+*/
+private void linkNodeLast(LinkedHashMap.Entry<K,V> p) {
+    LinkedHashMap.Entry<K,V> last = tail;
+    tail = p;
+    if (last == null)
+        head = p;
+    else {
+        p.before = last;
+        last.after = p;
+    }
+}
+
+
+/**
+如果在初始化linkedHashMap对象的时候，accessOrder设为true，则表示按照访问顺序有序，在get方法中，会对访问到的元素进行处理
+*/
+public V get(Object key) {
+    Node<K,V> e;
+    if ((e = getNode(hash(key), key)) == null)
+        return null;
+    if (accessOrder)
+        afterNodeAccess(e);
+    return e.value;
+}
+
+void afterNodeAccess(Node<K,V> e) { // move node to last
+    LinkedHashMap.Entry<K,V> last;
+    if (accessOrder && (last = tail) != e) {
+        LinkedHashMap.Entry<K,V> p =
+            (LinkedHashMap.Entry<K,V>)e, b = p.before, a = p.after;
+        p.after = null;
+        if (b == null)
+            head = a;
+        else
+            b.after = a;
+        if (a != null)
+            a.before = b;
+        else
+            last = b;
+        if (last == null)
+            head = p;
+        else {
+            p.before = last;
+            last.after = p;
+        }
+        tail = p;
+        ++modCount;
+    }
+}
+
+// LinkedHashMap的5个构造方法
+public LinkedHashMap(int initialCapacity, float loadFactor) {
+    super(initialCapacity, loadFactor);
+    accessOrder = false;
+}
+
+public LinkedHashMap(int initialCapacity) {
+    super(initialCapacity);
+    accessOrder = false;
+}
+
+public LinkedHashMap() {
+    super();
+    accessOrder = false;
+}
+
+public LinkedHashMap(Map<? extends K, ? extends V> m) {
+    super();
+    accessOrder = false;
+    putMapEntries(m, false);
+}
+
+// 只有这个方法，可以由外部设定accessOrder
+public LinkedHashMap(int initialCapacity,
+                         float loadFactor,
+                         boolean accessOrder) {
+    super(initialCapacity, loadFactor);
+    this.accessOrder = accessOrder;
+}
+```
+
