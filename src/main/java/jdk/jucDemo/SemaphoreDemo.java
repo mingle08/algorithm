@@ -3,6 +3,7 @@ package jdk.jucDemo;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Semaphore;
+import java.util.concurrent.TimeUnit;
 
 /**
  *
@@ -41,9 +42,9 @@ public class SemaphoreDemo {
 
     public static void test(int threadnum) throws InterruptedException {
         // 模拟请求的耗时操作
-        Thread.sleep(1000);
+        TimeUnit.SECONDS.sleep(1);
         System.out.println("threadnum:" + threadnum);
         // 模拟请求的耗时操作
-        Thread.sleep(1000);
+        TimeUnit.SECONDS.sleep(1);
     }
 }

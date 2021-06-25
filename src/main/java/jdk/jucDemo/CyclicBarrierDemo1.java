@@ -20,7 +20,7 @@ public class CyclicBarrierDemo1 {
 
         for (int i = 0; i < threadCount; i++) {
             final int threadNum = i;
-            Thread.sleep(1000);
+            TimeUnit.SECONDS.sleep(1);
             threadPool.execute(() -> {
                 try {
                     test(threadNum);

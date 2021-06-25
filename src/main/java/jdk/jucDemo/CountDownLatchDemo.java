@@ -3,6 +3,7 @@ package jdk.jucDemo;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 /**
  *
@@ -38,8 +39,8 @@ public class CountDownLatchDemo {
     }
 
     public static void test(int threadnum) throws InterruptedException {
-        Thread.sleep(1000);// 模拟请求的耗时操作
+        TimeUnit.SECONDS.sleep(1);// 模拟请求的耗时操作
         System.out.println("threadnum:" + threadnum);
-        Thread.sleep(1000);// 模拟请求的耗时操作
+        TimeUnit.SECONDS.sleep(1);// 模拟请求的耗时操作
     }
 }
