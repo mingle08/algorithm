@@ -1,5 +1,7 @@
 package designPattern.singleton;
 
+import java.lang.reflect.Constructor;
+
 public class Singleton {
 
     /*
@@ -61,4 +63,27 @@ public class Singleton {
     }
 
      */
+
+    public static void main(String[] args) {
+        Singleton instance1 = Singleton.getInstance();
+        Singleton instance2 = Singleton.getInstance();
+        // 打印出的地址相同
+        System.out.println(instance1);
+        System.out.println(instance2);
+
+        try {
+            // 用反射可破坏单例
+            Constructor constructor = Singleton.class.getDeclaredConstructor();
+            constructor.setAccessible(true);
+            Singleton instance3 = (Singleton) constructor.newInstance();
+            Singleton instance4 = (Singleton) constructor.newInstance();
+            // 打印出的地址不同
+            System.out.println(instance3);
+            System.out.println(instance4);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+    }
 }
