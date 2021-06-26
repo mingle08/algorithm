@@ -536,3 +536,32 @@ NESTED: 如果当前事务存在，则在嵌套事务中执行，否则开启一
 
 
 
+十六、单例模式，为什么枚举型单例是安全的？
+
+因为反射包下的Constructor中的newInstance方法，不允许通过反射获取枚举的实例
+
+```java
+// java.lang.reflect.Constructor
+public T newInstance(Object ... initargs)
+        throws InstantiationException, IllegalAccessException,
+               IllegalArgumentException, InvocationTargetException
+{
+   if (!override) {
+     if (!Reflection.quickCheckMemberAccess(clazz, modifiers)) {
+        Class<?> caller = Reflection.getCallerClass();
+        checkAccess(caller, clazz, null, modifiers);
+     }
+   }
+   // 如果是ENUM，抛出异常
+   if ((clazz.getModifiers() & Modifier.ENUM) != 0)
+      throw new IllegalArgumentException("Cannot reflectively create enum objects");
+   ConstructorAccessor ca = constructorAccessor;   // read volatile
+   if (ca == null) {
+     ca = acquireConstructorAccessor();
+   }
+   @SuppressWarnings("unchecked")
+   T inst = (T) ca.newInstance(initargs);
+     return inst;
+}
+```
+
