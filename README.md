@@ -507,3 +507,32 @@ NESTED: 如果当前事务存在，则在嵌套事务中执行，否则开启一
 3，数据库不支持事务
 4，没有被Spring管理
 5，异常被吃掉，事务不会回滚（或者抛出的异常没有被定义，默认为RuntimeException）
+
+十五、项目中使用dubbo的版本
+大致了解一下dubbo的版本更新事件：
+2012年10月23号   2.5.3
+2017年9月27号     2.5.4
+2018年1月8号       2.6.0    此版本合并了dubbox
+2019年5月             2.7.2
+
+1，引用的jar包的版本：2.6.8
+2，xml中配置的dubbo版本号
+
+```xml
+<!-- 使用的版本号为 1.0.0 -->
+<dubbo:service registry="loan" version="1.0.0" scope="remote" register="true"
+               interface="com.abc.pfs.service.api.QueryService" ref="queryService"/>
+```
+
+3，默认的协议：序列化 hessian2，传输 dubbo
+
+```xml
+<!-- 序列化协议 hessian2 -->
+<dubbo:provider serialization="hessian2" retries="0"  filter="setOrg" timeout="${dubbo.provider.timeout:3000}"
+                threads="${dubbo.provider.threads:300}" />
+<!-- 传输协议 dubbo -->
+<dubbo:protocol name="dubbo" port="${dubbo.protocol.port}" />
+```
+
+
+
