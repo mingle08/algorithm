@@ -94,7 +94,7 @@ public class RedisLock {
      * @return 是否释放成功
      */
     public static boolean releaseLock(Jedis jedis, String lockKey, String requestId) {
-
+        // 这是Lua脚本，Lua脚本在Redis中是原子执行的，执行过程中不会插入其他命令
         String script = "if redis.call('get', KEYS[1]) == ARGV[1] then return redis.call('del', KEYS[1]) else return 0 end";
         Object result = jedis.eval(script, Collections.singletonList(lockKey), Collections.singletonList(requestId));
 

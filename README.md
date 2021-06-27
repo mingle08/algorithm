@@ -565,3 +565,105 @@ public T newInstance(Object ... initargs)
 }
 ```
 
+十七、Dubbo SPI
+
+1，与Java SPI相比，Dubbo SPI做了一定的改进和优化：
+
+（1）JDK标准的SPI会一次性实例化扩展点所有实现，如果有扩展实现则初始化很耗时，如果没有用上也加载，则浪费资源
+（2）如果扩展加载失败，则连扩展的名称都获取不到了，加载失败的真正原因被“吃掉”了，报的错并不是真正失败的原因
+（3）增加了对扩展IOC和AOP的支持，一个扩展可以直接setter注入其他扩展。在Java SPI使用中，java.util.ServiceLoader
+会一次把某接口下的所有实现庆全部初始化，用户直接调用即可。 Dubbo SPI只是加载配置文件中的类，并分成不同的种类缓存
+在内存中，而不会立即全部初始化，在性能上有更好的表现。
+
+2，ExtensionLoader的工作原理
+
+![image-20210627212600584](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20210627212600584.png)
+
+ExtensionLoader的逻辑入口可以分为：
+
+（1）getExtension  获取普通扩展类
+
+（2）getAdaptiveExtension  获取自适应扩展类
+
+（3）getActivateExtension  获取自动激活的扩展类
+
+3，扩展点动态编译的实现
+
+Dubbo中有三种代码编译器：JdkCompiler、JavassitCompiler和AdaptiveCompiler
+
+![image-20210627214042897](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20210627214042897.png)
+
+```java
+/**
+注解的默认值是javassist，即Javassist编译器将作为默认编译器。
+如果用户想改变默认编译器，则可以通过<dubbo:application compiler="jdk" />标签进行配置
+*/
+@SPI("javassist")
+public interface Compiler {
+    Class<?> compile(String code, ClassLoader classLoader);
+}
+```
+
+
+
+（1）JdkCompiler使用了JDK自带的编译器
+
+![image-20210627215411722](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20210627215411722.png)
+
+```java
+import javax.tools.DiagnosticCollector;
+import javax.tools.FileObject;
+import javax.tools.ForwardingJavaFileManager;
+import javax.tools.JavaCompiler;
+import javax.tools.JavaFileManager;
+import javax.tools.JavaFileObject;
+import javax.tools.SimpleJavaFileObject;
+import javax.tools.StandardJavaFileManager;
+import javax.tools.StandardLocation;
+import javax.tools.ToolProvider;
+import javax.tools.JavaFileManager.Location;
+import javax.tools.JavaFileObject.Kind;
+public class JdkCompiler extends AbstractCompiler {.......}
+```
+
+（2）Javassist编译器
+
+```java
+public class JavassitCompiler extends AbstractCompiler {.......}
+```
+
+（3）Adaptive编译器
+
+```java
+/**
+AdaptiveCompiler直接实现Compiler，没有继续AbstractCompiler
+注解@Adaptive，说明AdaptiveCompiler会固定为默认实现，这个Compiler的主要作用就是为了管理其他compiler
+*/
+@Adaptive
+public class AdaptiveCompiler implements Compiler {
+    private static volatile String DEFAULT_COMPILER;
+
+    public AdaptiveCompiler() {
+    }
+
+    // 设置默认的编译器名称
+    public static void setDefaultCompiler(String compiler) {
+        DEFAULT_COMPILER = compiler;
+    }
+
+    // 通过ExtensionLoader获取对应的编译器扩展类实现，并调用真正的compiler做编译
+    public Class<?> compile(String code, ClassLoader classLoader) {
+        ExtensionLoader<Compiler> loader = ExtensionLoader.getExtensionLoader(Compiler.class);
+        String name = DEFAULT_COMPILER;
+        Compiler compiler;
+        if (name != null && name.length() > 0) {
+            compiler = (Compiler)loader.getExtension(name);
+        } else {
+            compiler = (Compiler)loader.getDefaultExtension();
+        }
+
+        return compiler.compile(code, classLoader);
+    }
+}
+```
+
