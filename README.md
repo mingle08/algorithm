@@ -515,6 +515,14 @@ NESTED: 如果当前事务存在，则在嵌套事务中执行，否则开启一
 2018年1月8号       2.6.0    此版本合并了dubbox
 2019年5月             2.7.2
 
+阿里的dubbo最后一个版本号是2.6.10.1，之后就捐赠给了apache
+
+![image-20210627233345791](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20210627233345791.png)
+
+apache的dubbo版本从2.7.0开始
+
+![image-20210627233420698](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20210627233420698.png)
+
 1，引用的jar包的版本：2.6.8
 2，xml中配置的dubbo版本号
 
@@ -666,4 +674,39 @@ public class AdaptiveCompiler implements Compiler {
     }
 }
 ```
+
+十八、什么是MVCC
+
+1，MVCC是Muiti-Version Concurrency Control的简写，即多版本并发控制：读取数据时通过一种类似快照的方式将数据保存下来，这样读锁和写锁就不冲突了，不同的事务session会看到自己特定版本的数据，版本链
+
+MVCC只有在READ COMMITTED和REPEATABLE READ两个隔离级别下工作。其他两个隔离级别和MVCC不兼容，因为READ UNCOMMITTED总是读取最新的数据行，而不是符合当前事务版本的数据行。而SERIALIZABLE则会对所有读取的行都加锁。
+
+2，聚簇索引记录中有两个必要的隐藏列：
+（1）trx_id  用来存储每次对某条聚簇索引记录进行修改时候的事务id
+（2）roll_pointer  每次对哪条聚簇索引记录有修改的时候，都会把老版本写入undo日志中。这个roll_pointer就是存了一个指针，
+它指向这条聚簇索引记录的上一个版本的位置，通过它来获得上一个版本的记录信息（注意插入操作的undo日志没有这个属性，因为它没有老版本）
+
+3，READ COMMITTED和REPEATABLE READ的区别就在于它们生成READVIEW的策略不同：
+（1）READ COMMITTED隔离级别下的事务在每次查询的开始都会生成一个独立的READVIEW
+（2）REPEATABLE READ隔离级别则在第一次读的时候生成一个READVIEW，之后的读都复用之前的READ VIEW
+
+4，开启事务时创建readview,readview维护当前活动的事务id，即未提交的事务尖，排序生成一个数组
+访问数据，获取数据中的事务id（获取的是事务id最大的记录），对比readview:
+（1）如果在readview的左边（比readview小），可以访问（在左边意味着该事务已经提交）
+（2）如果在readview的右边（比readview大），或者在readview区间内，不可以访问，获取roll_pointer，取上一版本重新对比（在右边意味着，该事务在readview生成之后出现；在readview区间内意味着该事务还未提交）
+
+十九、mysql主从同步原理
+
+1，有三个线程：binlog dump thread（master）、I/O thread（slave）和sql thread（slave）
+
+2，过程：
+（1）主节点binlog，主从复制的基础是主库记录数据库的所有变更记录到binlog。binlog在数据库服务器启动那一刻起，保存所有修改数据库结构或内容的一个文件
+（2）主节点log dump线程：当log有变动时，log dump线程读取其内容并发送给从节点
+（3）从节点I/O线程接收binlog内容，并将其写入到relay log文件中
+（4）从节点sql线程读取relay log文件内容，对数据更新进行同步，最终保证主从数据库的一致性
+
+3，同步方式
+（1）异步复制：mysql默认的复制方式
+（2）全同步复制：主库强制同步日志到从库，所有的从库都执行完成后才返回给客户端，此方式性能不高
+（3）半同步复制：从库写入日志成功后返回ACK确认给主库，主库收到至少一个从库的确认就认为同步操作完成
 
