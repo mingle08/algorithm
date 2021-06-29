@@ -817,3 +817,133 @@ public class HashMap<K,V> extends AbstractMap<K,V>
     static final int UNTREEIFY_THRESHOLD = 6;
 ```
 
+二十二、Spring如何解决循环依赖？
+
+
+
+1, 获取Bean
+AbstractBeanFactory.doGetBean
+
+```java
+protected <T> T doGetBean(String name, @Nullable Class<T> requiredType, @Nullable Object[] args, boolean typeCheckOnly) throws BeansException {
+        String beanName = this.transformedBeanName(name);
+        Object sharedInstance = this.getSingleton(beanName);
+        Object bean;
+        if (sharedInstance != null && args == null) {
+            if (this.logger.isTraceEnabled()) {
+                if (this.isSingletonCurrentlyInCreation(beanName)) {
+                    this.logger.trace("Returning eagerly cached instance of singleton bean '" + beanName + "' that is not fully initialized yet - a consequence of a circular reference");
+                } else {
+                    this.logger.trace("Returning cached instance of singleton bean '" + beanName + "'");
+                }
+            }
+
+            bean = this.getObjectForBeanInstance(sharedInstance, name, beanName, (RootBeanDefinition)null);
+        } else {
+            // 省略
+        }
+}
+```
+
+
+
+#第一次查询
+
+DefaultSingletonBeanRegistry.getSingleton
+
+```java
+@Nullable
+public Object getSingleton(String beanName) {
+    return this.getSingleton(beanName, true);
+}
+
+@Nullable
+protected Object getSingleton(String beanName, boolean allowEarlyReference) {
+    Object singletonObject = this.singletonObjects.get(beanName);
+    if (singletonObject == null && this.isSingletonCurrentlyInCreation(beanName)) {
+        singletonObject = this.earlySingletonObjects.get(beanName);
+        if (singletonObject == null && allowEarlyReference) {
+            synchronized(this.singletonObjects) {
+                singletonObject = this.singletonObjects.get(beanName);
+                if (singletonObject == null) {
+                    singletonObject = this.earlySingletonObjects.get(beanName);
+                    if (singletonObject == null) {
+                        ObjectFactory<?> singletonFactory = (ObjectFactory)this.singletonFactories.get(beanName);
+                        if (singletonFactory != null) {
+                            singletonObject = singletonFactory.getObject();
+                            this.earlySingletonObjects.put(beanName, singletonObject);
+                            this.singletonFactories.remove(beanName);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    return singletonObject;
+}
+```
+
+
+
+2, 创建
+#开始创建
+AbstractAutowireCapableBeanFactory.doCreateBean
+
+```java
+protected Object doCreateBean(String beanName, RootBeanDefinition mbd, @Nullable Object[] args) throws BeanCreationException {
+        BeanWrapper instanceWrapper = null;
+        if (mbd.isSingleton()) {
+            instanceWrapper = (BeanWrapper)this.factoryBeanInstanceCache.remove(beanName);
+        }
+
+        if (instanceWrapper == null) {
+            instanceWrapper = this.createBeanInstance(beanName, mbd, args);
+        }
+
+        Object bean = instanceWrapper.getWrappedInstance();
+        Class<?> beanType = instanceWrapper.getWrappedClass();
+        if (beanType != NullBean.class) {
+            mbd.resolvedTargetType = beanType;
+        }
+
+        synchronized(mbd.postProcessingLock) {
+            // 省略代码
+        }
+}
+```
+
+![image-20210629230515489](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20210629230515489.png)
+
+#创建实例
+createBeanInstance
+#填充属性
+populateBean
+#初始化
+
+![image-20210629230708974](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20210629230708974.png)
+
+initializeBean
+    #填充 beanName
+    invokeAwareMethods
+    #前置处理
+    applyBeanPostProcessorsBeforeInitialization
+    #初始化方法
+    invokeInitMethods
+    #后置处理（AOP动态代理）
+    applyBeanPostProcessorsAfterInitialization
+
+AOP处理
+#后置处理  触发动态代理
+AbstractAutoProxyCreator.postProcessAfterInitialization
+#创建动态代理
+AbstractAutoProxyCreator.createProxy
+
+解决循环依赖：提前引用
+#提前引用
+getEarlyBeanReference()
+    #创建代理
+    createProxy
+
+
+
