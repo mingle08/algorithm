@@ -710,3 +710,110 @@ MVCC只有在READ COMMITTED和REPEATABLE READ两个隔离级别下工作。其�
 （2）全同步复制：主库强制同步日志到从库，所有的从库都执行完成后才返回给客户端，此方式性能不高
 （3）半同步复制：从库写入日志成功后返回ACK确认给主库，主库收到至少一个从库的确认就认为同步操作完成
 
+二十、Spring循环依赖
+
+![image-20210629114954642](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20210629114954642.png)
+
+1，spring内部有三级缓存：
+    singletonObjects 一级缓存，用于保存实例化、注入、初始化完成的bean实例
+    earlySingletonObjects 二级缓存，用于保存实例化完成的bean实例
+    singletonFactories 三级缓存，用于保存bean创建工厂，以便于后面扩展有机会创建代理对象。
+
+摘自博客：[spring: 我是如何解决循环依赖的？ - Mars独行侠 - 博客园 (cnblogs.com)](https://www.cnblogs.com/wjxzs/p/14239052.html)
+
+2，Spring中的DependsOn注解
+
+```java
+package org.springframework.context.annotation;
+
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+@Target({ElementType.TYPE, ElementType.METHOD})
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+public @interface DependsOn {
+    String[] value() default {};
+}
+```
+
+3，AbstractBeanFactory中DependsOn相关代码：
+
+```java
+try {
+    RootBeanDefinition mbd = this.getMergedLocalBeanDefinition(beanName);
+    this.checkMergedBeanDefinition(mbd, beanName, args);
+    String[] dependsOn = mbd.getDependsOn();
+    String[] var11;
+    if (dependsOn != null) {
+        var11 = dependsOn;
+        int var12 = dependsOn.length;
+
+        for(int var13 = 0; var13 < var12; ++var13) {
+            String dep = var11[var13];
+            if (this.isDependent(beanName, dep)) {
+                throw new BeanCreationException(mbd.getResourceDescription(), beanName, "Circular depends-on relationship between '" + beanName + "' and '" + dep + "'");
+            }
+
+            this.registerDependentBean(dep, beanName);
+
+            try {
+                this.getBean(dep);
+            } catch (NoSuchBeanDefinitionException var24) {
+                throw new BeanCreationException(mbd.getResourceDescription(), beanName, "'" + beanName + "' depends on missing bean '" + dep + "'", var24);
+            }
+        }
+    }
+ // 省略代码   
+}
+```
+
+二十一、HashMap中转化为红黑树的阈值为什么是8，退化的阈值为什么是6？
+
+```java
+public class HashMap<K,V> extends AbstractMap<K,V>
+    implements Map<K,V>, Cloneable, Serializable {
+
+    private static final long serialVersionUID = 362498820763181265L;
+    
+	/*
+        * Because TreeNodes are about twice the size of regular nodes, we
+        * use them only when bins contain enough nodes to warrant use
+        * (see TREEIFY_THRESHOLD). And when they become too small (due to
+        * removal or resizing) they are converted back to plain bins.  In
+        * usages with well-distributed user hashCodes, tree bins are
+        * rarely used.  Ideally, under random hashCodes, the frequency of
+        * nodes in bins follows a Poisson distribution
+        * (http://en.wikipedia.org/wiki/Poisson_distribution) with a
+        * parameter of about 0.5 on average for the default resizing
+        * threshold of 0.75, although with a large variance because of
+        * resizing granularity. Ignoring variance, the expected
+        * occurrences of list size k are (exp(-0.5) * pow(0.5, k) /
+        * factorial(k)). The first values are:
+        *
+        * 0:    0.60653066
+        * 1:    0.30326533
+        * 2:    0.07581633
+        * 3:    0.01263606
+        * 4:    0.00157952
+        * 5:    0.00015795
+        * 6:    0.00001316
+        * 7:    0.00000094
+        * 8:    0.00000006
+        * more: less than 1 in ten million
+        
+        
+        ......
+        */
+    /**
+    在理想情况下,使用随机哈希码,节点出现的频率在hash桶中遵循泊松分布，同时给出了桶中元素个数和概率的对照表。
+	从上面的表中可以看到当桶中元素到达8个的时候，概率已经变得非常小，也就是说用0.75作为加载因子，每个碰撞位置的链表长度超过８个是几乎不可能的。
+    */
+    static final int TREEIFY_THRESHOLD = 8;
+    
+    static final int UNTREEIFY_THRESHOLD = 6;
+```
+
