@@ -945,5 +945,101 @@ getEarlyBeanReference()
     #创建代理
     createProxy
 
+![image-20210630121014916](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20210630121014916.png)
+
+二十三、Spring的依赖注入（DI）
+### Constructor-based Dependency Injection
+Constructor-based DI is accomplished by the container invoking a constructor with a number of arguments, each representing a dependency. Calling a static factory method with specific arguments to construct the bean is nearly equivalent, and this discussion treats arguments to a constructor and to a static factory method similarly.
+### Setter-based Dependency Injection
+Setter-based DI is accomplished by the container calling setter methods on your beans after invoking a no-argument constructor or a no-argument static factory method to instantiate your bean.
+
+基于Setter的DI是由容器在调用无参数构造函数或无参数`静态`工厂方法实例化bean后调用bean上的Setter方法来实现的。
+
+## Constructor-based or setter-based DI?
+Since you can mix constructor-based and setter-based DI, it is a good rule of thumb to use constructors for mandatory dependencies and setter methods or configuration methods for optional dependencies. Note that use of the @Required annotation on a setter method can be used to make the property be a required dependency; however, constructor injection with programmatic validation of arguments is preferable.
+
+The Spring team generally advocates constructor injection, as it lets you implement application components as immutable objects and ensures that required dependencies are not null. Furthermore, constructor-injected components are always returned to the client (calling) code in a fully initialized state. As a side note, a large number of constructor arguments is a bad code smell, implying that the class likely has too many responsibilities and should be refactored to better address proper separation of concerns.
+
+Setter injection should primarily only be used for optional dependencies that can be assigned reasonable default values within the class. Otherwise, not-null checks must be performed everywhere the code uses the dependency. One benefit of setter injection is that setter methods make objects of that class amenable to reconfiguration or re-injection later. Management through JMX MBeans is therefore a compelling use case for setter injection.
+
+Use the DI style that makes the most sense for a particular class. Sometimes, when dealing with third-party classes for which you do not have the source, the choice is made for you. For example, if a third-party class does not expose
+
+双亲委派模型
+1，三层类加载器
+（1）启动类加载器（Bootstrap Class Loader）：
+    无父类加载器
+    加载范围：存放在<JAVA_HOME>\lib目录，或者被-Xbootclasspath参数所指定的路径中存放的，而且是Java虚拟机能够识别的类库
+（2）扩展类加载器（Extension Class Loader）：
+    父类加载器就是Bootstrap Class Loader
+    加载范围：存放在<JAVA_HOME>\lib\ext目录，或者被java.ext.dirs系统变量所指定的路径中所有的类库
+（2）应用程序类加载器（Application Class Loader）：
+    父类加载器就是Extension Class Loader
+    加载范围：用户类路径（ClassPath）上所有的类库
+
+2，工作过程
+如果一个类加载哭收到了类加载的请求，它首先不会自己去尝试加载这个类，而是把这个请求委派给父类加载器去完成，每一个层次的类加载器都是如此，因此所有的加载请求最终都应该传送到最顶层的启动类加载器中，只有当父加载器反馈自己无法完成这个加载请求（它的搜索范围中没有找到所需要的类）时，子加载器才会尝试自己去完成加载
+3，破坏双亲委派模型
+（1）JDK1.2以前
+    双亲委派模型是JDK1.2之后才引入的，已有的代码有很多重写ClassLoader中的loadClass()方法，而双亲委派的具体逻辑就在这个loadClass()方法里，所以Java设计者们引入双亲委派模型时不得不做出一些妥协，为了兼容这些已有代码，无法再以技术手段避免loadClass()被子类覆盖的可能性，只能在JDK1.2之后的java.lang.ClassLoader中添加一个新的protected方法findClass()，并引导用户编写的类加载逻辑时尽可能去重写这个方法，而不是在loadClass()中编写代码。
+
+```java
+/**
+Finds the class with the specified binary name. This method should be overridden by class loader implementations that follow the delegation model for loading classes, and will be invoked by the loadClass method after checking the parent class loader for the requested class. The default implementation throws a ClassNotFoundException.
+Params: name – The binary name of the class
+Returns: The resulting Class object
+Throws: ClassNotFoundException – If the class could not be found
+Since: 1.2
+*/
+protected Class<?> findClass(String name) throws ClassNotFoundException {
+        throw new ClassNotFoundException(name);
+    }
+```
 
 
+
+（2）Java SPI服务
+    比如JNDI、JDBC等的实现类是由不同厂商实现并部署在应该程序的ClassPath下的。解决方法：引入线程上下文类加载器（Thread Context ClassLoader）。这个类加载器可以通过java.lang.Thread类的setContextClassLoader()方法进行设置，如果创建线程时还未设置，它将会从父线程中继承一个，如果在应用程序的全局范围内都没有设置过的话，那这个类加载器默认就是应用程序类加载器。    
+
+```java
+// since 1.2
+public void setContextClassLoader(ClassLoader cl) {
+    SecurityManager sm = System.getSecurityManager();
+    if (sm != null) {
+        sm.checkPermission(new RuntimePermission("setContextClassLoader"));
+    }
+    contextClassLoader = cl;
+}
+```
+
+缺点：当SPI的服务提供者多于一个的时候，代码就只能根据具体提供者的类型来硬编码判断，为了解决这个问题，JDK 6提供了java.util.ServiceLoader类，以META-INF/services中的配置信息，辅以责任链模式，才给SPI的加载提供了一个相对合理的解决方案
+
+```java
+// since 1.6
+public final class ServiceLoader<S>
+    implements Iterable<S>
+{
+    // 省略其他
+    
+    public static <S> ServiceLoader<S> load(Class<S> service) {
+        ClassLoader cl = Thread.currentThread().getContextClassLoader();
+        return ServiceLoader.load(service, cl);
+    }
+    
+    public static <S> ServiceLoader<S> loadInstalled(Class<S> service) {
+        ClassLoader cl = ClassLoader.getSystemClassLoader();
+        ClassLoader prev = null;
+        while (cl != null) {
+            prev = cl;
+            cl = cl.getParent();
+        }
+        return ServiceLoader.load(service, prev);
+    }
+    
+    // 省略其他
+    
+}
+```
+
+
+
+（3）用户对程序动态性的追求，OSGi实现模块化热部署，它自定义的类加载器机制
