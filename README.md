@@ -193,34 +193,41 @@ public class ListArray
 
 八、死锁
 产生死锁必须具备以下四个条件：
-
 1. 互斥条件：该资源任意一个时刻只由一个线程占用。
 2. 请求与保持条件：一个进程因请求资源而阻塞时，对已获得的资源保持不放。
 3. 不剥夺条件:线程已获得的资源在未使用完之前不能被其他线程强行剥夺，只有自己使用完毕后才释放资源。
 4. 循环等待条件:若干进程之间形成一种头尾相接的循环等待资源关系。
 
 为了避免死锁，我们只要破坏产生死锁的四个条件中的其中一个就可以了。现在我们来挨个分析一下：
-
 1. **破坏互斥条件** ：这个条件我们没有办法破坏，因为我们用锁本来就是想让他们互斥的（临界资源需要互斥访问）。
 2. **破坏请求与保持条件** ：一次性申请所有的资源。
 3. **破坏不剥夺条件** ：占用部分资源的线程进一步申请其他资源时，如果申请不到，可以主动释放它占有的资源。
 4. **破坏循环等待条件** ：依靠按序申请资源来预防。按某一顺序申请资源，释放资源则反序释放。破坏循环等待条件。
 
+九、数据库
 
-九、数据库的三范式（Normal Form）
+1，三范式（Normal Form）
 1NF:字段不可分;
-
 2NF:有主键，非主键字段依赖主键;
-
 3NF:非主键字段不能相互依赖;
 
 解释:
-
 1NF:原子性 字段不可再分,否则就不是关系数据库;
-
 2NF:唯一性 一个表只说明一个事物;
-
 3NF:每列都与主键有直接关系，不存在传递依赖;
+
+2，数据库还有第四、每五范式
+BCNF : Boyce-Codd Normal Form可以看作更好的3NF。在满足第二第三范式的情况下，决定项内部也不能部分或传递依赖。
+4NF：没有多值依赖
+
+3，数据库设计涉及的名词
+关系：一个关系对应通常所说的一张表
+元组：表中的一行即为一个元组
+属性：表中的一列即为一个属性；每一个属性都有一个名称，称为属性名
+候选码：表中的某个属性组，它可以唯一确定一个元组
+主码：一个关系有多个候选码，选定其中一个为主码
+域：属性的取值范围
+分量：元组中的一个属性值
 
 十、线程池
 
@@ -964,7 +971,7 @@ Setter injection should primarily only be used for optional dependencies that ca
 
 Use the DI style that makes the most sense for a particular class. Sometimes, when dealing with third-party classes for which you do not have the source, the choice is made for you. For example, if a third-party class does not expose
 
-双亲委派模型
+二十四、双亲委派模型
 1，三层类加载器
 （1）启动类加载器（Bootstrap Class Loader）：
     无父类加载器
@@ -1043,3 +1050,75 @@ public final class ServiceLoader<S>
 
 
 （3）用户对程序动态性的追求，OSGi实现模块化热部署，它自定义的类加载器机制
+
+
+
+二十五、轻量级锁
+
+工作过程：在代码即将进入同步块的时候，如果此同步对象没有被锁定（锁标志位为“01”状态），虚拟机首先将在当前线程的栈帧中建立一个名为锁记录（Lock Record）的空间，用于存储对象目前的mark word的拷贝（Displaced Mark Word）。
+
+然后虚拟机将使用CAS操作尝试把对象的Mark Word更新为指向Lock Record的指针。
+
+（1）如果这个更新动作成功了，即代表该线程拥有了这个对象的锁，并且对象Mark Word的锁标志位将转变了“00”，表示此对象处于轻量级锁定状态。
+
+（2）如果更新失败，那就意味着至少存在一条线程与当前线程竞争获取该对象的锁。虚拟机首先会检查对象的Mark Word是否指向当前线程的栈帧，如果是，说明当前线程已经拥有了这个对象的锁，那直接进入同步块继续执行就可以了，否则说明这个锁对象已经被其他线程抢占了。如果出现2条以上的线程争用同一个锁的情况，那轻量级锁就不再有效，必须膨胀为重量级锁，锁标志的状态值变为“10”
+
+
+
+二十六、AtomicInteger 线程安全原理
+
+```java
+public class AtomicInteger extends Number implements java.io.Serializable {
+    private static final long serialVersionUID = 6214790243416807050L;
+
+    // setup to use Unsafe.compareAndSwapInt for updates
+    private static final Unsafe unsafe = Unsafe.getUnsafe();
+    private static final long valueOffset;
+
+    static {
+        try {
+            // 拿到“原来的值”的内存地址
+            valueOffset = unsafe.objectFieldOffset
+                (AtomicInteger.class.getDeclaredField("value"));
+        } catch (Exception ex) { throw new Error(ex); }
+    }
+    
+    // 省略代码
+    
+    // CAS
+    public final boolean compareAndSet(int expect, int update) {
+        return unsafe.compareAndSwapInt(this, valueOffset, expect, update);
+    }
+    
+    // 省略代码
+    
+}
+```
+
+二十七、docker的优势
+
+原文链接：https://blog.csdn.net/qq_37527715/article/details/79878891
+1.简化配置 
+这是Docker初始目的，虚拟机VM最大的好处是基于你的应用配置能够无缝运行在任何平台上。Docker提供同样类似VM的能力，但是没有任何副作用，它能让你将环境和配置放入代码然后部署，同样的Docker配置能够在各种环境中使用，这实际是将应用环境和底层环境实现了解耦。
+
+2.代码管道化管理 
+能够对代码以流式pipeline管道化进行管理，从开发者的机器到生产环境机器这个流程中都能有效管理。因为在这个流程中会有各种不同的环境，每个都可能有微小的区别，Docker提供了跨越这些异构环境以一致性的微环境，从开发到部署实现流畅发布。
+
+3.开发人员的生产化 
+在一个开发环境，我们希望我们的开发环境能更加接近于生产环境，我们会让每个服务运行在自己的VM中，这样能模拟生产环境，比如有时我们并不总是需要跨越网络连接，这样我们可以将多个Docker装载一系列服务运行在单机上最大程度模拟生产分布式部署的环境。
+
+4.应用隔离 
+有很多理由你需要在一台机器上运行多个应用，这就需要将原来铁板一块monolithic的应用切分为很多微服务。实现应用之间的解耦，将多个应用服务部署在多个Docker中能轻松达到这个目的。
+
+5.服务合并 
+使用Docker也能合并多个服务以降低费用，不多的操作系统内存占用，跨实例共享多个空闲的内存，这些技术Docker能以更加紧密资源提供更有效的服务合并。
+
+6.多租户 
+Docker能够作为云计算的多租户容器，使用Docker能容易为每个租户创建运行应该多个实例，这得益其灵活的快速环境以及有效diff命令。
+
+7.快速部署 
+Docker通过创建进程的容器，不必重新启动操作系统，几秒内能关闭，你可以在数据中心创建或销毁资源，不用担心额外消耗。典型的数据中心利用率是30%，通过更积极的资源分配，以低成本方式对一个新的实例实现一个更聚合的资源分配，我们很容易超过这个利用率，大大提高数据中心的利用效率。 
+
+ 8.环境统一
+docker将容器打包成镜像，创建符合docker hub规范的镜像，上传进个人的私有docker hub，转换环境时直接pull即可，最大程   度的保证了开发环境，正式环境统一
+
