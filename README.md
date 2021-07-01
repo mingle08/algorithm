@@ -1122,3 +1122,149 @@ Docker通过创建进程的容器，不必重新启动操作系统，几秒内�
  8.环境统一
 docker将容器打包成镜像，创建符合docker hub规范的镜像，上传进个人的私有docker hub，转换环境时直接pull即可，最大程   度的保证了开发环境，正式环境统一
 
+二十八、fail-fast机制与fail-safe机制
+
+1，fail-fast
+
+直接在容器（Collection, Map）上进行遍历，在遍历过程中，一旦发现容器中的数据被修改了，会立刻抛出ConcurrentModificationException异常导致遍历失败。java.util包下的集合类都是快速失败机制的, 常见的的使用fail-fast方式遍历的容器有HashMap和ArrayList等。
+
+```java
+// ArrayList中的内部类Itr
+private class Itr implements Iterator<E> {
+    int cursor;       // index of next element to return
+    int lastRet = -1; // index of last element returned; -1 if no such
+    int expectedModCount = modCount;
+
+    Itr() {}
+    
+    public boolean hasNext() {
+        return cursor != size;
+    }
+    
+    // 比较i与elementData.length
+    public E next() {
+        checkForComodification();
+        int i = cursor;
+        if (i >= size)
+            throw new NoSuchElementException();
+        Object[] elementData = ArrayList.this.elementData;
+        if (i >= elementData.length)
+            throw new ConcurrentModificationException();
+        cursor = i + 1;
+        return (E) elementData[lastRet = i];
+    }
+    
+    
+    public void remove() {
+        if (lastRet < 0)
+            throw new IllegalStateException();
+        // 调用方法检测并发修改
+        checkForComodification();
+
+        try {
+            ArrayList.this.remove(lastRet);
+            cursor = lastRet;
+            lastRet = -1;
+            expectedModCount = modCount;
+        } catch (IndexOutOfBoundsException ex) {
+            throw new ConcurrentModificationException();
+        }
+    }
+    
+    // ......
+    
+    // 比较modCount与expectedModCount
+    final void checkForComodification() {
+        if (modCount != expectedModCount)
+            throw new ConcurrentModificationException();
+    }
+}
+
+// HashMap中的HashIterator
+abstract class HashIterator {
+    Node<K,V> next;        // next entry to return
+    Node<K,V> current;     // current entry
+    int expectedModCount;  // for fast-fail
+    int index;             // current slot
+
+    HashIterator() {
+        expectedModCount = modCount;
+        Node<K,V>[] t = table;
+        current = next = null;
+        index = 0;
+        if (t != null && size > 0) { // advance to first entry
+            do {} while (index < t.length && (next = t[index++]) == null);
+        }
+    }
+
+    public final boolean hasNext() {
+        return next != null;
+    }
+
+    final Node<K,V> nextNode() {
+        Node<K,V>[] t;
+        Node<K,V> e = next;
+        if (modCount != expectedModCount)
+            throw new ConcurrentModificationException();
+        if (e == null)
+            throw new NoSuchElementException();
+        if ((next = (current = e).next) == null && (t = table) != null) {
+            do {} while (index < t.length && (next = t[index++]) == null);
+        }
+        return e;
+    }
+
+    public final void remove() {
+        Node<K,V> p = current;
+        if (p == null)
+            throw new IllegalStateException();
+        if (modCount != expectedModCount)
+            throw new ConcurrentModificationException();
+        current = null;
+        K key = p.key;
+        removeNode(hash(key), key, null, false, false);
+        expectedModCount = modCount;
+    }
+}
+
+// HashMap中的HashMapSpliterator
+static class HashMapSpliterator<K,V> {
+    final HashMap<K,V> map;
+    Node<K,V> current;          // current node
+    int index;                  // current index, modified on advance/split
+    int fence;                  // one past last index
+    int est;                    // size estimate
+    int expectedModCount;       // for comodification checks  并发检测
+
+    HashMapSpliterator(HashMap<K,V> m, int origin,
+                       int fence, int est,
+                       int expectedModCount) {
+        this.map = m;
+        this.index = origin;
+        this.fence = fence;
+        this.est = est;
+        this.expectedModCount = expectedModCount;
+    }
+
+    final int getFence() { // initialize fence and size on first use
+        int hi;
+        if ((hi = fence) < 0) {
+            HashMap<K,V> m = map;
+            est = m.size;
+            expectedModCount = m.modCount;
+            Node<K,V>[] tab = m.table;
+            hi = fence = (tab == null) ? 0 : tab.length;
+        }
+        return hi;
+    }
+
+    public final long estimateSize() {
+        getFence(); // force init
+        return (long) est;
+    }
+}
+```
+
+[2]()，fail-safe ( 安全失败 )
+java.util.concurrent包下的容器都是安全失败的，可以在多线程下并发使用，并发修改。常见的的使用fail-safe方式遍历的容器有ConcerrentHashMap和CopyOnWriteArrayList等。采用安全失败机制的集合容器，在遍历时不是直接在集合内容上访问，而是先copy原有集合内容，在copy的新集合上进行遍历，所以在遍历过程中对原集合所作的修改并不能被迭代器检测到，所以不会触发ConcurrentModificationException
+
