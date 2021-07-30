@@ -3,9 +3,19 @@ package algo.girlTeacher.graph.mst;
 public class Graph {
 
 	private final int MAX_VERTS = 20;
-	private Vertex vertexList[];  // 顶点数组
-	private int[][] adjMat;  // 邻接矩阵
-	private int nVerts;  // 当前顶点数
+	/**
+	 * 顶点数组
+	 */
+	private Vertex vertexList[];
+	/**
+	 * 邻接矩阵
+	 */
+	private int[][] adjMat;
+	/**
+	 * 当前顶点数
+	 */
+	private int nVerts;
+
 	private StackX stackX;
 	
 	public Graph() {
@@ -20,12 +30,21 @@ public class Graph {
 		
 		stackX = new StackX();
 	}
-	
-	public void addVertex(char lab) {// 添加顶点
+
+	/**
+	 * 添加顶点
+	 * @param lab
+	 */
+	public void addVertex(char lab) {
 		vertexList[nVerts++] = new Vertex(lab);
 	}
-	
-	public void addEdge(int start, int end) {// 添加一个边
+
+	/**
+	 * 添加一个边
+	 * @param start
+	 * @param end
+	 */
+	public void addEdge(int start, int end) {
 		adjMat[start][end] = 1;
 		adjMat[end][start] = 1;
 	}
@@ -43,7 +62,8 @@ public class Graph {
 		while(!stackX.isEmpty()) {
 			int currentVertex = stackX.peek();
 			int v = getAdjUnvisitedVertex(currentVertex);
-			if(v == -1) {// 没有找到邻接的，没有访问过的顶点
+			// 没有找到邻接的，没有访问过的顶点
+			if(v == -1) {
 				stackX.pop();
 			}else {
 				vertexList[v].isVisited = true;
