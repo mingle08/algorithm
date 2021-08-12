@@ -1268,3 +1268,12 @@ static class HashMapSpliterator<K,V> {
 [2]()，fail-safe ( 安全失败 )
 java.util.concurrent包下的容器都是安全失败的，可以在多线程下并发使用，并发修改。常见的的使用fail-safe方式遍历的容器有ConcerrentHashMap和CopyOnWriteArrayList等。采用安全失败机制的集合容器，在遍历时不是直接在集合内容上访问，而是先copy原有集合内容，在copy的新集合上进行遍历，所以在遍历过程中对原集合所作的修改并不能被迭代器检测到，所以不会触发ConcurrentModificationException
 
+二十九、ThreadLocal与SimpleDateFormat
+![img.png](img.png)
+```java
+    // ThreadLocal类中的方法
+    protected T initialValue() {
+        return null;
+    }
+
+```
