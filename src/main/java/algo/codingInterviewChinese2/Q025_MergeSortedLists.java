@@ -13,10 +13,14 @@ public class Q025_MergeSortedLists {
         if (head2 == null) return head1;
         ListNode mergedHead = null;
         if (head1.val < head2.val) {
+            // 二者相比，head1的值较小，作为头节点
             mergedHead = head1;
+            // 比较head1的下一个节点与head2，较小者作为下一个节点
             mergedHead.next = merge(head1.next, head2);
         } else {
+            // 二者相比，head2的值较小，作为头节点
             mergedHead = head2;
+            // 比较head1与head2的下一个节点，较小者作为下一个节点
             mergedHead.next = merge(head1, head2.next);
         }
         return mergedHead;
