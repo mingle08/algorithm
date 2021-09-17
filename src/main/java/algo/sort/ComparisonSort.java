@@ -47,11 +47,16 @@ public class ComparisonSort {
         }
         */
 
-        // 参考Arrays归并排序时 当length < INSERTIONSORT_THRESHOLD， 则用插入排序
-        for (int i = 1; i < arr.length; i++)    // 拿第2张牌，跟第1张牌比较，下次循环拿第3张牌跟前面的2张牌比较，下次拿第4张牌与前面的3张牌比较，依次类推
-            for (int j = i; j >= 1 && arr[j - 1] > arr[j]; j--)    // 只有要排序的牌小于前面的牌，才交换
+        /*
+         参考Arrays归并排序时 当length < INSERTIONSORT_THRESHOLD， 则用插入排序
+         */
+        // 拿第2张牌，跟第1张牌比较，下次循环拿第3张牌跟前面的2张牌比较，下次拿第4张牌与前面的3张牌比较，依次类推
+        for (int i = 1; i < arr.length; i++) {
+            // 只有要排序的牌小于前面的牌，才交换
+            for (int j = i; j >= 1 && arr[j - 1] > arr[j]; j--) {
                 swap(arr, j, j - 1);
-
+            }
+        }
     }
 
     /**
@@ -64,11 +69,15 @@ public class ComparisonSort {
     public static void shellSort(int[] arr) {
         int length = arr.length;
         int step = 1;
-        while (step < length / 3) step = 3 * step + 1;
+        while (step < length / 3) {
+            step = 3 * step + 1;
+        }
 
         while (step >= 1) {
-            for (int i = step; i < arr.length; i++) {// 从索引step开始往后依次找分组，所以是i++
-                for (int j = i; j - step >= 0; j -= step) {// 根据后面的索引j，找它前面的组员j-step
+            // 从索引step开始往后依次找分组，所以是i++
+            for (int i = step; i < arr.length; i++) {
+                // 根据后面的索引j，找它前面的组员j-step
+                for (int j = i; j - step >= 0; j -= step) {
                     if (arr[j] < arr[j - step]) {
                         swap(arr, j, j - step);
                     }
@@ -87,10 +96,12 @@ public class ComparisonSort {
 
     public static void selectionSort(int[] arr) {
         for (int a = 0; a < arr.length - 1; a++) {
-            int minIndex = a;   // 参照物
+            // 参照物
+            int minIndex = a;
             // 1，找出比参照物更小的数，for循环能找出最小的
             for (int b = a + 1; b < arr.length; b++) {
-                if (arr[b] < arr[minIndex]) {   // 找出比最小的数还要小的数
+                // 找出比最小的数还要小的数
+                if (arr[b] < arr[minIndex]) {
                     minIndex = b;
                 }
             }
@@ -283,7 +294,7 @@ public class ComparisonSort {
 
     }
 
-    /*
+    /**
         7, 归并排序
         （1）创建在归并操作上的一种有效的排序算法。算法是采用分治法（Divide and Conquer）的一个非常典型的应用，且各层分治递归可以同时进行。
             归并排序思路简单，速度仅次于快速排序，为稳定排序算法，一般用于对总体无序，但是各子项相对有序的数列。

@@ -30,7 +30,7 @@ static final int tableSizeFor(int cap) {
 >>>8    0000 0000
 |=      0000 1111    (15)
 
-经过多次右移之后再进制 | 运算，结果是最右边四位都是1
+经过多次右移之后再进行 | 运算，结果是最右边四位都是1
 n = 15
 n + 1 = 16
 ```
@@ -57,7 +57,7 @@ public static int highestOneBit(int i) {
 |=      0000 1111    (15)
 >>8     0000 0000
 |=      0000 1111    (15)
-经过多次右移之后再进制 | 运算，结果是最右边四位都是1
+经过多次右移之后再进行 | 运算，结果是最右边四位都是1
 i           0000 1111  (15)
 i >>> 1     0000 0111  (7)
 i - (i >>> 1) 得到
@@ -651,7 +651,7 @@ public class JavassitCompiler extends AbstractCompiler {.......}
 
 ```java
 /**
-AdaptiveCompiler直接实现Compiler，没有继续AbstractCompiler
+AdaptiveCompiler直接实现Compiler，没有继承AbstractCompiler
 注解@Adaptive，说明AdaptiveCompiler会固定为默认实现，这个Compiler的主要作用就是为了管理其他compiler
 */
 @Adaptive

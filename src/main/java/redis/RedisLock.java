@@ -112,7 +112,12 @@ public class RedisLock {
         jedis.del(lockKey);
     }
 
-    // 两个命令，不满足原子性
+    /**
+     * 两个命令，不满足原子性
+     * @param jedis
+     * @param lockKey
+     * @param requestId
+     */
     public static void wrongReleaseLock2(Jedis jedis, String lockKey, String requestId) {
 
         // 判断加锁与解锁是不是同一个客户端
