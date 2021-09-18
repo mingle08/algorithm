@@ -1277,3 +1277,24 @@ java.util.concurrent包下的容器都是安全失败的，可以在多线程下
     }
 
 ```
+三十、HTTP消息结构
+![img_1.png](img_1.png)
+
+三十一、部分linux命令
+1，ping命令使用的是什么协议？ ICMP
+2，kill与kill -9的区别，kill命令的底层是什么？
+
+3，查询端口的命令是什么？ netstat
+
+三十二、TCP相关
+1，TCP释放连接，哪一方处理time_await状态？
+2，TCP拥塞机制
+3，TCP为什么有粘包和拆包
+
+三十三、进程间的通信
+请看这篇博客：https://www.jianshu.com/p/c1015f5ffa74
+
+三十四、并发有几种方式
+1，共享内存
+   比如Java的加锁
+2，go channel
