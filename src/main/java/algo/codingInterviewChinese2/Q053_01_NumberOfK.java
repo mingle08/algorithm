@@ -55,7 +55,7 @@ public class Q053_01_NumberOfK {
             int last = getLastK(data, len, k, 0, len - 1);
 
             if (first > -1 && last > -1)
-                number = last - first;
+                number = last - first + 1;
         }
 
         return number;
