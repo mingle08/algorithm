@@ -51,6 +51,7 @@ public class Q043_NumberOf1 {
     }
 
     /**
+     * 参考b站博主：香辣鸡排蛋包饭
      * 数字分成  a cur b三部分
      * 比如数字 21345
      * 当base = 1时，a = 2134, cur = 5, b = 0
@@ -61,6 +62,18 @@ public class Q043_NumberOf1 {
      * （1）当cur = 0，cur位置为 1 的数字的个数
      * （2）当cur = 1，cur位置为 1 的数字的个数
      * （3）当cur > 1，cur位置为 1 的数字的个数
+     *
+     * 例如，3101592
+     * 一、[3101] 5 [92]
+     * 1, [0-3101] 1 [0-99]
+     * (a + 1) * base
+     * 二、[310] 1 [ 592]
+     * 1, [0-309] 1 [0-999]
+     * 2, [310] 1 [0-592]
+     * a * base + (b + 1)
+     * 三、[31] 0 [1592]
+     * 1, [0-30] 1 [0-9999]
+     * a * base
      *
      * @param n
      * @return
@@ -74,10 +87,12 @@ public class Q043_NumberOf1 {
         int res = 0;
         int a, cur, b;
         while (base <= n) {
-            b = n % base;    // cur后面的部分
+            // cur后面的部分
+            b = n % base;
             a = n / base;
             cur = a % 10;
-            a /= 10;     // cur前面的部分
+            // cur前面的部分
+            a /= 10;
             if (cur > 1) {
                 res += (a + 1) * base;
             } else if (cur == 1) {

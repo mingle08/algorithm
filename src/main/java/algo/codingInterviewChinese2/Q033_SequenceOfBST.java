@@ -15,19 +15,23 @@ package algo.codingInterviewChinese2;
  */
 public class Q033_SequenceOfBST {
     public boolean verifySequenceOfBST(int[] sequence, int start, int end) {
-        if (start >= end) {//递归临界点
+        //递归临界点
+        if (start >= end) {
             return true;
         }
-        int root = sequence[end];//后序遍历序列的最后一个元素为二叉树的根节点
+        //后序遍历序列的最后一个元素为二叉树的根节点
+        int root = sequence[end];
         int i = start;
         // 统计左子树的节点数
         while (sequence[i] < root) {
             i++;
         }
         int j = i;
-        while (j < end) {//依次遍历右侧，看是否所有元素均大于根结点
+        //依次遍历右侧，看是否所有元素均大于根结点
+        while (j < end) {
+            //若出现小于根结点的元素，则直接返回false
             if (sequence[j] < root) {
-                return false;//若出现小于根结点的元素，则直接返回false
+                return false;
             }
             j++;
         }

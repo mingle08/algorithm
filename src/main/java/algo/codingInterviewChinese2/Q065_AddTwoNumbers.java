@@ -18,7 +18,9 @@ public class Q065_AddTwoNumbers {
         int sum, carry;
         do {
             sum = num1 ^ num2;
+            // 因为进位要往前进一位，所以要左移
             carry = (num1 & num2) << 1;
+            // 与第10题的逻辑很像
             num1 = sum;
             num2 = carry;
         } while (num2 != 0);    // 如果没有进位，就不用再循环了（此时num2是进位值）

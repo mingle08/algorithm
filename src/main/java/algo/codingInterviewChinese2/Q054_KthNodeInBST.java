@@ -8,11 +8,13 @@ import java.util.Stack;
  * 二叉搜索树的第K大节点
  * 题目：给定一棵二叉搜索树，请找出其中第K大节点。
  * 例如，在下图中的二叉搜索树里，按节点数值大小顺序，第三大节点的值是
- *
- *
- *                 5
- *           3             7
- *      2       4      8        9
+ * <p>
+ * <p>
+ * 5
+ * 3             7
+ * 2       4      6        8
+ * <p>
+ * 中序遍历
  */
 public class Q054_KthNodeInBST {
 
@@ -40,21 +42,28 @@ public class Q054_KthNodeInBST {
         return null;
     }*/
 
-    public TreeNode findKthNode(TreeNode root, int k){
+    /**
+     * 中序遍历
+     *
+     * @param root
+     * @param k
+     * @return
+     */
+    public TreeNode findKthNode(TreeNode root, int k) {
         //栈顶元素保证一直是cur的父节点
-        if(root == null || k < 0)
+        if (root == null || k < 0)
             return null;
         Stack<TreeNode> stack = new Stack<>();
         TreeNode cur = root;
         int count = 0;
-        while (!stack.isEmpty() || cur != null){
-            if(cur != null){
+        while (!stack.isEmpty() || cur != null) {
+            if (cur != null) {
                 stack.push(cur);
                 cur = cur.left;
             } else {
                 cur = stack.pop();
                 count++;
-                if(count == k)
+                if (count == k)
                     return cur;
 
                 cur = cur.right;
@@ -63,7 +72,7 @@ public class Q054_KthNodeInBST {
         return null;
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
         Q054_KthNodeInBST solution = new Q054_KthNodeInBST();
         TreeNode node1 = new TreeNode(5);
         TreeNode node2 = new TreeNode(3);

@@ -29,7 +29,8 @@ public class Q056_2_NumbersAppearOnce {
         }
         int[] bitSum = new int[32];
         for (int num : nums) {
-            int bitMask = 1; //位掩码
+            //位掩码，二进制更好理解：0000 0001
+            int bitMask = 1;
             //从右向左判断位数是否为1
             for (int i = bitSum.length - 1; i >= 0; i--) {
                 int bit = num & bitMask;
@@ -37,13 +38,15 @@ public class Q056_2_NumbersAppearOnce {
                 if (bit != 0) {
                     bitSum[i] += 1;
                 }
+                // 左移
                 bitMask = bitMask << 1;
             }
         }
         int result = 0;
         for (int j : bitSum) {
             result = result << 1;
-            result += j % 3; // 余数：要么为0，要么为1
+            // 余数：要么为0，要么为1
+            result += j % 3;
         }
         return result;
     }
@@ -54,9 +57,11 @@ public class Q056_2_NumbersAppearOnce {
         int n = findNumberAppearOnce(nums);
 
         System.out.println(n);
-
-        int a = 5; // 0000 0101
+        // 0000 0101
+        int a = 5;
+        // 1相当于 0000 0001
         int b = a & 1;
-        System.out.println(a + " & 1 = " + b);    // 0
+        // 0
+        System.out.println(a + " & 1 = " + b);
     }
 }

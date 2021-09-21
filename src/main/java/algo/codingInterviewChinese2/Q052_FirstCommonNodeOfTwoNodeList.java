@@ -4,6 +4,12 @@ import algo.util.ListNode;
 import algo.util.MyLinkList;
 
 /**
+ * 输入2个链表，找出它们的第一个公共节点。链表节点定义如下：
+ * struct ListNode {
+ *     int m_nKey;
+ *     ListNode* m_pNext;
+ * }
+ *
  * 二个链表的第一个公共节点
  * 1. 遍历二个链表，得到它们的长度
  * 2. 二个长度相减，假设差是 m，就是长的比短的多 m 个节点个数
@@ -30,12 +36,13 @@ public class Q052_FirstCommonNodeOfTwoNodeList {
             headLong = headLong.next;
         }
 
+        // 只要2个节点的值不相等，就一直往后遍历
         while (headLong != null && headShort != null
                 && headLong.val != headShort.val) {
             headLong = headLong.next;
             headShort = headShort.next;
         }
-
+        // 上面的循环跳出之后，就是遇到公共节点了
        return headLong;
     }
 

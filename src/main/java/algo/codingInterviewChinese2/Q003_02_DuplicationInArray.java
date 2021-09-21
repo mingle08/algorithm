@@ -21,7 +21,8 @@ public class Q003_02_DuplicationInArray {
         int end = nums.length - 1;
         while(end >= start){
             int mid = ((end - start) >> 1) + start;
-            int count = countRange(nums, start, mid);  // 统计在左一半的目标数量
+            // 统计在左一半的目标数量
+            int count = countRange(nums, start, mid);
             if(end == start){
                 if(count > 1){
                     return start;

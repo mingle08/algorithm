@@ -4,33 +4,47 @@ import algo.util.ListNode;
 import algo.util.MyLinkList;
 
 /**
- *  反转链表：单向链表，反转是指前后关系反转，头节点变尾节点，尾节点变头节点，
- *  并不是反向打印链表
- *   a -> b -> c -> d -> e
- *   a <- b <- c <- d <- e
+ * 反转链表：单向链表，反转是指前后关系反转，头节点变尾节点，尾节点变头节点，
+ * 并不是反向打印链表
+ * a -> b -> c -> d -> e
+ * a <- b <- c <- d <- e
  */
 public class Q024_ReverseNodeList {
 
-    public ListNode reverseList(ListNode head){
+    public ListNode reverseList(ListNode head) {
         ListNode reverseHead = null;
         ListNode curr = head;
         ListNode pre = null;
         ListNode pNext = null;
-        while (curr != null){ // 假设是头节点 a
-            pNext = curr.next;  // 下一个节点是 b
+
+        while (curr != null) {
+            /**
+             * 1，保存下一个节点
+             */
+            // 下一个节点
+            pNext = curr.next;
+            // 反转链表的头部不断往后移
             if (pNext == null)
                 reverseHead = curr;
 
-            curr.next = pre;    // 头指针的下一个节点指向前一个节点
+            /**
+             * 2，反转链表
+             */
+            curr.next = pre;
 
-            pre = curr;  // 前一个节点是 a
-            curr = pNext;  // 头指针移动到 b，至此 b 指向 a
+            /**
+             * 3，向后移动
+             */
+            // 前一个节点后移至当前节点
+            pre = curr;
+            // 当前节点后移至原来的下一个节点
+            curr = pNext;
         }
 
         return reverseHead;
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
         Q024_ReverseNodeList solution = new Q024_ReverseNodeList();
         MyLinkList link = new MyLinkList();
         link.add(1);

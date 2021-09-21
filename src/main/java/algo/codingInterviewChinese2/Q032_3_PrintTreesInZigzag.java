@@ -11,28 +11,26 @@ import java.util.Stack;
  * 请实现一个函数按照之字形顺序打印二叉树，即第一行按照从左到右的顺序打印，第二层
  * 按照从右向左的顺序打印，第三行再按照从左到右的顺序打印，其它行以此类推。
  * 例如，按之字形打印如下的二叉树的结果为：
- *  1
- *  3  2
- *  4  5  6  7
- *  15 14 13 12 11 10 9 8
- *
- *  二叉树如下图
- *
- *                  1
- *           2             3
- *      4       5       6      7
- *   8   9    10 11   12 13  14 15
- *
- *
- *   思路：使用2个栈。
- *   如果当前打印的是奇数层（第一层、第三层等），则先保存左子节点再保存右子节点（先左后右）到第一个栈里；
- *   如果当前打印的是偶数层（第二层、第四层等），则先保存右子节点再保存左子节点（先右后左）到第二个栈里。
- *
- *
+ * 1
+ * 3  2
+ * 4  5  6  7
+ * 15 14 13 12 11 10 9 8
+ * <p>
+ * 二叉树如下图
+ * <p>
+ * 1
+ * 2             3
+ * 4       5       6      7
+ * 8   9    10 11   12 13  14 15
+ * <p>
+ * <p>
+ * 思路：使用2个栈。
+ * 如果当前打印的是奇数层（第一层、第三层等），则先保存左子节点再保存右子节点（先左后右）到第一个栈里；
+ * 如果当前打印的是偶数层（第二层、第四层等），则先保存右子节点再保存左子节点（先右后左）到第二个栈里。
  */
 public class Q032_3_PrintTreesInZigzag {
 
-    public void printInZigZag(TreeNode root){
+    public void printInZigZag(TreeNode root) {
         if (root == null)
             return;
 
@@ -45,29 +43,29 @@ public class Q032_3_PrintTreesInZigzag {
         int next = 1;
         list.get(cur).push(root);
 
-        while (!list.get(0).isEmpty() || !list.get(1).isEmpty()){
+        while (!list.get(0).isEmpty() || !list.get(1).isEmpty()) {
             TreeNode node = list.get(cur).pop();
             System.out.print(node.val + " ");
 
-            if (cur == 0){ // 第一层， 第三层
+            if (cur == 0) { // 第一层， 第三层
                 // 下一层（子节点），先存左，再存右，因为栈是后进先出，子节点先打印右，再是左
-                if (node.left != null){
+                if (node.left != null) {
                     list.get(next).push(node.left);
                 }
-                if (node.right != null){
+                if (node.right != null) {
                     list.get(next).push(node.right);
                 }
             } else { // 第二层，第四层
                 // 下一层（子节点），先存右，再存左
-                if (node.right != null){
+                if (node.right != null) {
                     list.get(next).push(node.right);
                 }
-                if (node.left != null){
+                if (node.left != null) {
                     list.get(next).push(node.left);
                 }
             }
 
-            if (list.get(cur).empty()){
+            if (list.get(cur).empty()) {
                 System.out.println();
                 cur = 1 - cur;
                 next = 1 - next;
@@ -76,7 +74,7 @@ public class Q032_3_PrintTreesInZigzag {
         }
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
         Q032_3_PrintTreesInZigzag solution = new Q032_3_PrintTreesInZigzag();
 
         TreeNode root = new TreeNode(1);

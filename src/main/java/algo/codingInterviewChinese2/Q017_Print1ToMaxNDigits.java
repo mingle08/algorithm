@@ -3,14 +3,13 @@ package algo.codingInterviewChinese2;
 /**
  * 题目：打印从1到最大的n位数
  * 输入数字n，按顺序打印出从1到最大的n位十进制数，比如输入3，打印出1、2、3……直到最大的三位数999
- *
+ * <p>
  * 数字与char的转化
  * 1. 数字转化成char    =>    n + '0'
- *
- *    比如：字符'0'的ASCII码是48， 1 + '0' 得到 ASCII是49，即字符'1'
+ * <p>
+ * 比如：字符'0'的ASCII码是48， 1 + '0' 得到 ASCII是49，即字符'1'
  * 2. char转化成数字    =>    'c' - '0'
- *    比如：字符'1'的ASCII码是49，'0'的ASCII码是48， '1' - '0' = 49 - 48 = 1
- *
+ * 比如：字符'1'的ASCII码是49，'0'的ASCII码是48， '1' - '0' = 49 - 48 = 1
  */
 public class Q017_Print1ToMaxNDigits {
 
@@ -55,8 +54,8 @@ public class Q017_Print1ToMaxNDigits {
     }
 
     // 方法二：递归
-    public void solution2(int n){
-        if (n <= 0 ){
+    public void solution2(int n) {
+        if (n <= 0) {
             return;
         }
 
@@ -69,14 +68,17 @@ public class Q017_Print1ToMaxNDigits {
 
     }
 
-    public void print1ToMaxNDigits_Recursive(char[] numbers, int index){
-        if (index == numbers.length - 1){    // 因为从左到右设置，index为数组最后一项，说明个位设置好了
+    public void print1ToMaxNDigits_Recursive(char[] numbers, int index) {
+        // 因为从左到右设置，index为数组最后一项，说明个位设置好了
+        if (index == numbers.length - 1) {
             printNumber(numbers);
-            return;    // 因为个位设置好了，就打印，然后执行return，所以index不会越界
+            // 因为个位设置好了，就打印，然后执行return，所以index不会越界
+            return;
         }
 
         for (int i = 0; i < 10; i++) {
-            numbers[index + 1] = (char)(i + '0');    // 依次设置第二位，第三位，直到个位
+            // 依次设置第二位，第三位，直到个位
+            numbers[index + 1] = (char) (i + '0');
             print1ToMaxNDigits_Recursive(numbers, index + 1);
         }
     }
@@ -98,7 +100,7 @@ public class Q017_Print1ToMaxNDigits {
         }
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
         Q017_Print1ToMaxNDigits solution = new Q017_Print1ToMaxNDigits();
         solution.solution2(2);
     }

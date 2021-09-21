@@ -5,13 +5,13 @@ import algo.util.ListNode;
 /**
  * 链表中环的入口节点
  * 思路：（1）求出环上的一个节点：快慢指针
- *      （2）求出环的节点数 k
- *      （3）2个指针，第一个指针先走 k 步，第二个指针才开始走（2个指针步长都是1）
+ * （2）求出环的节点数 k
+ * （3）2个指针，第一个指针先走 k 步，第二个指针才开始走（2个指针步长都是1）
  */
 public class Q023_EntryNodeInListLoop {
 
     // 找到环中的任意一个节点
-    private ListNode meetingNode(ListNode head){
+    private ListNode meetingNode(ListNode head) {
         if (head == null) {
             return null;
         }
@@ -21,7 +21,7 @@ public class Q023_EntryNodeInListLoop {
         }
         ListNode pFast = pSlow.next;
 
-        while (pFast != null && pSlow != null){
+        while (pFast != null && pSlow != null) {
             if (pFast == pSlow) {
                 return pFast;
             }
@@ -42,28 +42,28 @@ public class Q023_EntryNodeInListLoop {
         return null;
     }
 
-    public ListNode entryNodeOfLoop(ListNode head){
+    public ListNode entryNodeOfLoop(ListNode head) {
         ListNode meetingNode = meetingNode(head);
         if (meetingNode == null)
             return null;
 
-        // 得到环中节点的数目
+        // 1，得到环中节点的数目
         int nodesInLoop = 1;
         ListNode pNode1 = meetingNode;
-        while (pNode1.next != meetingNode){
+        while (pNode1.next != meetingNode) {
             pNode1 = pNode1.next;
             nodesInLoop++;
         }
 
-        // 先移动pNode1，次数为环中节点的数目
+        // 2，先移动pNode1，次数为环中节点的数目
         pNode1 = head;
         for (int i = 0; i < nodesInLoop; i++) {
             pNode1 = pNode1.next;
         }
 
-        // 再移动pNode1和pNode2：相同的速度
+        // 3，再移动pNode1和pNode2：相同的速度
         ListNode pNode2 = head;
-        while (pNode1 != pNode2){
+        while (pNode1 != pNode2) {
             pNode1 = pNode1.next;
             pNode2 = pNode2.next;
         }

@@ -36,8 +36,10 @@ public class Q010_Fibonacci {
         long fib1 = 0;
         long fib2 = 1;
         long fibN = 0;
+
         for (int i = 2; i <= n; i++) {
             fibN = fib1 + fib2;
+            // 与第65题的逻辑很像
             fib1 = fib2;
             fib2 = fibN;
         }

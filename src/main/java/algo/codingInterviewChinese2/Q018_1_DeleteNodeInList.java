@@ -15,30 +15,50 @@ import algo.util.ListNode;
  */
 public class Q018_1_DeleteNodeInList {
 
-    public void deleteNode(ListNode head, ListNode toBeDeleted){
-        if (head == null || toBeDeleted == null)
-            return;
-
-        // 要删除的节点，不是尾节点
-        if (toBeDeleted.next != null){
-            ListNode nextNode = toBeDeleted.next;  // j 节点
-            toBeDeleted.val = nextNode.val;  // j 节点的内容覆盖 i 节点
-            /**
-             * 覆盖了 i 的j，相当于 删除了i，现在i的位置是 j，下一个节点，是原来 j 的下个节点
-             */
-            toBeDeleted.next = nextNode.next;
-
-            nextNode = null;
-        } else if (head == toBeDeleted){ // 链表只有一个节点，既是头节点，也是尾节点
-            head = null;
-            toBeDeleted = null;
-        } else { // 链表有多个节点，删除的节点是尾节点
-            ListNode node = head;
-            while (node.next != toBeDeleted){
-                node = node.next;
+    /**
+     * curr与dummy都指向原链表的头节点，所以删除的时候，不用判断删除的是头节点还是尾节点
+     * @param head
+     * @param val
+     * @return
+     */
+    public static ListNode deleteNode(ListNode head, int val) {
+        // dummy只作为指针，指向原链表的头节点，不参与循环操作
+        ListNode dummy = new ListNode(-1);
+        dummy.next = head;
+        // curr参与循环操作
+        ListNode curr = dummy;
+        while (curr.next != null) {
+            if (curr.next.val == val) {
+                curr.next = curr.next.next;
+                break;
             }
-            node.next = null;
-            toBeDeleted = null;
+            curr = curr.next;
         }
+
+        return dummy.next;
+    }
+
+    public static void printNode(ListNode node) {
+        while(node != null) {
+            System.out.print(node.val + " ");
+            node = node.next;
+        }
+        System.out.println();
+    }
+
+    public static void main(String[] args) {
+        ListNode node1 = new ListNode(5);
+        ListNode node2 = new ListNode(2);
+        ListNode node3 = new ListNode(4);
+        ListNode node4 = new ListNode(9);
+        node1.next = node2;
+        node2.next = node3;
+        node3.next = node4;
+
+        printNode(node1);
+
+        ListNode newNode = deleteNode(node1, 9);
+
+        printNode(newNode);
     }
 }

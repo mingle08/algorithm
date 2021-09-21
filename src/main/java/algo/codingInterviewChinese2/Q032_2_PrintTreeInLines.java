@@ -36,8 +36,11 @@ public class Q032_2_PrintTreeInLines {
             toBePrinted--;
             // 每打印完一层，另起一行，重新给2个变量赋值
             if (toBePrinted == 0){
-                System.out.println();    // 另起一行打印
+                // 另起一行打印
+                System.out.println();
+                // 换行之后，待打印的节点数，初始化为nextLevelCount
                 toBePrinted = nextLevelCount;
+                // 再下一行，节点数初始化为0
                 nextLevelCount = 0;
             }
         }

@@ -7,11 +7,12 @@ package algo.codingInterviewChinese2;
  */
 public class Q058_01_ReverseWordsInSentence {
 
-    private void reverse(char[] chs, int start, int end){
+    // 1, 先翻转整个句子
+    private void reverse(char[] chs, int start, int end) {
         if (chs == null || chs.length < 0 || start > end || start < 0 || end > chs.length)
             return;
 
-        while(start < end){
+        while (start < end) {
             char temp = chs[start];
             chs[start] = chs[end];
             chs[end] = temp;
@@ -21,7 +22,7 @@ public class Q058_01_ReverseWordsInSentence {
         }
     }
 
-    public String reverseSentence(String str){
+    public String reverseSentence(String str) {
         char[] chs = str.toCharArray();
         if (str == null || str.length() < 0)
             return null;
@@ -33,11 +34,13 @@ public class Q058_01_ReverseWordsInSentence {
         // 翻转句子中的单词
         int start = 0;
         int end = 0;
-        while (start < chs.length){
-            if (chs[start] == ' '){
+        while (start < chs.length) {
+            // 遇到下一个单词
+            if (chs[start] == ' ') {
                 start++;
                 end++;
-            } else if (end == chs.length || chs[end] == ' '){
+            } else if (end == chs.length || chs[end] == ' ') {
+                // 翻转单词
                 reverse(chs, start, end - 1);
                 end++;
                 start = end;  // 进入下一个单词
@@ -50,7 +53,7 @@ public class Q058_01_ReverseWordsInSentence {
         return new String(chs);
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
         Q058_01_ReverseWordsInSentence solution = new Q058_01_ReverseWordsInSentence();
         String str = "I am a student.";
         String reverseStr = solution.reverseSentence(str);

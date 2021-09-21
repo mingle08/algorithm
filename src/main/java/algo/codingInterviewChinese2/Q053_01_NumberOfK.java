@@ -14,7 +14,8 @@ public class Q053_01_NumberOfK {
         int mid = start + (end - start) / 2;
         int midData = data[mid];
         if (midData == k){
-            if (mid > 0 && data[mid - 1] != k || mid == 0){ // 如果前面一个数不等于k，说明midData是第一个k
+            // 如果前面一个数不等于k，说明midData是第一个k
+            if (mid > 0 && data[mid - 1] != k || mid == 0){
                 return mid;
             } else  // 在前半段，因为数组是递增的
                 end = mid - 1;
@@ -31,10 +32,11 @@ public class Q053_01_NumberOfK {
         if (start > end)
             return -1;
 
-        int mid = start + (end - start) / 2;
+        int mid = start + ((end - start) >> 1);
         int midData = data[mid];
 
         if (midData == k){
+            // 如果后面一个数不等于k，说明midData是最后一个k
             if (mid < len - 1 && data[mid + 1] != k || mid == len - 1)
                 return mid;
             else

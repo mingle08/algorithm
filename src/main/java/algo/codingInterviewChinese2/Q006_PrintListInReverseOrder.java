@@ -11,7 +11,7 @@ import java.util.Stack;
  */
 public class Q006_PrintListInReverseOrder {
 
-    public void printListReversely(ListNode node){
+    public void printListReversingly_Iteratively(ListNode node){
         Stack<ListNode> stack = new Stack<>();
 
         while (node != null){
@@ -21,6 +21,15 @@ public class Q006_PrintListInReverseOrder {
 
         while (!stack.isEmpty()){
             node = stack.pop();
+            System.out.print(node.val + " ");
+        }
+    }
+
+    public void printListReversingly_Recursively(ListNode node) {
+        if (node != null) {
+            if (node.next != null) {
+                printListReversingly_Recursively(node.next);
+            }
             System.out.print(node.val + " ");
         }
     }
@@ -35,7 +44,9 @@ public class Q006_PrintListInReverseOrder {
         link.add(4);
         link.add(5);
 
-        solution.printListReversely(link.head);
+        solution.printListReversingly_Iteratively(link.head);
+        System.out.println();
+        solution.printListReversingly_Recursively(link.head);
 
 
     }
