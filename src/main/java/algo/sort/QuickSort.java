@@ -31,7 +31,6 @@ public class QuickSort {
 		quickSort(arr, 0, mid-1);
 		quickSort(arr, mid + 1, high);
 		
-		
 	}
 
 	/**
@@ -48,14 +47,14 @@ public class QuickSort {
 			while(low < high && arr[high] >= pivot) {
 				high--;
 			}
-			// 2. 否则，如果arr[high] <= temp，把小的值存在arr[low]
+			// 2. 否则，如果arr[high] <= pivot，把小的值存在arr[low]
 			arr[low] = arr[high];
 			
-			// 3. 如果arr[low] < temp，low指针往右移
+			// 3. 如果arr[low] < pivot，low指针往右移
 			while(low < high && arr[low] <= pivot) {
 				low++;
 			}
-			// 4. 否则，如果arr[low] >= temp, 把大的值存在arr[high]
+			// 4. 否则，如果arr[low] >= pivot, 把大的值存在arr[high]
 			arr[high] = arr[low];
 			
 		}

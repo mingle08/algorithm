@@ -329,7 +329,9 @@ public class ComparisonSort {
 
     public static void merge(int[] arr, int low, int mid, int high) {
         int[] temp = new int[high - low + 1];
+        // 左一半的开始索引
         int left = low;
+        // 右一半的开始索引
         int right = mid + 1;
         int k = 0;
         // 把较小的数先移到新数组中
