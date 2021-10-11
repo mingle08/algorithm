@@ -67,17 +67,17 @@ public class Q038_StringPermutation {
     }
 
     // 回溯法
-    private void backTrace(int index, char[] chs, Set<String> set, boolean[] visited, char[] con) {
+    private void backTrace(int index, char[] chs, Set<String> set, boolean[] visited, char[] temp) {
         if (index == chs.length) {
-            set.add(new String(con));
+            set.add(new String(temp));
             return;
         }
 
         for (int i = 0; i < chs.length; i++) {
             if (!visited[i]) {
                 visited[i] = true;
-                con[index] = chs[i];
-                backTrace(index + 1, chs, set, visited, con);
+                temp[index] = chs[i];
+                backTrace(index + 1, chs, set, visited, temp);
                 visited[i] = false;
             }
         }
