@@ -1336,3 +1336,85 @@ https://www.cnblogs.com/ffdsj/p/12266539.html
 2，持久性：用 redo log，从而达到故障后恢复；
 3，隔离性使用锁以及MVCC,运用的优化思想有读写分离，读读并行，读写并行；
 4，一致性：通过回滚，以及恢复，和在并发环境下的隔离做到一致性。
+
+三十八、HashMap的put方法
+```java
+final V putVal(int hash, K key, V value, boolean onlyIfAbsent,
+                   boolean evict) {
+    Node<K,V>[] tab; Node<K,V> p; int n, i;
+    // table未初始化或者长度为0，进行扩容
+    if ((tab = table) == null || (n = tab.length) == 0)
+        n = (tab = resize()).length;
+    /** 
+    (n - 1) & hash 确定元素存放在哪个桶中，桶为空，新生成结点放入桶中(此时，这个结点是放在数组中)
+    哈希值赋值给i，tab[i]赋值给p，即 p = tab[i = (n - 1) & hash]，虽然是在if分支里，但p变量在方法内第一行，所以能在后续else中使用
+    相当于在if之前赋值，if和else都能使用此赋值
+    p = tab[i = (n - 1) & hash];
+    if (p == null)
+        tab[i] = newNode(hash, key, value, null);
+    else {
+        ......
+    }
+    */
+    if ((p = tab[i = (n - 1) & hash]) == null)
+        tab[i] = newNode(hash, key, value, null);
+    // 桶中已经存在元素
+    else {
+        Node<K,V> e; K k;
+        // 比较桶中第一个元素(数组中的结点), 如果hash值相等，key相等
+        if (p.hash == hash &&
+            ((k = p.key) == key || (key != null && key.equals(k))))
+                // 将第一个元素赋值给e，用e来记录，后面将e进行旧值覆盖
+                e = p;
+        // hash值不相等，即key不相等；为红黑树结点
+        else if (p instanceof TreeNode)
+            // 放入树中
+            e = ((TreeNode<K,V>)p).putTreeVal(this, tab, hash, key, value);
+        // 为链表结点
+        else {
+            // 在链表最末插入结点
+            for (int binCount = 0; ; ++binCount) {
+                // 到达链表的尾部
+                if ((e = p.next) == null) {
+                    // 在尾部插入新结点
+                    p.next = newNode(hash, key, value, null);
+                    // 结点数量达到阈值，转化为红黑树
+                    if (binCount >= TREEIFY_THRESHOLD - 1) // -1 for 1st
+                        treeifyBin(tab, hash);
+                    // 跳出循环
+                    break;
+                }
+                // 判断链表中结点的key值与插入的元素的key值是否相等
+                if (e.hash == hash &&
+                    ((k = e.key) == key || (key != null && key.equals(k))))
+                    // 相等，跳出循环，等待后续操作覆盖旧值
+                    break;
+                // 用于遍历桶中的链表，与前面的e = p.next组合，可以遍历链表
+                p = e;
+            }
+        }
+        // 表示在桶中找到key值、hash值与插入元素相等的结点，进行旧值覆盖
+        if (e != null) { 
+            // 记录e的value
+            V oldValue = e.value;
+            // onlyIfAbsent为false或者旧值为null
+            if (!onlyIfAbsent || oldValue == null)
+                //用新值替换旧值
+                e.value = value;
+            // 访问后回调
+            afterNodeAccess(e);
+            // 返回旧值
+            return oldValue;
+        }
+    }
+    // 结构性修改
+    ++modCount;
+    // 实际大小大于阈值则扩容
+    if (++size > threshold)
+        resize();
+    // 插入后回调
+    afterNodeInsertion(evict);
+    return null;
+} 
+
+```
