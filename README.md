@@ -1387,7 +1387,7 @@ final V putVal(int hash, K key, V value, boolean onlyIfAbsent,
                 // 判断链表中结点的key值与插入的元素的key值是否相等
                 if (e.hash == hash &&
                     ((k = e.key) == key || (key != null && key.equals(k))))
-                    // 相等，跳出循环
+                    // 相等，跳出循环，等待后续操作覆盖旧值
                     break;
                 // 用于遍历桶中的链表，与前面的e = p.next组合，可以遍历链表
                 p = e;
