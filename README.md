@@ -1430,3 +1430,13 @@ Java平台中，因为有内置锁的机制，每个对象都可以承担锁的�
 ————————————————
 版权声明：本文为CSDN博主「雪飘雪融」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
 原文链接：https://blog.csdn.net/qq_22498277/article/details/82184419
+
+![img_3.png](img_3.png)
+
+1，准备争抢会进入临界区的线程会进入Entry Set；
+2，只有一个线程会进去临界区，独占锁；
+3，获取锁的线程执行wait方法会让出锁，并进去Wait Set；
+4，Wait Set中的线程需要被唤醒才能进入Entry Set，然后再参与竞争；
+
+作者：此间有道
+链接：https://www.jianshu.com/p/a3f86c89eb54
