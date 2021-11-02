@@ -1418,3 +1418,15 @@ final V putVal(int hash, K key, V value, boolean onlyIfAbsent,
 } 
 
 ```
+
+三十九、GC Root对象有哪些
+1，虚拟机栈（栈桢中的本地变量表）中引用的对象
+2，方法区中类静态属性引用的对象
+3，方法区中常量引用的对象
+4，本地方法栈中JNI即一般说的Native方法引用的对象
+
+四十、Java对象的锁池和等待池
+Java平台中，因为有内置锁的机制，每个对象都可以承担锁的功能。Java虚拟机会为每个对象维护两个“队列”（姑且称之为“队列”，尽管它不一定符合数据结构上队列的“先进先出”原则）：一个叫Entry Set（入口集），另外一个叫Wait Set（等待集）。对于任意的对象objectX，objectX的Entry Set用于存储等待获取objectX这个锁的所有线程，也就是传说中的锁池，objectX的Wait Set用于存储执行了objectX.wait()/wait(long)的线程，也就是等待池。
+————————————————
+版权声明：本文为CSDN博主「雪飘雪融」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
+原文链接：https://blog.csdn.net/qq_22498277/article/details/82184419
