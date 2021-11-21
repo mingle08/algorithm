@@ -1313,6 +1313,10 @@ java.util.concurrent包下的容器都是安全失败的，可以在多线程下
     }
 
 ```
+ThreadLocal内存泄露的根源，由于ThreadLocalMap的生命周期跟Thread一样长，如果没有手动删除对应的key，就会导致内存泄露，而不是因为弱引用
+ThreadLocal正确的使用方法：
+1，每次使用完ThreadLocal都手动调用remove()方法清除数据；
+2，将ThreadLocal变量定义成private static，这样就一直存在ThreadLocal强引用，也就能保证任何时候都能通过ThreadLocal的弱引用访问到Entry中的value，进而清除掉
 三十、HTTP消息结构
 
 ![img_1.png](img_1.png)
