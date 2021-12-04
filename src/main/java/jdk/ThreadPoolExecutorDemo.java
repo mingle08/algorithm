@@ -38,15 +38,17 @@ public class ThreadPoolExecutorDemo {
      * TERMINATED     3 << COUNT_BITS       0110 0000 0000 0000 0000 0000 0000 0000          011
      *
      *
+     *总结：
+     * 0001 1111 1111 1111 1111 1111 1111 1111    CAPACITY
      *
-     *  c & ~CAPACITY 就是取前三位
+     * 1110 0000 0000 0000 0000 0000 0000 0000    ~CAPACITY
+     *
+     *
      *  c & CAPACITY  取低 29 位的值, 也就是线程数
+     *  c & ~CAPACITY 就是取前三位，即线程的状态
      *
      *  Integer.MIN = -2147483648
      *  Integer.MAX = 2147483647
-     *
-     *
-     *
      *
      * @param args
      */
