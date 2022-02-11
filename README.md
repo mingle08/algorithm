@@ -697,7 +697,7 @@ MVCC只有在READ COMMITTED和REPEATABLE READ两个隔离级别下工作。其�
 （1）READ COMMITTED隔离级别下的事务在每次查询的开始都会生成一个独立的READVIEW
 （2）REPEATABLE READ隔离级别则在第一次读的时候生成一个READVIEW，之后的读都复用之前的READ VIEW
 
-4，开启事务时创建readview,readview维护当前活动的事务id，即未提交的事务尖，排序生成一个数组
+4，开启事务时创建readview,readview维护当前活动的事务id，即未提交的事务id，排序生成一个数组
 访问数据，获取数据中的事务id（获取的是事务id最大的记录），对比readview:
 （1）如果在readview的左边（比readview小），可以访问（在左边意味着该事务已经提交）
 （2）如果在readview的右边（比readview大），或者在readview区间内，不可以访问，获取roll_pointer，取上一版本重新对比（在右边意味着，该事务在readview生成之后出现；在readview区间内意味着该事务还未提交）
@@ -984,12 +984,47 @@ Use the DI style that makes the most sense for a particular class. Sometimes, wh
     加载范围：用户类路径（ClassPath）上所有的类库
 
 2，工作过程
-如果一个类加载哭收到了类加载的请求，它首先不会自己去尝试加载这个类，而是把这个请求委派给父类加载器去完成，每一个层次的类加载器都是如此，因此所有的加载请求最终都应该传送到最顶层的启动类加载器中，只有当父加载器反馈自己无法完成这个加载请求（它的搜索范围中没有找到所需要的类）时，子加载器才会尝试自己去完成加载
+如果一个类加载器收到了类加载的请求，它首先不会自己去尝试加载这个类，而是把这个请求委派给父类加载器去完成，每一个层次的类加载器都是如此，因此所有的加载请求最终都应该传送到最顶层的启动类加载器中，只有当父加载器反馈自己无法完成这个加载请求（它的搜索范围中没有找到所需要的类）时，子加载器才会尝试自己去完成加载
 3，破坏双亲委派模型
 （1）JDK1.2以前
     双亲委派模型是JDK1.2之后才引入的，已有的代码有很多重写ClassLoader中的loadClass()方法，而双亲委派的具体逻辑就在这个loadClass()方法里，所以Java设计者们引入双亲委派模型时不得不做出一些妥协，为了兼容这些已有代码，无法再以技术手段避免loadClass()被子类覆盖的可能性，只能在JDK1.2之后的java.lang.ClassLoader中添加一个新的protected方法findClass()，并引导用户编写的类加载逻辑时尽可能去重写这个方法，而不是在loadClass()中编写代码。
 
 ```java
+protected Class<?> loadClass(String name, boolean resolve) throws ClassNotFoundException {
+    synchronized (getClassLoadingLock(name)) {
+        // First, check if the class has already been loaded
+        Class<?> c = findLoadedClass(name);
+        if (c == null) {
+            long t0 = System.nanoTime();
+            try {
+                if (parent != null) {
+                    c = parent.loadClass(name, false);
+                } else {
+                    c = findBootstrapClassOrNull(name);
+                }
+            } catch (ClassNotFoundException e) {
+            // ClassNotFoundException thrown if class not found
+            // from the non-null parent class loader
+            }
+    
+            if (c == null) {
+                // If still not found, then invoke findClass in order
+                // to find the class.
+                long t1 = System.nanoTime();
+                c = findClass(name);
+    
+            // this is the defining class loader; record the stats
+            sun.misc.PerfCounter.getParentDelegationTime().addTime(t1 - t0);
+            sun.misc.PerfCounter.getFindClassTime().addElapsedTimeFrom(t1);
+            sun.misc.PerfCounter.getFindClasses().increment();
+            }
+        }
+        if (resolve) {
+            resolveClass(c);
+        }
+        return c;
+    }
+}
 /**
 Finds the class with the specified binary name. This method should be overridden by class loader implementations that follow the delegation model for loading classes, and will be invoked by the loadClass method after checking the parent class loader for the requested class. The default implementation throws a ClassNotFoundException.
 Params: name – The binary name of the class
@@ -1278,6 +1313,10 @@ java.util.concurrent包下的容器都是安全失败的，可以在多线程下
     }
 
 ```
+ThreadLocal内存泄露的根源，由于ThreadLocalMap的生命周期跟Thread一样长，如果没有手动删除对应的key，就会导致内存泄露，而不是因为弱引用
+ThreadLocal正确的使用方法：
+1，每次使用完ThreadLocal都手动调用remove()方法清除数据；
+2，将ThreadLocal变量定义成private static，这样就一直存在ThreadLocal强引用，也就能保证任何时候都能通过ThreadLocal的弱引用访问到Entry中的value，进而清除掉
 三十、HTTP消息结构
 
 ![img_1.png](img_1.png)
@@ -1320,9 +1359,7 @@ https://www.jianshu.com/p/98e8cfbf1b12
 
 3，熔断
 服务熔断（防止服务雪崩）:作用在服务提供者
-当链路的某个微服务不可用或者响应时间太长时，会进行服务的降级，进而熔断该节点微服务的调用，快速返回“错误”的响应信息。当检测到该节点微服务响应正常后恢复调用链路
-
-2，go channel
+当链路的某个微服务不可用或者响应时间太长时，会进行服务的降级，进而熔断该节点微服务的调用，快速返回“错误”的响应信息。当检测到该节点微服务响应正常后恢复调用链
 
 三十五、dubbo的服务是怎么暴露的？
 
@@ -1358,7 +1395,7 @@ final V putVal(int hash, K key, V value, boolean onlyIfAbsent,
     */
     if ((p = tab[i = (n - 1) & hash]) == null)
         tab[i] = newNode(hash, key, value, null);
-    // 桶中已经存在元素
+    // 桶中已经存在元素：hash值相同
     else {
         Node<K,V> e; K k;
         // 比较桶中第一个元素(数组中的结点), 如果hash值相等，key相等
@@ -1366,7 +1403,7 @@ final V putVal(int hash, K key, V value, boolean onlyIfAbsent,
             ((k = p.key) == key || (key != null && key.equals(k))))
                 // 将第一个元素赋值给e，用e来记录，后面将e进行旧值覆盖
                 e = p;
-        // hash值不相等，即key不相等；为红黑树结点
+        // key不相等且为红黑树结点
         else if (p instanceof TreeNode)
             // 放入树中
             e = ((TreeNode<K,V>)p).putTreeVal(this, tab, hash, key, value);
@@ -1418,6 +1455,14 @@ final V putVal(int hash, K key, V value, boolean onlyIfAbsent,
 } 
 
 ```
+
+三十九、Spring启动流程
+1，在创建Spring容器，即启动Spring时：
+（1）扫描xml文件，得到所有的BeanDefinition对象，并保存在一个Map中
+（2）筛选出非懒加载的单例BeanDefinition进行创建，对于多例不需要在启动过程中创建，会在每次获取Bean时利用BeanDefinition创建
+（3）利用BeanDefinition创建Bean就是Bean的创建的生命周期，这过程包括了合并BeanDefinition、推断构造方法、实例化、属性填充、初始化前、初始化、初始化后等步骤，其中AOP就是改重在初始化后这一步骤中
+2，单例Bean创建完成之后，Spring会发布一个容器启动事件
+3，Spring启动结束
 
 三十九、GC Root对象有哪些
 1，虚拟机栈（栈桢中的本地变量表）中引用的对象
@@ -1634,3 +1679,20 @@ InputSource，EntityResolver都在jdk中
 		}
 	}
 ```
+
+四十二、并发的三大特性
+1，原子性
+java内存模型保证原子性：lock, unlock, synchronized
+2，可见性
+（1）volatile
+    Java内存模型是通过在变量修改后将新值同步回主内存，在变量读取前从主内存刷新变量值这种依赖主内存作为传递媒介的方式来实现可见性的，无论是普通变量还是volatile变量都是如此。
+普通变量与volatie变量的区别是，volatile的特殊规则保证了新值能立即同步到主内存，以及每次使用前立即从主内存刷新。因此我们可以说volatile保证了多线程操作时变量的可见性，而普通变量则不能保证这一点。
+（2）synchronized
+    同步块的可见性，是由“对一个变量执行unlock操作之前，必须先把此变量同步回主内存中（执行store、write操作）”这条规则获得的。
+（3）final
+    被final修饰的字段在构造器中一旦被初始化完成，并且构造器没有把“this”的引用传递出去，那么在其他线程中就能看见final字段的值
+3，有序性
+（1）volatile
+    volatile关键字本身就包含了禁止指令重排序的语义
+（2）synchronized
+    则是由“一个变量在同一个时刻只允许一条线程对其进行lock操作”这条规则获得的，这个规则决定了持有同一个锁的两个同步块只能串行地进入
