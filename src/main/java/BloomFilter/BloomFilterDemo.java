@@ -1,6 +1,8 @@
 package BloomFilter;
 
 import java.util.BitSet;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *  照搬Snailclimb大神的代码
@@ -42,6 +44,7 @@ public class BloomFilterDemo {
      */
     public void add(Object value) {
         for (SimpleHash f : funcArr) {
+            // set方法的第二个参数：true是保存，false是删除
             bits.set(f.hash(value), true);
         }
     }
@@ -81,7 +84,7 @@ public class BloomFilterDemo {
     }
 
     public static void main(String[] args) {
-        String str1 = "https://javaguide.cn/";
+        /*String str1 = "https://javaguide.cn/";
         String str2 = "https://github.com/Snailclimb";
         BloomFilterDemo filter = new BloomFilterDemo();
         System.out.println(filter.contains(str1));
@@ -89,6 +92,8 @@ public class BloomFilterDemo {
         filter.add(str1);
         filter.add(str2);
         System.out.println(filter.contains(str1));
-        System.out.println(filter.contains(str2));
+        System.out.println(filter.contains(str2));*/
+
+
     }
 }
