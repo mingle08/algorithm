@@ -47,11 +47,27 @@ public class Q010_Fibonacci {
         return fibN;
     }
 
+    // 带备忘录的递归
+    public int fib(int n) {
+        int[] memo = new int[n + 1];
+        return helper(memo, n);
+    }
+
+    private int helper(int[] memo, int n) {
+        // base case
+        if (n < 2) return n;
+        // 已经计算过了，不用再计算
+        if (memo[n] != 0) return memo[n];
+        memo[n] = helper(memo, n - 1) + helper(memo, n - 2);
+        return memo[n];
+    }
+
     public static void main(String[] args){
         Q010_Fibonacci solution = new Q010_Fibonacci();
 
         long res1 = solution.fibonacci1(20);
         long res2 = solution.fibonacci2(20);
-        System.out.println(res1 + ", " + res2);
+        long res3 = solution.fib(20);
+        System.out.println(res1 + ", " + res2 + ", " + res3);
     }
 }

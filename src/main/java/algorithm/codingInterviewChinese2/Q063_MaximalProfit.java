@@ -12,7 +12,8 @@ public class Q063_MaximalProfit {
         int maxDiff = arr[1] - min;
 
         for (int i = 2; i < arr.length; i++) {
-            if (arr[i - 1] < min) {    // min初始值是0下标的，此处i=2，所以要取i-1与min比较
+            // min初始值是0下标的，此处i=2，所以要取i-1与min比较
+            if (arr[i - 1] < min) {
                 min = arr[i -1];
             }
             int currMaxDiff = arr[i] - min;

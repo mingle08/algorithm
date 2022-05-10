@@ -1,4 +1,4 @@
-package algorithm.labuladong;
+package algorithm.labuladong.chapter2;
 
 /**
  * 戳气球

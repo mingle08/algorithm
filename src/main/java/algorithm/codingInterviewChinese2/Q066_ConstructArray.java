@@ -8,8 +8,10 @@ package algorithm.codingInterviewChinese2;
  *
  * 思路：
  * 分成两部分：B[i] = C[i] * D[i}
- * 即C[i] = A[0] * A[1] * ... * A[i-1], D[i] = A[i+1] * ... * A[n-1].
- * 而C[i] = C[i-1] * A[i-1], D[i] = D[i-1] * A[i+1]
+ * 即C[i] = A[0] * A[1] * ... * A[i-1],
+ * D[i] = A[i+1] * ... * A[n-1].
+ * 而C[i] = C[i-1] * A[i-1],
+ * D[i] = D[i-1] * A[i+1]
  */
 public class Q066_ConstructArray {
 

@@ -28,8 +28,10 @@ public class Q061_ContinousCards {
         }
 
         // 统计数组中的间隔数，small和big都是数组下标
-        int small = numOfZero; // 如果有2个0，small是2，num[small]对应第三个数
-        int big = small + 1;    // 顺子相邻的2张牌：小的是small，大的是big
+        // 如果有2个0，small是2，num[small]对应第三个数
+        int small = numOfZero;
+        // 顺子相邻的2张牌：小的是small，大的是big
+        int big = small + 1;
         while (big < len){
             // 二个数相等，即对子，不可能是顺子
             if (num[small] == num[big])
@@ -37,8 +39,10 @@ public class Q061_ContinousCards {
 
             // 空缺： 顺子相邻二数相差1，不算缺口，需再减 1
             numOfGap += num[big] - num[small] - 1;
-            small = big;    // small移到big的位置
-            big++;    // big再往上移一位
+            // small移到big的位置
+            small = big;
+            // big再往上移一位
+            big++;
         }
 
         return numOfGap <= numOfZero;

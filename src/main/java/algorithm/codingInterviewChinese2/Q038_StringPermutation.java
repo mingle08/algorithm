@@ -227,6 +227,7 @@ public class Q038_StringPermutation {
 
     /**
      * labuladong的解法
+     * 简单易懂，但效率并不高
      */
     static List<List<Character>> res = new LinkedList<>();
 

@@ -1,4 +1,4 @@
-package algorithm.labuladong;
+package algorithm.labuladong.chapter2;
 
 import java.util.Arrays;
 import java.util.Comparator;

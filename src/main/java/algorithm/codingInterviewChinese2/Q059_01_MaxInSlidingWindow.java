@@ -19,7 +19,7 @@ public class Q059_01_MaxInSlidingWindow {
         Deque<Integer> deque = new ArrayDeque<>();
 
         // 遍历0~size-1范围内
-        for (int i = 0; i < size - 1; i++) {
+        for (int i = 0; i < size; i++) {
             // 若队尾下标对应的数字小于待存入的数据，那么它不可能是最大值，将其删除
             while (!deque.isEmpty() && num[i] >= num[deque.getLast()])
                 deque.removeLast();
@@ -27,17 +27,21 @@ public class Q059_01_MaxInSlidingWindow {
             deque.addLast(i);
         }
         // 遍历size-1至length范围
-        for (int i = size - 1; i < num.length; i++) {
-            // 如果滑动窗口已经不包含队首下标对应的值，删除队首元素
-            while (!deque.isEmpty() && i - deque.getFirst() + 1 > size)
-                deque.removeFirst();
+        for (int i = size; i < num.length; i++) {
+            res[i - size] = num[deque.getFirst()];
             // 若队尾下标对应的数字小于待存入的数据，那么它不可能是最大值，将其删除
-            while (!deque.isEmpty() && num[deque.getLast()] <= num[i])
+            while (!deque.isEmpty() && num[deque.getLast()] <= num[i]) {
                 deque.removeLast();
+            }
+            // 如果滑动窗口已经不包含队首下标对应的值，删除队首元素
+            if (!deque.isEmpty() && (i - deque.getFirst()) >= size) {
+                deque.removeFirst();
+            }
 
             deque.addLast(i);
-            res[i - (size - 1)] = num[deque.getFirst()];
         }
+        // 保存最后一个最大值
+        res[num.length - size] = num[deque.getFirst()];
         return res;
     }
 

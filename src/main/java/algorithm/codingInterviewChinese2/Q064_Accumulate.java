@@ -7,7 +7,8 @@ package algorithm.codingInterviewChinese2;
 public class Q064_Accumulate {
 
     public static int accum(int n) {
-        int sum = 1; //初始为1是作为base case的
+        //初始为1是作为base case的
+        int sum = 1;
         boolean flag = n == 1 || (sum = n + accum(n - 1)) > 0;
         return sum;
     }

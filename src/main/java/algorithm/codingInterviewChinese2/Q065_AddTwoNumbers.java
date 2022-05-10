@@ -10,7 +10,7 @@ package algorithm.codingInterviewChinese2;
  *          这个进位，可以看作&运算，然后向左移一位
  * 3，把前面两个结果加起来：有可能有进位，所以重复循环这3步
  *
- *
+ * 加法器的原理
  */
 public class Q065_AddTwoNumbers {
 
