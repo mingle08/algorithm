@@ -73,6 +73,35 @@ public class Q023_EntryNodeInListLoop {
         return pNode1;
     }
 
+    /**
+     * 当快、慢指针相遇时，让其中任何一个指针指向头节点，然后让2个指针以相同速度前进，再次相遇时所在的节点位置就是环开始的位置
+     * 第一次相遇时，假设慢指针slow走了k步，那么快指针fast一定走了2k步，也就是说，比slow指针多走了k步（环长度的整数倍）
+     * 设相遇点与环的起点的距离为m，那么环的起点与头节点head的距离为(k - m)，也就是说从head前进(k - m)步就能到达环的起点。
+     * 而如果从相遇点继续前进(k - m)步，也恰好到达环的起点
+     * 因为快指针比慢指针多走的k步，就是从相遇点出发再走k步（好几圈）回到相遇点的步数。从相遇点到头节点的k步，是快慢指针都走过的。
+     * k步往回退m，就剩下(k - m)
+     * 慢指针的后退m距离比较好理解，快指针走过的k步，在最后一圈，在距离相遇点m的地方停下，走过的距离就是(k - m)的距离
+     * 把步理解为步长，理解成距离单位
+     * @param head
+     * @return
+     */
+    public ListNode findEntryNode(ListNode head) {
+        ListNode fast, slow;
+        fast = slow = head;
+        while (fast != null && fast.next != null) {
+            fast = fast.next.next;
+            slow = slow.next;
+            if (fast.val == slow.val) break;
+        }
+
+        slow = head;
+        while (slow.val != fast.val) {
+            slow = slow.next;
+            fast = fast.next;
+        }
+        return slow;
+    }
+
     public static void main(String[] args) {
         Q023_EntryNodeInListLoop solution = new Q023_EntryNodeInListLoop();
         ListNode root = new ListNode(1);
@@ -93,5 +122,7 @@ public class Q023_EntryNodeInListLoop {
         System.out.println("环中的一个节点：" + meet.val);
         ListNode entry = solution.entryNodeOfLoop(root);
         System.out.println("环的入口为：" + entry.val);
+        ListNode enter = solution.findEntryNode(root);
+        System.out.println("第二种找法，环的入口：" + enter.val);
     }
 }
