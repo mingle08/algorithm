@@ -87,7 +87,6 @@ public class Q038_3_3_EightQueen {
 		int specialCol = 1;
 		Q038_3_3_EightQueen problem = new Q038_3_3_EightQueen(specialRow, specialCol, size);
 		problem.printBoard(specialRow, specialCol, size);
-
 	}
 
 }
