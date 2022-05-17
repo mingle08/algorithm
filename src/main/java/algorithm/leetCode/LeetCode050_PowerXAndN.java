@@ -1,9 +1,9 @@
-package algorithm.leetcode;
+package algorithm.leetCode;
 
 public class LeetCode050_PowerXAndN {
 
     public static void main(String[] args) {
-        algorithm.leetcode.LeetCode050_PowerXAndN solution = new algorithm.leetcode.LeetCode050_PowerXAndN();
+        LeetCode050_PowerXAndN solution = new LeetCode050_PowerXAndN();
         double x = 2;
         int n = 6;
         double res = solution.myPow(x, n);

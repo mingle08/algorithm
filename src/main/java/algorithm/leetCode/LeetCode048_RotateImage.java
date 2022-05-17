@@ -1,4 +1,4 @@
-package algorithm.leetcode;
+package algorithm.leetCode;
 
 public class LeetCode048_RotateImage {
 

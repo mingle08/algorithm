@@ -1,4 +1,4 @@
-package algorithm.leetcode.p047;
+package algorithm.leetCode;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -7,7 +7,7 @@ import java.util.List;
 public class LeetCode047_PermutationsII {
 
     public static void main(String[] args) {
-        algorithm.leetcode.p047.LeetCode047_PermutationsII solution = new algorithm.leetcode.p047.LeetCode047_PermutationsII();
+        LeetCode047_PermutationsII solution = new LeetCode047_PermutationsII();
         int[] arr = {1,1,2};
         List<List<Integer>> result = solution.permuteUnique(arr);
 

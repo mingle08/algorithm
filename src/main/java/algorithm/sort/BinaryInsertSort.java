@@ -1,4 +1,4 @@
-package algoDemo.sort;
+package algorithm.sort;
 
 /**
  * 二分法插入排序
@@ -12,7 +12,7 @@ public class BinaryInsertSort {
 		sort1(a);
 
 		for(int i = 0; i < a.length; i++ ) {
-			System.out.println(" " + a[i]);
+			System.out.print(" " + a[i]);
 		}
 
 	}
