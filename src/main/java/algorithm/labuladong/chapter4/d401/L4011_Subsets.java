@@ -31,18 +31,18 @@ public class L4011_Subsets {
     /**
      * 回溯法
      */
+    static List<List<Integer>> res = new ArrayList<List<Integer>>();
     public static List<List<Integer>> subsets2(int[] nums) {
-        List<List<Integer>> res = new ArrayList<List<Integer>>();
         List<Integer> temp = new ArrayList<Integer>();
-        dfs(res, temp, nums, 0);
+        dfs(temp, nums, 0);
         return res;
     }
 
-    private static void dfs(List<List<Integer>> res, List<Integer> temp, int[] nums, int j) {
+    private static void dfs(List<Integer> temp, int[] nums, int start) {
         res.add(new ArrayList<Integer>(temp));
-        for (int i = j; i < nums.length; i++) {
+        for (int i = start; i < nums.length; i++) {
             temp.add(nums[i]);  //① 加入 nums[i]
-            dfs(res, temp, nums, i + 1);  //② 递归
+            dfs(temp, nums, i + 1);  //② 递归
             temp.remove(temp.size() - 1);  //③ 移除 nums[i]
         }
     }
