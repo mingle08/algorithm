@@ -15,20 +15,20 @@ public class Q058_01_ReverseWordsInSentence {
      */
     public static String reverseSentence(String str) {
         if (str == null) return null;
-        char[] chs = str.toCharArray();
+        char[] S = str.toCharArray();
         StringBuilder sb = new StringBuilder();
         int i = str.length() - 1, j;
         while (i >= 0) {
-            if (chs[i] != ' ') {
+            if (S[i] != ' ') {
                 j = i;
-                while (i >= 0 && chs[i] != ' ') {
+                while (i >= 0 && S[i] != ' ') {
                     i--;
                 }
                 /*int len = j - i;
                 char[] temp = new char[len];
                 // 从后往前遍历，便于理解
                 for (int k = j; k > i; k--) {
-                    temp[len-1] = chs[k];
+                    temp[len-1] = S[k];
                     len--;
                 }*/
                 /**

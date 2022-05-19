@@ -4,7 +4,7 @@ public class L207_LongestPalindromeSubseq {
 
     static int findPalindrome(String s) {
         int n = s.length();
-        char[] chs = s.toCharArray();
+        char[] S = s.toCharArray();
         // dp数组全部初始化为0
         int[][] dp = new int[n][n];
         // base case
@@ -15,7 +15,7 @@ public class L207_LongestPalindromeSubseq {
         for (int i = n - 2; i >= 0; i--) {
             for (int j = i + 1; j < n; j++) {
                 // 状态转移方程
-                if (chs[i] == chs[j])
+                if (S[i] == S[j])
                     dp[i][j] = dp[i + 1][j - 1] + 2;
                 else
                     dp[i][j] = Math.max(dp[i + 1][j], dp[i][j - 1]);
@@ -32,7 +32,7 @@ public class L207_LongestPalindromeSubseq {
      */
     static int longestPalindrome(String s) {
         int n = s.length();
-        char[] chs = s.toCharArray();
+        char[] S = s.toCharArray();
         // base case：一维dp数组全部初始化为1
         int[] dp = new int[n];
         for (int i = 0; i < n; i++) {
@@ -43,7 +43,7 @@ public class L207_LongestPalindromeSubseq {
             for (int j = i + 1; j < n; j++) {
                 int temp = dp[j];
                 // 状态转移方程
-                if (chs[i] == chs[j])
+                if (S[i] == S[j])
                     dp[j] = pre + 2;
                 else
                     dp[j] = Math.max(dp[j], dp[j - 1]);

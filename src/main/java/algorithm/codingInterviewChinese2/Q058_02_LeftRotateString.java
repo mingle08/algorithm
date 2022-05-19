@@ -7,14 +7,14 @@ package algorithm.codingInterviewChinese2;
  */
 public class Q058_02_LeftRotateString {
     /*
-    private void reverse(char[] chs, int start, int end) {
-        if (chs == null || chs.length < 0 || start > end || start < 0 || end > chs.length)
+    private void reverse(char[] S, int start, int end) {
+        if (S == null || S.length < 0 || start > end || start < 0 || end > S.length)
             return;
 
         while (start < end) {
-            char temp = chs[start];
-            chs[start] = chs[end];
-            chs[end] = temp;
+            char temp = S[start];
+            S[start] = S[end];
+            S[end] = temp;
 
             start++;
             end--;
@@ -50,8 +50,8 @@ public class Q058_02_LeftRotateString {
     public static void main(String[] args){
         Q058_02_LeftRotateString solution = new Q058_02_LeftRotateString();
         String str = "abcdefg";
-        char[] chs = str.toCharArray();
-//        String rotateStr = solution.leftRotateString(chs, 2);
+        char[] S = str.toCharArray();
+//        String rotateStr = solution.leftRotateString(S, 2);
 //        Systemm.out.println(rotateStr);
 
         String s = leftRotate(str, 2);

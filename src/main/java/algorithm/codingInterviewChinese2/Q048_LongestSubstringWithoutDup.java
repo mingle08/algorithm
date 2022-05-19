@@ -45,12 +45,12 @@ public class Q048_LongestSubstringWithoutDup {
         for (int i = 0; i < 26; i++)
             lastPos[i] = -1;
 
-        char[] chs = str.toCharArray();
+        char[] S = str.toCharArray();
         int i = -1;
         int res = 0;
-        for (int k = 0; k < chs.length; k++) {
+        for (int k = 0; k < S.length; k++) {
             // 字母在26个字母中的位置，下标从0开始计算
-            int j = chs[k] - 'a';
+            int j = S[k] - 'a';
 
             // 如果重复出现，i更新到新出现的位置
             if (lastPos[j] > -1) {

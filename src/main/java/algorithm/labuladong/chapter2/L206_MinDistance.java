@@ -2,8 +2,8 @@ package algorithm.labuladong.chapter2;
 
 /**
  * 可以对一个字符串进行三种操作：插入一个字符、删除一个字符、替换一个字符
- * 现在给你2个字符串s1和s2，请计算将s1转换成s2最少需要多少次操作
- * 比如，输入s1 = "intention", s2 = "execution"，那么算法应该返回5，因为最少需要5步可以将s1变成s2
+ * 现在给你2个字符串s和t，请计算将s转换成t最少需要多少次操作
+ * 比如，输入s = "intention", t = "execution"，那么算法应该返回5，因为最少需要5步可以将s变成t
  * 第一步：删除't', intention -> inention
  * 第二步：将'i'替换为'e', inention -> enention
  * 第三步：将'n'替换为'x', enention -> exention
@@ -38,10 +38,10 @@ package algorithm.labuladong.chapter2;
  * 3，再分析
  */
 public class L206_MinDistance {
-    static int minDistance(String s1, String s2) {
-        int m = s1.length(), n = s2.length();
-        char[] ch1 = s1.toCharArray();
-        char[] ch2 = s2.toCharArray();
+    static int minDistance(String s, String t) {
+        int m = s.length(), n = t.length();
+        char[] S = s.toCharArray();
+        char[] T = t.toCharArray();
         int[][] dp = new int[m + 1][n + 1];
         // base case
         for (int i = 0; i < m + 1; i++) {
@@ -56,9 +56,9 @@ public class L206_MinDistance {
                 /*
                 注意循环起始条件是1，最大值限定是 < m + 1, < n + 1
                 需要用到i为0，j为0的值，所以是i-1，j-1
-                i - 1，j - 1也保证了ch1，ch2下标不会越界
+                i - 1，j - 1也保证了S，T下标不会越界
                  */
-                if (ch1[i - 1] == ch2[j - 1])
+                if (S[i - 1] == T[j - 1])
                     dp[i][j] = dp[i - 1][j - 1];
                 else
                     dp[i][j] = Math.min(Math.min(dp[i][j - 1] + 1,  // 插入
@@ -71,8 +71,8 @@ public class L206_MinDistance {
     }
 
     public static void main(String[] args) {
-        String s1 = "intention", s2 = "execution";
-        int res = minDistance(s1, s2);
+        String s = "intention", t = "execution";
+        int res = minDistance(s, t);
         System.out.println(res);
     }
 }

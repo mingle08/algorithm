@@ -26,7 +26,7 @@ public class Q046_TranslateNumbersToString {
 
     private int getCount(String str) {
         int len = str.length();
-        char[] chs = str.toCharArray();
+        char[] S = str.toCharArray();
         int[] counts = new int[len];
         int cnt = 0;
         for (int i = len - 1; i >= 0; i--) {
@@ -38,8 +38,8 @@ public class Q046_TranslateNumbersToString {
                 cnt = 1;
 
             if (i < len - 1) {
-                int digit1 = chs[i] - '0';
-                int digit2 = chs[i + 1] - '0';
+                int digit1 = S[i] - '0';
+                int digit2 = S[i + 1] - '0';
                 int converted = digit1 * 10 + digit2;
                 if (converted >= 10 && converted <= 25) {
                     if (i < len - 2)

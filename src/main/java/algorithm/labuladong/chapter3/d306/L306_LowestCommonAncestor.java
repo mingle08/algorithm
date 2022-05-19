@@ -6,11 +6,17 @@ import algorithm.util.TreeNode;
  * 二叉树的最近公共祖先
  * 输入一棵树以root为根的二叉树和该二叉树上的2个节点p和q，请计算这2个节点的最近公共祖先
  *
+ * 递归什么时候终止退出？
+ * 当节点不是叶子节点，或节点值不等于p或q时，会一直递归
+ * 当节点是叶子节点，或节点值等于p或q时返回上层递归
+ *
+ * 本题例子，最后退回到root是3，即根节点，左是5，右是null，是情况3，所以返回不是null的那个，也就是5
  */
 public class L306_LowestCommonAncestor {
 
     private static TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
         // 两种情况的base case
+        // 在递归过程中，这2句是用来退出递归回到上一层的
         if (root == null) return null;
         if (root == p || root == q) return root;
 

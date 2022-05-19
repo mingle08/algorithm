@@ -13,16 +13,16 @@ public class Q050_01_FirstNotRepeatingChar {
     public char firstRepeating(String str){
         if (str == null)
             return '\0';
-        char[] chs = str.toCharArray();
+        char[] S = str.toCharArray();
         int size = 256;
         // 借助数组，模拟哈希表（256代表所有的数字与大小写字母的总和）
         int[] hashTable = new int[size];
-        for (int i = 0; i < chs.length; i++) {
-            hashTable[chs[i]]++;  // 先查出hashTable中chs[i]的值，再加1
+        for (int i = 0; i < S.length; i++) {
+            hashTable[S[i]]++;  // 先查出hashTable中S[i]的值，再加1
         }
-        for (int i = 0; i < chs.length; i++) {// 按字符数组从前往后遍历，保证字符的先后顺序
-            if (hashTable[chs[i]] == 1)
-                return chs[i];
+        for (int i = 0; i < S.length; i++) {// 按字符数组从前往后遍历，保证字符的先后顺序
+            if (hashTable[S[i]] == 1)
+                return S[i];
         }
         return '\0';
     }

@@ -9,16 +9,16 @@ public class LeetCode125_ValidPalindrome {
         if (str == null)
             return false;
 
-        char[] chs = str.toLowerCase().toCharArray();
-        int len = chs.length;
+        char[] S = str.toLowerCase().toCharArray();
+        int len = S.length;
         int left = 0;
         int right = len - 1;
         while (left < right){
-            if (!(chs[left] >= '0' && chs[left] <= '9') || !(chs[left] >= 'a' && chs[left] <= 'z'))
+            if (!(S[left] >= '0' && S[left] <= '9') || !(S[left] >= 'a' && S[left] <= 'z'))
                 left++;
-            else if (!(chs[right] >= '0' && chs[right] <= '9') || !(chs[right] >= 'a' && chs[right] <= 'z'))
+            else if (!(S[right] >= '0' && S[right] <= '9') || !(S[right] >= 'a' && S[right] <= 'z'))
                 right--;
-            else if (chs[left] == chs[right]){
+            else if (S[left] == S[right]){
                 left++;
                 right--;
             } else
