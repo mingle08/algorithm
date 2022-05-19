@@ -10,7 +10,9 @@ package algorithm.codingInterviewChinese2;
 public class Q015_NumOfBitToChange {
 
     private static int countNumOfBit(int m, int n) {
+        // 1，异或
         int x = m ^ n;
+        // 2，统计异或结果中1的位数
         int count = numOf1(x);
         return count;
     }

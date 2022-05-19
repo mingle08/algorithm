@@ -39,7 +39,7 @@ public class Q018_1_DeleteNodeInList {
 
             nextNode = null;
         }
-        // 2，要删除的节点是尾节点
+        // 2，要删除的节点是尾节点，因为尾节点后面是空，不需要处理，需要处理的是与前节点的关系，要拿到前节点，把它的下个节点设为null
         // 2.1 链表只有一个节点，删除头节点（也是尾节点）
         else if (head.next == null && head == toBeDeleted) {
             dummy.next = null;

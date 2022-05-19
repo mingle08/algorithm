@@ -37,7 +37,9 @@ public class Q016_Power {
 
         // 用右移 >> 代替除以2
         double res = powerWithUnsignedExponent(base, exponent >> 1);
+        // 1，先平方
         res *= res;
+        // 2，如果是奇数，再乘以base
         if ((exponent & 0x1) == 1){  // 位与判断一个数是奇数还是偶数
             res *= base;
         }
@@ -68,6 +70,7 @@ public class Q016_Power {
                不然只是计算平方，供后面是1的使用
              */
             base *= base;   // base^2, base^4, base^8 ……  只有二进制是1的才记住结果
+            // 指数右移
             exponent = exponent >> 1;
         }
         return res;

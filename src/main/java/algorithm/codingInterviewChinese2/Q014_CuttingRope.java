@@ -14,7 +14,7 @@ package algorithm.codingInterviewChinese2;
 public class Q014_CuttingRope {
 
     // 1. 动态规划  时间复杂度：O(n^2)  空间复杂度：O(n)
-    public int maxProductAfterCutting_1(int length){
+    public static int maxProductAfterCutting_1(int length){
         if (length < 2)
             return 0;
         if (length == 2)
@@ -36,11 +36,15 @@ public class Q014_CuttingRope {
         int max = 0;
         for (int i = 4; i <= length; i++){
             max = 0;
+            /**
+             * 为了求解f(i)，需求求出所有可能的f(j) * f(i - j)并比较得出最大值
+             */
             for (int j = 0; j <= i/2 ; j++) {
                 int product = products[j] * products[i-j];
                 if (max < product)
                     max = product;
 
+                // 变量i
                 products[i] = max;
             }
         }
@@ -54,7 +58,7 @@ public class Q014_CuttingRope {
      * 当 n >= 5时，尽可能多地剪长度为3的绳子
      * 当 剩下的绳子长度为4时，把绳子剪成2段长度为2的绳子，其实剪与不剪，都是4
      */
-    public int maxProductAfterCutting_2(int length){
+    public static int maxProductAfterCutting_2(int length){
         if (length < 2)
             return 0;
         if (length == 2)
@@ -76,5 +80,12 @@ public class Q014_CuttingRope {
 
         return (int)(Math.pow(3, timesOf3)) * (int)(Math.pow(2, timeOf2));
 
+    }
+
+    public static void main(String[] args) {
+        int len = 8;
+        int res1 = maxProductAfterCutting_1(len);
+        int res2 = maxProductAfterCutting_2(len);
+        System.out.println(res1 + ", " + res2);
     }
 }

@@ -24,6 +24,7 @@ public class Q008_NextNodeInBinaryTree {
         if(pNode==null)
             return null;
         TreeNode pNext = null;
+        // 有右子树
         if (pNode.right != null){
             TreeNode pRight = pNode.right;
             while (pRight.left != null) {    // 找最左子节点

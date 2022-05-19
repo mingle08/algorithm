@@ -30,11 +30,11 @@ public class Q007_ConstructBinaryTree {
             return null;
         }
 
-        // 二叉树的根节点
+        // 1，求出二叉树的根节点
         TreeNode root = new TreeNode(preOrder[0]);
         root.left = null;
         root.right = null;
-        // 左子树的个数
+        // 2，求出左子树的个数
         int leftNum = 0;
         for (int j : inOrder) {
             if (root.val == j) {
@@ -43,34 +43,34 @@ public class Q007_ConstructBinaryTree {
                 leftNum++;
             }
         }
-        // 右子树的个数
+        // 3，求出右子树的个数
         int rightNum = inOrder.length - 1 - leftNum;
-        // 重建左子树
+        // 4，重建左子树
         if (leftNum > 0) {
-            //左子树的先序序列
+            // 4.1 左子树的先序序列
             int[] leftPreOrder = new int[leftNum];
-            //左子树的中序序列
+            //4.2 左子树的中序序列
             int[] leftInOrder = new int[leftNum];
             for (int i = 0; i < leftNum; i++) {
                 leftPreOrder[i] = preOrder[i + 1];    // 因为第一位是根节点，所以是 i + 1
                 leftInOrder[i] = inOrder[i];
             }
-            // 递归构建左子树
+            // 4.3 递归构建左子树
             TreeNode leftRoot = construct(leftPreOrder, leftInOrder);
 
             root.left = leftRoot;
         }
-        // 重构右子树
+        // 5，重构右子树
         if (rightNum > 0) {
-            //右子树的先序序列
+            // 5.1 右子树的先序序列
             int[] rightPreOrder = new int[rightNum];
-            //右子树的中序序列
+            // 5.2 右子树的中序序列
             int[] rightInOrder = new int[rightNum];
             for (int i = 0;  i < rightNum; i++) {
                 rightPreOrder[i] = preOrder[leftNum + 1 + i];    // 根节点和左子树都在左侧
                 rightInOrder[i] = inOrder[leftNum + 1 + i];
             }
-            // 递归构建右子树
+            // 5.3 递归构建右子树
             TreeNode rightRoot = construct(rightPreOrder, rightInOrder);
 
             root.right = rightRoot;

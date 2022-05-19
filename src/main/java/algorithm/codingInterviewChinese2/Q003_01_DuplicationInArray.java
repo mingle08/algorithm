@@ -22,8 +22,10 @@ public class Q003_01_DuplicationInArray {
 
         // 多次循环，交换之后，数组变成{0,1,2,3,2,5,3}
         for (int i = 0; i < nums.length; i++) {
-            while (nums[i] != i){// 当i为4时，nums[4] == 2,
-                if(nums[i] == nums[nums[i]]){// 比较nums[4] 与nums[nums[4]]（即nums[2] == 2）
+            // 当i为4时，nums[4] != 4（因为nums[4] == 2)
+            while (nums[i] != i){
+                // 比较nums[4] 与nums[nums[4]]（即nums[4] == nums[2]）
+                if(nums[i] == nums[nums[i]]){
                     return nums[i];
                 }
 

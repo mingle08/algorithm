@@ -83,11 +83,18 @@ public class Q017_Print1ToMaxNDigits {
         if (index == numbers.length - 1) {
             printNumber(numbers);
             // 因为个位设置好了，就打印，然后执行return，所以index不会越界
+            // 打印之后就返回递归上一层，
             return;
         }
 
         for (int i = 0; i < 10; i++) {
-            // 依次设置第二位，第三位，直到个位
+            /**
+             * 比如2位数，index + 1就是个位
+             * i为0时，个位就是字符0，进入下层递归，00 不打印，返回这层
+             * i为1时，个位就是字符1，进入下层递归，01 打印1，返回这里
+             * i为2时，个位就是字符2，进入下层递归，02 打印2，返回这里
+             * 一直到9，结束循环，退回到上层递归
+             */
             numbers[index + 1] = (char) (i + '0');
             print1ToMaxNDigits_Recursive(numbers, index + 1);
         }

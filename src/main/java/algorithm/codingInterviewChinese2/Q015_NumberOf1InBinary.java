@@ -23,7 +23,7 @@ public class Q015_NumberOf1InBinary {
     }
 
     /**
-     * 方法2：为了避免死循环的发生，我们不右移数字n。我们左移1
+     * 方法2：为了避免死循环的发生，我们不右移数字n。我们左移
      * @param num
      * @return
      */
@@ -34,6 +34,7 @@ public class Q015_NumberOf1InBinary {
             if ((num & flag) == 1){
                 count++;
             }
+            // 左移flag
             flag = flag << 1;
         }
         return count;
