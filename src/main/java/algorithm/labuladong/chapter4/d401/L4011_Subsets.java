@@ -32,6 +32,7 @@ public class L4011_Subsets {
      * 回溯法
      */
     static List<List<Integer>> res = new ArrayList<List<Integer>>();
+
     public static List<List<Integer>> subsets2(int[] nums) {
         List<Integer> temp = new ArrayList<Integer>();
         dfs(temp, nums, 0);

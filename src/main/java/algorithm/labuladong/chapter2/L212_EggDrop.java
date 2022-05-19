@@ -18,6 +18,7 @@ public class L212_EggDrop {
                 if (j == 0) {
                     memo[i][j] = 0;
                 }
+                // 初始化为-1
                 if (i != 1 && j != 0) {
                     memo[i][j] = -1;
                 }
