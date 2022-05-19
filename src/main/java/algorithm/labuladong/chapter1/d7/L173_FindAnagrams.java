@@ -16,9 +16,9 @@ public class L173_FindAnagrams {
     static List<Integer> findAnagrams(String s, String t) {
         Map<Character, Integer> need = new HashMap<>();
         Map<Character, Integer> window = new HashMap<>();
-        char[] chs = s.toCharArray();
-        char[] cht = t.toCharArray();
-        for (char ch : cht) {
+        char[] S = s.toCharArray();
+        char[] T = t.toCharArray();
+        for (char ch : T) {
             // Map中的getOrDefault方法，是1.8开始有的
             need.put(ch, need.getOrDefault(ch, 0) + 1);
         }
@@ -28,7 +28,7 @@ public class L173_FindAnagrams {
         List<Integer> res = new ArrayList<>();
         while (right < s.length()) {
             // c是将要移入窗口的字符
-            char c = chs[right];
+            char c = S[right];
             // 右移窗口
             right++;
             // 进行窗口内数据的一系列操作
@@ -44,7 +44,7 @@ public class L173_FindAnagrams {
                 if (valid == need.size())
                     res.add(left);
                 // d是将要移出窗口的字符
-                char d = chs[left];
+                char d = S[left];
                 // 右移窗口
                 left++;
                 // 进行窗口内数据的一系列更新

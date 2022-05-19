@@ -26,7 +26,7 @@ import static algorithm.util.SwapUtil.swap;
  *
  * 3，第三层递归
  *   begin _ _ 2
- *   因为 begin == chs.length - 1，得到一个结果，退回上层递归
+ *   因为 begin == S.length - 1，得到一个结果，退回上层递归
  *
  * 4，第二层递归
  *   begin _ 1 _
@@ -36,17 +36,17 @@ import static algorithm.util.SwapUtil.swap;
  * 5，第二层递归中的循环：i1++
  *   begin _ 1 _
  *   i1    _ _ 2
- *   交换chs[1]，chs[2]，chs变成acb
+ *   交换S[1]，S[2]，S变成acb
  *   递归进入下一层：begin + 1
  *
  * 6，第三层递归
  *   begin _ _ 2
- *   因为 begin == chs.length - 1，得到一个结果，退回上层递归
+ *   因为 begin == S.length - 1，得到一个结果，退回上层递归
  *
  * 7，第二层递归
  *   begin _ 1 _
  *   i1    _ _ 2
- *   执行交换还原，chs又恢复成abc
+ *   执行交换还原，S又恢复成abc
  *   因为i1 == 2，本次循环结束，退回上层递归
  *
  * 8，第一层递归
@@ -57,7 +57,7 @@ import static algorithm.util.SwapUtil.swap;
  * 9，第一层递归中的循环：i++
  *   begin 0 _ _
  *   i     _ 1 _
- *   交换chs的0和1位，chs变成bac
+ *   交换S的0和1位，S变成bac
  *   递归进入下一层：begin + 1
  *
  * 8，第二层递归
@@ -67,7 +67,7 @@ import static algorithm.util.SwapUtil.swap;
  *
  * 9，第三层递归
  *   begin _ _ 2
- *   因为 begin == chs.length - 1，得到一个结果，退回上层递归
+ *   因为 begin == S.length - 1，得到一个结果，退回上层递归
  *
  * 10，第二层递归
  *   begin _ 1 _
@@ -77,29 +77,29 @@ import static algorithm.util.SwapUtil.swap;
  * 11，第二层递归中的循环：i++
  *   begin _ 1 _
  *   i1    _ _ 2
- *   交换chs的1和2位，chs变成bca
+ *   交换S的1和2位，S变成bca
  *   递归进入下一层
  *
  * 12，第三层递归
  *   begin _ _ 2
- *   因为 begin == chs.length - 1，得到一个结果，退回上层递归
+ *   因为 begin == S.length - 1，得到一个结果，退回上层递归
  *
  * 13，第二层递归
  *   begin _ 1 _
  *   i1    _ _ 2
- *   交换还原，chs变成bac
+ *   交换还原，S变成bac
  *   因为i1为2，循环结束，退回上层递归
  *
  * 14，第一层递归
  *   begin 0 _ _
  *   i     _ 1 _
- *   交换还原，chs变成abc
+ *   交换还原，S变成abc
  *   开始下一次循环
  *
  * 15，第一层递归中的循环：i++
  *   begin 0 _ _
  *   i     _ _ 2
- *   因为 i != begin，交换chs的0和2位，chs变成cba
+ *   因为 i != begin，交换S的0和2位，S变成cba
  *   递归进入下一层：begin + 1
  *
  * 16，第二层递归
@@ -109,7 +109,7 @@ import static algorithm.util.SwapUtil.swap;
  *
  * 17，第三层递归
  *   begin _ _ 2
- *   因为 begin == chs.length - 1，得到一个结果，退回上层递归
+ *   因为 begin == S.length - 1，得到一个结果，退回上层递归
  *
  * 18，第二层递归
  *   begin _ 1 _
@@ -119,23 +119,23 @@ import static algorithm.util.SwapUtil.swap;
  * 19，第二层递归中的循环：i++
  *   begin _ 1 _
  *   i1    _ _ 2
- *   交换，chs变为cab
+ *   交换，S变为cab
  *   递归进入下一层
  *
  * 20，第三层递归
  *   begin _ _ 2
- *   因为 begin == chs.length - 1，得到一个结果，退回上层递归
+ *   因为 begin == S.length - 1，得到一个结果，退回上层递归
  *
  * 21，第二层递归
  *   begin _ 1 _
  *   i1    _ _ 2
- *   交换还原，chs变为cba
+ *   交换还原，S变为cba
  *   循环结束，返回上层递归
  *
  * 22，第一层递归
  *   begin 0 _ _
  *   i     _ _ 2
- *   交换还原，chs变为abc
+ *   交换还原，S变为abc
  *   循环结束，退出递归
  *
  *
@@ -152,28 +152,28 @@ public class Q038_StringPermutation {
 
     /**
      * 固定第一位，排列后面的位
-     * @param chs
+     * @param S
      * @param list
      * @param begin
      */
-    private static void permutation(int begin, char[] chs, List<String> list) {
-        if (begin == chs.length - 1) {
-            list.add(new String(chs));
+    private static void permutation(int begin, char[] S, List<String> list) {
+        if (begin == S.length - 1) {
+            list.add(new String(S));
             return;
         }
         /**
          * 第一次循环，都是 i = begin，直接进入下一层递归
-         * 如果递归到最后一位，即begin == chs.length - 1，表明得到结果，返回上一层递归
+         * 如果递归到最后一位，即begin == S.length - 1，表明得到结果，返回上一层递归
          *
          */
-        for (int i = begin; i < chs.length; i++) {
+        for (int i = begin; i < S.length; i++) {
             // 如果值相等，不交换
-            if (i != begin && chs[i] == chs[begin]) {
+            if (i != begin && S[i] == S[begin]) {
                 continue;
             }
-            if (i != begin) swap(chs, begin, i);
-            permutation(begin + 1,chs, list);
-            if (i != begin) swap(chs, begin, i);
+            if (i != begin) swap(S, begin, i);
+            permutation(begin + 1,S, list);
+            if (i != begin) swap(S, begin, i);
 
         }
     }
@@ -196,11 +196,11 @@ public class Q038_StringPermutation {
     public String[] solution2(String s) {
         // Set去重
         Set<String> set = new HashSet<>();
-        char[] chs = s.toCharArray();
+        char[] S = s.toCharArray();
         // 记录已经访问过的字符
         boolean[] visited = new boolean[s.length()];
         char[] temp = new char[s.length()];
-        backTrace(0, chs, set, visited, temp);
+        backTrace(0, S, set, visited, temp);
         StringBuilder sb = new StringBuilder();
         set.stream().forEach(str -> {
             sb.append(str + ",");
@@ -209,17 +209,17 @@ public class Q038_StringPermutation {
     }
 
     // 回溯法
-    private void backTrace(int index, char[] chs, Set<String> set, boolean[] visited, char[] temp) {
-        if (index == chs.length) {
+    private void backTrace(int index, char[] S, Set<String> set, boolean[] visited, char[] temp) {
+        if (index == S.length) {
             set.add(new String(temp));
             return;
         }
 
-        for (int i = 0; i < chs.length; i++) {
+        for (int i = 0; i < S.length; i++) {
             if (!visited[i]) {
                 visited[i] = true;
-                temp[index] = chs[i];
-                backTrace(index + 1, chs, set, visited, temp);
+                temp[index] = S[i];
+                backTrace(index + 1, S, set, visited, temp);
                 visited[i] = false;
             }
         }
@@ -233,21 +233,21 @@ public class Q038_StringPermutation {
 
     public static List<List<Character>> solution3(String str) {
         LinkedList<Character> track = new LinkedList<>();
-        char[] chs = str.toCharArray();
-        backtrace(chs, track);
+        char[] S = str.toCharArray();
+        backtrace(S, track);
         return res;
     }
 
-    static void backtrace(char[] chs, LinkedList<Character> track) {
-        if (track.size() == chs.length) {
+    static void backtrace(char[] S, LinkedList<Character> track) {
+        if (track.size() == S.length) {
             res.add(new LinkedList<>(track));
         }
-        for (int i = 0; i < chs.length; i++) {
-            if (track.contains(chs[i])) {
+        for (int i = 0; i < S.length; i++) {
+            if (track.contains(S[i])) {
                 continue;
             }
-            track.add(chs[i]);
-            backtrace(chs, track);
+            track.add(S[i]);
+            backtrace(S, track);
             track.removeLast();
         }
     }
@@ -260,8 +260,8 @@ public class Q038_StringPermutation {
         }
 
         List<List<Character>> res = solution3(abc);
-        for (List<Character> chs : res) {
-            for (Character c : chs) {
+        for (List<Character> S : res) {
+            for (Character c : S) {
                 System.out.print(c + " ");
             }
             System.out.println();

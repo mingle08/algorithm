@@ -11,14 +11,14 @@ import java.util.Map;
 public class L174_LongestSubString {
     static Integer find(String s) {
         Map<Character, Integer> window = new HashMap<>();
-        char[] chs = s.toCharArray();
+        char[] S = s.toCharArray();
 
         int left = 0, right = 0;
 
         int res = 0;
         while (right < s.length()) {
             // c是将要移入窗口的字符
-            char c = chs[right];
+            char c = S[right];
             // 右移窗口
             right++;
             // 进行窗口内数据的一系列操作
@@ -27,7 +27,7 @@ public class L174_LongestSubString {
             // 判断左侧窗口是否要收缩
             while (window.get(c) > 1) {
                 // d是将要移出窗口的字符
-                char d = chs[left];
+                char d = S[left];
                 // 右移窗口
                 left++;
 
