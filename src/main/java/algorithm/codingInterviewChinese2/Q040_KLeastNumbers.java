@@ -74,7 +74,12 @@ public class Q040_KLeastNumbers {
         for (int i = k / 2 - 1; i >= 0; i--)
             adjustHeap(res, i, k - 1);
 
+        // 遍历原数组第k个开始之后的所有数据
         for (int i = k; i < num.length; i++) {
+            /**
+             * 因为是是大顶堆，出现比顶更小的数字，换进来，因为我们求的是最小的k个数
+             * 不断把堆顶（最大）的数字替换成更小的，最后就得到最小的k个数
+             */
             if (num[i] < res[0]) {    //存在更小的数字时
                 res[0] = num[i];
                 adjustHeap(res, 0, k - 1);   //重新调整最大堆
@@ -139,7 +144,8 @@ public class Q040_KLeastNumbers {
         Q040_KLeastNumbers solution = new Q040_KLeastNumbers();
 
         int[] num = {4, 5, 1, 6, 2, 7, 3, 8};
-        int[] res = solution.getKLeastNumbers(num, 4);
+//        int[] res = solution.getKLeastNumbers(num, 4);
+        int[] res = solution.findKLeastNum(num, 4);
         for (int i = 0; i < res.length; i++) {
             System.out.print(res[i] + " ");
         }

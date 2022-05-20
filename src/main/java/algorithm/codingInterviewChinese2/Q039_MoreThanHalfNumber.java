@@ -6,7 +6,7 @@ package algorithm.codingInterviewChinese2;
  * 2. 方法二：统计每个元素出现的次数
  */
 public class Q039_MoreThanHalfNumber {
-    private boolean isInputInvalid = false;
+    private static boolean isInputInvalid = false;
 
     // 方法一（略）
 
@@ -19,20 +19,22 @@ public class Q039_MoreThanHalfNumber {
      * 如果不同，则次数减1
      * 由于要找的数字出现的次数比其他所有数字出现的次数之和还要多，那么要找的数字肯定是最后一次把次数设为1时对应的数字
      * @param numbers
-     * @param len
      * @return
      */
-    public int numMoreThanHalf(int[] numbers, int len){
+    public static int numMoreThanHalf(int[] numbers){
+        int len = numbers.length;
         if (checkInputInvalid(numbers, len))
             return 0;
 
         int result = numbers[0];
         int times = 1;
-        for (int i = 0; i < len; i++) {
-            // 如果次数为0，则保存下一个数字，即numbers[i]，并把次数设为1
+        for (int i = 1; i < len; i++) {
+            /**
+             *  如果次数为0，则保存下一个数字，即numbers[i]，并把次数设为1
+             *  因为次数是被上次循环减到0的，保存下一个数字，也就是判断次数是否为0时，已是进入了下次循环
+             */
             if (times == 0) {
                 result = numbers[i];
-                times = 1;
             }
             if (numbers[i] == result)
                 times++;
@@ -47,7 +49,7 @@ public class Q039_MoreThanHalfNumber {
 
     }
 
-    private boolean checkInputInvalid(int[] numbers, int length){
+    private static boolean checkInputInvalid(int[] numbers, int length){
         isInputInvalid = false;
         if (numbers == null || length < 0)
             isInputInvalid = true;
@@ -55,7 +57,7 @@ public class Q039_MoreThanHalfNumber {
         return isInputInvalid;
     }
 
-    private boolean checkMoreThanHalf(int[] numbers, int len, int num){
+    private static boolean checkMoreThanHalf(int[] numbers, int len, int num){
         int times = 0;
         for (int i = 0; i < len; i++) {
             if(num == numbers[i])
@@ -70,5 +72,11 @@ public class Q039_MoreThanHalfNumber {
 
         return isMoreThanHalf;
 
+    }
+
+    public static void main(String[] args) {
+        int[] nums = {1,2,1,3,1,1,2,1,5};
+        int res = numMoreThanHalf(nums);
+        System.out.println(res);
     }
 }

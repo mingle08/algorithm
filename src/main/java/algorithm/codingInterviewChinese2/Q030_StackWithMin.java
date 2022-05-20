@@ -15,6 +15,7 @@ public class Q030_StackWithMin {
     // stack,minStack同步push
     public void push(int num){
         stack.push(num);
+        // 此处比较大小，保证辅助栈的数值是最小的
         if (num < min())
             minStack.push(num);
         else
@@ -28,6 +29,7 @@ public class Q030_StackWithMin {
         return val;
     }
 
+    // 只是peek，返回一个值，并不做大小判断
     public int min(){
         if (minStack.isEmpty())
             return 0;

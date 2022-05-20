@@ -43,6 +43,7 @@ public class Q035_CopyComplexNodeList {
      * 1. 复制每个结点，并插入到原始节点的后面
      */
     private void copyNodes(ComplexListNode head) {
+        // 原节点
         ComplexListNode pNode = head;
         while (pNode != null) {
             ComplexListNode copydNode = new ComplexListNode(pNode.val);
@@ -63,6 +64,7 @@ public class Q035_CopyComplexNodeList {
             ComplexListNode copyNode = pNode.next;
             //必须考虑到siblingNode==null的情况
             if (pNode.sibling != null) {
+                // 原节点的sibling和新节点的sibling也是前后挨着的
                 copyNode.sibling = pNode.sibling.next;
             }
             pNode = copyNode.next;  // 原节点移动到下一个原节点
@@ -77,15 +79,22 @@ public class Q035_CopyComplexNodeList {
         ComplexListNode copyNode = null;
         ComplexListNode pNode = head;
         if (pNode != null) {
-            copyHead = copyNode = pNode.next;  // copyHead指向 A'
-            pNode.next = copyNode.next;        // copyNode.next是 B，所以pNode现在是 A --> B
-            pNode = pNode.next;                // pNode移动到 B
+            // copyHead指向 A'
+            copyHead = copyNode = pNode.next;  
+            // copyNode.next是 B，所以pNode现在是 A --> B
+            pNode.next = copyNode.next;   
+            // pNode移动到 B     
+            pNode = pNode.next;                
         }
         while (pNode != null) {
-            copyNode.next = pNode.next;  // pNode是 B，pNode.next是 B'，此步让copyNode由A'指向B'
-            copyNode = copyNode.next;    // copyNode移动到 B'
-            pNode.next = copyNode.next;  // copyNode.next是C，此步让pNode（在B）的下个节点是C
-            pNode = pNode.next;          // pNode移动到 C
+            // pNode是 B，pNode.next是 B'，此步让copyNode由A'指向B'
+            copyNode.next = pNode.next;  
+            // copyNode移动到 B'
+            copyNode = copyNode.next;    
+            // copyNode.next是C，此步让pNode（在B）的下个节点是C
+            pNode.next = copyNode.next; 
+            // pNode移动到 C 
+            pNode = pNode.next;          
         }
         return copyHead;
     }

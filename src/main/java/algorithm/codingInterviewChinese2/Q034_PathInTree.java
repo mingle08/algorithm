@@ -31,6 +31,7 @@ public class Q034_PathInTree {
         if (root == null) return;
 
         expectedSum -= root.val;
+        // 做选择
         path.add(root.val);
 
         // 如果是叶节点，并且路径上节点值的和等于输入的值
@@ -50,6 +51,7 @@ public class Q034_PathInTree {
         if (root.right != null)
             findPathCore(root.right, path, expectedSum);
 
+        // 撤消选择
         path.pollLast();
     }
 

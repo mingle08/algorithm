@@ -47,7 +47,8 @@ public class Q032_3_PrintTreesInZigzag {
             TreeNode node = list.get(cur).pop();
             System.out.print(node.val + " ");
 
-            if (cur == 0) { // 第一层， 第三层
+            // 第一层， 第三层
+            if (cur == 0) { 
                 // 下一层（子节点），先存左，再存右，因为栈是后进先出，子节点先打印右，再是左
                 if (node.left != null) {
                     list.get(next).push(node.left);
@@ -55,7 +56,8 @@ public class Q032_3_PrintTreesInZigzag {
                 if (node.right != null) {
                     list.get(next).push(node.right);
                 }
-            } else { // 第二层，第四层
+            // 第二层，第四层
+            } else { 
                 // 下一层（子节点），先存右，再存左
                 if (node.right != null) {
                     list.get(next).push(node.right);

@@ -14,6 +14,8 @@ import com.sun.org.apache.xpath.internal.WhitespaceStrippingElementMatcher;
  * <p>
  * 题目：输入一棵二叉搜索树，将该二叉搜索树转换成一个排序的双向链表。
  * 要求不能创建任何新的结点，只能调整树中结点指针的指向。
+ *
+ * 中序遍历
  */
 public class Q036_ConvertBSTreeToDoubleNodeList {
 
@@ -33,16 +35,19 @@ public class Q036_ConvertBSTreeToDoubleNodeList {
             return lastNode;
 
         BinaryTreeNode cur = root;
+        // 中序遍历：1，处理左子节点
         if (cur.left != null)
             lastNode = convertNode(cur.left, lastNode);
         cur.left = lastNode;    // 双向链接第1步
 
+        // 中序遍历：2，处理根节点
         // 把根节点连接到链表中
         if (lastNode != null)
             lastNode.right = cur;   // 双向链接第2步，至此，完成双向链接
 
-        // 根节点成为新的最后节点，再与右子树相连
+        // 最后节点往右移动
         lastNode = cur;
+        // 中序遍历：3，处理右子节点
         if (cur.right != null)
             lastNode = convertNode(cur.right, lastNode);
 
@@ -53,30 +58,31 @@ public class Q036_ConvertBSTreeToDoubleNodeList {
     /**
      * 方法2：非递归
      *
-     * @param pRootOfTree
+     * @param root
      * @return
      */
-    public static BinaryTreeNode convert2(BinaryTreeNode pRootOfTree) {
-        if (pRootOfTree == null) {
+    public static BinaryTreeNode convert2(BinaryTreeNode root) {
+        if (root == null) {
             return null;
         }
-        BinaryTreeNode list = null;
+        BinaryTreeNode cur = root;
+        BinaryTreeNode lastNode = null;
         Stack<BinaryTreeNode> stack = new Stack<BinaryTreeNode>();
-        while (pRootOfTree != null || !stack.isEmpty()) {
-            if (pRootOfTree != null) {
-                stack.push(pRootOfTree);
-                pRootOfTree = pRootOfTree.right;
+        while (cur != null || !stack.isEmpty()) {
+            if (cur != null) {
+                stack.push(cur);
+                cur = cur.right;
             } else {
-                pRootOfTree = stack.pop();
-                if (list != null) {
-                    list.left = pRootOfTree;
-                    pRootOfTree.right = list;
+                cur = stack.pop();
+                if (lastNode != null) {
+                    lastNode.left = cur;
+                    cur.right = lastNode;
                 }
-                list = pRootOfTree;
-                pRootOfTree = pRootOfTree.left;
+                lastNode = cur;
+                cur = cur.left;
             }
         }
-        return list;
+        return lastNode;
     }
 
     public static void main(String[] args) {
@@ -90,7 +96,7 @@ public class Q036_ConvertBSTreeToDoubleNodeList {
 
         BinaryTreeNode head = convert(root);
         while (head != null) {
-            System.out.println(head.val);
+            System.out.print(head.val + " ");
             head = head.right;
         }
     }
