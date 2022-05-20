@@ -38,25 +38,31 @@ public class Q040_KLeastNumbers {
     }
 
     public int partition(int[] arr, int low, int high) {
-        int temp = arr[low];  // 以temp为基数
-        while (low < high) {
-            // 1. 如果arr[high]大于temp, high指针往左移
-            while (low < high && arr[high] >= temp) {
-                high--;
+        int pivot = arr[low];  // 以pivot为基数
+        int left = low;
+        int right = high;
+        int temp = 0;
+        while (left < right) {
+            // 1. 如果arr[high]大于pivot, high指针往左移
+            while (left < right && arr[right] >= pivot) {
+                right--;
             }
-            // 2. 否则，如果arr[high] <= temp，把小的值存在arr[low]
-            arr[low] = arr[high];
 
-            // 3. 如果arr[low] < temp，low指针往右移
-            while (low < high && arr[low] <= temp) {
-                low++;
+            // 2. 如果arr[low] < pivot，low指针往右移
+            while (left < right && arr[left] <= pivot) {
+                left++;
             }
-            // 4. 否则，如果arr[low] >= temp, 把大的值存在arr[high]
-            arr[high] = arr[low];
 
+            // 3. 交换
+            if (left < right) {
+                temp = arr[left];
+                arr[left] = arr[right];
+                arr[right] = temp;
+            }
         }
-        arr[high] = temp;
-        return high;
+        arr[low] = arr[left];
+        arr[left] = pivot;
+        return pivot;
     }
 
     // 分析2：O(nlogk)的算法，特别适用处理海量数据
@@ -92,7 +98,7 @@ public class Q040_KLeastNumbers {
     // 最大堆的调整方法
     private void adjustHeap(int[] arr, int start, int end) {
         // 父节点
-        int temp = arr[start];
+        int pivot = arr[start];
         // 左孩子
         int leftChild = start * 2 + 1;
         // 右孩子
@@ -101,15 +107,15 @@ public class Q040_KLeastNumbers {
             if (rightChild <= end && arr[rightChild] > arr[leftChild])
                 leftChild++;
 
-            if (arr[leftChild] < temp)
+            if (arr[leftChild] < pivot)
                 break;
 
-            // 走到这里，说明上一步没有break，即arr[leftChild] >= temp，需要交换
+            // 走到这里，说明上一步没有break，即arr[leftChild] >= pivot，需要交换
             arr[start] = arr[leftChild];
             start = leftChild;
             leftChild = start * 2 + 1;
         }
-        arr[start] = temp;
+        arr[start] = pivot;
     }
 
     // 因为TreeSet实现了红黑树，TreeSet中的数据会按照插入数据自动升序排列
@@ -135,9 +141,9 @@ public class Q040_KLeastNumbers {
 
     //交换数组中的两个元素
     public void swap(int[] num, int i, int j) {
-        int temp = num[i];
+        int pivot = num[i];
         num[i] = num[j];
-        num[j] = temp;
+        num[j] = pivot;
     }
 
     public static void main(String[] args) {
