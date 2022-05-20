@@ -16,7 +16,7 @@ public class Q060_DicesProobability {
          * 4个骰子，能掷出的所有可能点数：4～24，总共21种：24 - (4 - 1) = n * max - (n - 1)
          */
         double[] res = new double[max * n - n + 1];
-
+        // base case
         for (int i = 1; i < max; i++) {
             dp[0][i] = 1;
         }

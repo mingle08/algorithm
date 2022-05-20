@@ -18,7 +18,7 @@ public class Q059_01_MaxInSlidingWindow {
         int[] res = new int[num.length - size + 1];
         Deque<Integer> deque = new ArrayDeque<>();
 
-        // 遍历0~size-1范围内
+        // 遍历0至size-1范围内
         for (int i = 0; i < size; i++) {
             // 若队尾下标对应的数字小于待存入的数据，那么它不可能是最大值，将其删除
             while (!deque.isEmpty() && num[i] >= num[deque.getLast()])
@@ -26,11 +26,12 @@ public class Q059_01_MaxInSlidingWindow {
             // 存入较大值的下标
             deque.addLast(i);
         }
-        // 遍历size-1至length范围
+        // 遍历size至length范围
         for (int i = size; i < num.length; i++) {
+            // 取队头的数字，作为最大值
             res[i - size] = num[deque.getFirst()];
             // 若队尾下标对应的数字小于待存入的数据，那么它不可能是最大值，将其删除
-            while (!deque.isEmpty() && num[deque.getLast()] <= num[i]) {
+            while (!deque.isEmpty() && num[i] >= num[deque.getLast()]) {
                 deque.removeLast();
             }
             // 如果滑动窗口已经不包含队首下标对应的值，删除队首元素
