@@ -8,12 +8,33 @@ package algorithm.codingInterviewChinese2;
  *
  *
  * 动态规划
- * 定义f(i)为以i开头的翻译方法的种数
+ * 定义f(i)为以i开头到末尾的翻译方法的种数
  *
  * 如果按单个字符来翻译，f(0) == f(1) == f(2) ... f(n-1) == 1
  * 现在2个字符如果在10到25内，可以翻译成一个字符
  * f(i) = f(i+1) + g(i, i+1) * f(i+2)
  * 其中g(i, i+1)表示第i和i+1这2个数字是否在10到25范围内，是则为1，不是则为0
+ *
+ * 比如215
+ * i = 0
+ * f(i+2) 就是5这个数字的翻译方法，只有1种
+ * f(i+1) 是以1开头的翻译方法，即15，可以拿1和5分别翻译，也可以拿15翻译，所以是2种
+ * f(i) 就是215的翻译方法，要么215分别拆开，要么21和5，要么2和15，总共3种
+ * 此时i和i+1的数字是21，在10和25范围内，所以值是1
+ *
+ * 比如295
+ * i=0
+ * f(i+2) 就是5这个数字的翻译方法，只有1种
+ * f(i+1) 是95，因为95>26，只能拿9和5分别翻译，是1种
+ * f(i) 就是295的翻译方法，只能拿295分别拆开，因为29和95都大于26， 总共1种
+ * 此时i和i+1的数字是29，不在10到25范围内，所以值是0
+ *
+ * 比如245
+ *  * i=0
+ *  * f(i+2) 就是5这个数字的翻译方法，只有1种
+ *  * f(i+1) 是45，因为45>26，只能拿4和5分别翻译，是1种
+ *  * f(i) 就是245的翻译方法，可以拿245分别拆开，可以拿24和5， 总共2种
+ *  * 此时i和i+1的数字是24，在10到25范围内，所以值是1
  */
 public class Q046_TranslateNumbersToString {
     public int getTranslationCount(int number) {
@@ -30,7 +51,6 @@ public class Q046_TranslateNumbersToString {
         int[] counts = new int[len];
         int cnt = 0;
         for (int i = len - 1; i >= 0; i--) {
-            cnt = 0;
             if (i < len - 1)
                 //f(i+1)
                 cnt = counts[i + 1];
@@ -67,6 +87,9 @@ public class Q046_TranslateNumbersToString {
         int f_i2 = 1;
         int f_i1 = 1;
         int f_i = 0;
+        /**
+         * 从尾到头逆序遍历
+         */
         for (int i = length - 2; i >= 0; i--) {
             f_i = f_i1;
             int digit = (numChar[i] - '0') * 10 + (numChar[i + 1] - '0');

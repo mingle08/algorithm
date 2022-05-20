@@ -12,18 +12,21 @@ public class Q047_MaxValueOfGifts {
     public int getMaxValue1(int[][] grid, int rows, int cols) {
         if (grid == null || rows <= 0 || cols <= 0)
             return 0;
-
+        // 二维数组
         int[][] dp = new int[rows][cols];
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
                 int left = 0;
                 int up = 0;
+                // 上方
                 if (i > 0)
                     up = dp[i - 1][j];
 
+                // 左方
                 if (j > 0)
                     left = dp[i][j - 1];
 
+                // 求出上方和左方的最大值，加上此格的值
                 dp[i][j] = Math.max(left, up) + grid[i][j];
             }
         }

@@ -1,7 +1,9 @@
 package algorithm.labuladong.chapter1.d7;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * 最长无重复子串
@@ -21,26 +23,50 @@ public class L174_LongestSubString {
             char c = S[right];
             // 右移窗口
             right++;
+
             // 进行窗口内数据的一系列操作
             window.put(c, window.getOrDefault(c, 0) + 1);
 
             // 判断左侧窗口是否要收缩
             while (window.get(c) > 1) {
-                // d是将要移出窗口的字符
-                char d = S[left];
                 // 右移窗口
                 left++;
-
                 window.put(c, window.get(c) - 1);
             }
-            res = Math.max(res, right - left);
+
+            res = (right - left > res) ? right - left : res;
         }
 
-        return res;
+        return res - 1;
     }
 
+
+    public static int lengthOfLongestSubstring(String s) {
+        int max = 0, temp = 0, i = 0, j = 0;
+        int length = s.length();
+        Set<Character> set = new HashSet<>();	//滑动窗口的 set 解法
+
+        //用窗口来进行优化
+        while(i < length && j < length) {
+            //窗口是一个 [start, end]，则 j 是 end，i 是start
+            if(!set.contains(s.charAt(j))) {
+                set.add(s.charAt(j));
+                j++;
+                max = (j - i > max) ? j - i : max;
+            } else {	//移动 start，是一步一步移动的！
+                set.remove(s.charAt(i));
+                i++;
+            }
+
+        }
+
+        return max;
+    }
+
+
+
     public static void main(String[] args) {
-        String s = "aabab";
-        System.out.println(find(s));
+        String s = "arabcacfr";
+        System.out.println(find(s) + ", " + lengthOfLongestSubstring(s));
     }
 }

@@ -30,11 +30,14 @@ public class Q042_GreatestSumOfSubarrays {
 
     // 动态规划
     public int findGreatestSum(int[] arr) {
+        // 使用max记录最大值
         int max = Integer.MIN_VALUE;
         int len = arr.length;
-        int[] curSum = new int[len];    // curSum[i] 表示以第i个数字结尾的子数组的最大和
+        // curSum[i] 表示以第i个数字结尾的子数组的最大和
+        int[] curSum = new int[len];
+        // base case
         curSum[0] = arr[0];
-
+        // i从1开始
         for (int i = 1; i < len; i++) {
             // i-1的最大和小于等于0，i的最大和就等于arr[i]
             if (curSum[i - 1] <= 0) {

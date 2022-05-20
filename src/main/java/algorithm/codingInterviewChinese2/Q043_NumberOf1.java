@@ -89,7 +89,9 @@ public class Q043_NumberOf1 {
         while (base <= n) {
             // cur后面的部分
             b = n % base;
+            // 此时的a并不是真正的a，是包含了a和cur，所以下面要继续%，继续/运算
             a = n / base;
+            // 得到cur和cur前面的a
             cur = a % 10;
             // cur前面的部分
             a /= 10;

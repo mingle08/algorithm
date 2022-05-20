@@ -48,7 +48,6 @@ public class Q041_StreamMedian {
         Integer[] arr = {7, 3, 21, 2, 6, 13, 8, 9, 17};
         for (Integer integer : arr) {
             solution.insert(integer);
-
         }
         double median = solution.getMedian();
         System.out.println(median);
