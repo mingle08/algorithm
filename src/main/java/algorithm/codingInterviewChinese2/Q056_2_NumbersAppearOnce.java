@@ -28,6 +28,9 @@ public class Q056_2_NumbersAppearOnce {
             throw new IllegalArgumentException();
         }
         int[] bitSum = new int[32];
+        /**
+         * 把数组的每一位数字转化为二进制形式并相加
+         */
         for (int num : nums) {
             //位掩码，二进制更好理解：0000 0001
             int bitMask = 1;
@@ -44,14 +47,14 @@ public class Q056_2_NumbersAppearOnce {
             }
         }
         int result = 0;
-        for (int j : bitSum) {
+        for (int j = 0; j < 32; j++) {
             /**
              * 因为j是从左到右遍历bitSum，感觉是在左移bitSum
              * result计算之后，结果要左移一位，让右边的一位来计算下一次结果
              */
             result = result << 1;
             // 余数：要么为0，要么为1
-            result += j % 3;
+            result += bitSum[j] % 3;
         }
         return result;
     }

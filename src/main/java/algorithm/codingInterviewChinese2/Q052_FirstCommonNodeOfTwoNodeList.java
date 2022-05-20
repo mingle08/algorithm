@@ -99,11 +99,13 @@ public class Q052_FirstCommonNodeOfTwoNodeList {
         while (cur1.val != cur2.val) {
             if (cur1 != null) {
                 cur1 = cur1.next;
+                // 当走完自己的路时，走别人的路
                 if (cur1 == null) cur1 = node2;
             }
 
             if (cur2 != null) {
                 cur2 = cur2.next;
+                // 当走完自己的路时，走别人的路
                 if (cur2 == null) cur2 = node1;
             }
             count++;

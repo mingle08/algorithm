@@ -4,6 +4,7 @@ import algorithm.util.TreeNode;
 
 public class Q055_1_TreeDepth {
     public static int calcDepth(TreeNode root){
+        // 递归回退条件
         if (root == null)
             return 0;
 

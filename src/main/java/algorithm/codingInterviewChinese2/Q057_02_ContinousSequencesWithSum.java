@@ -29,14 +29,19 @@ public class Q057_02_ContinousSequencesWithSum {
             if (curSum == target){
                 packListIntoList(res, list, lo, hi);
                 curSum -= lo;
-                // 指针右移，不能后退（左移）
+                // 指针右移，不能后退（左指针右移）
                 lo++;
-            } else if (curSum > target) {
+            }
+            // 多退
+            else if (curSum > target) {
+                // 舍弃lo所指的数
                 curSum -= lo;
-                // 指针右移，不能后退（左移）
+                // 指针右移，不能后退（左指针右移）
                 lo++;
-            } else {
-                // 指针右移，不能后退（左移）
+            }
+            // 少补
+            else {
+                // 指针右移，不能后退（右指针右移）
                 hi++;
                 curSum += hi;
             }

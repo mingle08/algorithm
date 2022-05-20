@@ -17,6 +17,7 @@ public class Q058_01_ReverseWordsInSentence {
         if (str == null) return null;
         char[] S = str.toCharArray();
         StringBuilder sb = new StringBuilder();
+        // i初始化为最后一个下标，从后往前遍历
         int i = str.length() - 1, j;
         while (i >= 0) {
             if (S[i] != ' ') {

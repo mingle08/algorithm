@@ -38,10 +38,10 @@ public class Q050_02_FirstCharacterInStream {
      * @param ch
      */
     public void insert(char ch) {
-        if (occurence[(int) ch] == -1) {
-            occurence[(int) ch] = index;   //第一次出现, 记录读出位置
-        } else if (occurence[(int) ch] >= 0) {
-            occurence[(int) ch] = -2;   //已经出现过了
+        if (occurence[ch] == -1) {
+            occurence[ch] = index;   //第一次出现, 记录读出位置
+        } else if (occurence[ch] >= 0) {
+            occurence[ch] = -2;   //已经出现过了
         }
         index++;
     }
@@ -50,6 +50,7 @@ public class Q050_02_FirstCharacterInStream {
         int minIndex = Integer.MAX_VALUE;  // 非重复字符最早出现的位置
         char ch = '#';
         for (int i = 0; i < 256; i++) {
+            // minIndex是每次循环都可能更新的
             if (occurence[i] >= 0 && occurence[i] < minIndex) {
                 ch = (char) i;
                 minIndex = occurence[i];
@@ -62,6 +63,7 @@ public class Q050_02_FirstCharacterInStream {
         Q050_02_FirstCharacterInStream solution = new Q050_02_FirstCharacterInStream();
         String str = "google";
         for (int i = 0; i < str.length(); i++) {
+            // 每加入字符的同时，就要判断第一个只出现一次的字符
             solution.insert(str.charAt(i));
             System.out.print(solution.getFirst());  // ggg#ll
         }

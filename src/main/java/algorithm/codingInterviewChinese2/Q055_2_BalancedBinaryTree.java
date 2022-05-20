@@ -1,5 +1,6 @@
 package algorithm.codingInterviewChinese2;
 
+import algorithm.util.BinaryTreeNode;
 import algorithm.util.TreeNode;
 
 /**
@@ -7,28 +8,32 @@ import algorithm.util.TreeNode;
  * 后序遍历
  */
 public class Q055_2_BalancedBinaryTree {
-    private boolean isBalancedPostOrder(TreeNode root, int depth){
-        if (root == null){
-            depth = 0;
-            return true;
+    public int treeDepth(BinaryTreeNode root) {
+        if (root == null) {
+            return 0;
         }
-
-        int leftDepth = 0, rightDepth = 0;
-        // 先遍历左子树，再遍历右子树
-        if (isBalancedPostOrder(root.left, leftDepth)
-                && isBalancedPostOrder(root.right, rightDepth)){
-            int diff = leftDepth - rightDepth;
-            if (diff <= 1 || diff >= -1){
-                depth = 1 + (diff > 0 ? leftDepth : rightDepth);
-                return true;
-            }
+        // 遍历左子树
+        int left = treeDepth(root.left);
+        if (left == -1) {
+            return -1;
         }
-
-        return false;
+        // 遍历右子树
+        int right = treeDepth(root.right);
+        if (right == -1) {
+            return -1;
+        }
+        // 绝对值相差是否大于1
+        if (Math.abs(left - right) > 1) {
+            return -1;
+        } else {
+            return Math.max(left, right) + 1;
+        }
     }
 
-    public boolean isBalanced(TreeNode root){
-        int depth = 0;
-        return isBalancedPostOrder(root, depth);
+    public boolean isBalanced(BinaryTreeNode root) {
+        if (root == null) {
+            return true;
+        }
+        return treeDepth(root) != -1;
     }
 }

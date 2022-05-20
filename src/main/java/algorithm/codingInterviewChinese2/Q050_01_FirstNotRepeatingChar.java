@@ -1,6 +1,10 @@
 package algorithm.codingInterviewChinese2;
 
 /**
+ * 题目：第一个只出现一次的字符
+ * 在字符串中找出第一个只出现一次的字符。如输入"abaccdeff"，则输出'b'
+ *
+ *
  * 一、Ascii完整码表（256个）
  * 1. ASCII中的0~31为控制字符；32~126为打印字符；127为Delete(删除)命令。
  * 2. ASCII扩展字符——（为了适应更多字符）128~255，或者-128~-1
@@ -18,6 +22,9 @@ public class Q050_01_FirstNotRepeatingChar {
         // 借助数组，模拟哈希表（256代表所有的数字与大小写字母的总和）
         int[] hashTable = new int[size];
         for (int i = 0; i < S.length; i++) {
+            /**
+             * 比如hashTable[S[i]]有可能等于 hashTable['c']
+             */
             hashTable[S[i]]++;  // 先查出hashTable中S[i]的值，再加1
         }
         for (int i = 0; i < S.length; i++) {// 按字符数组从前往后遍历，保证字符的先后顺序
@@ -32,5 +39,9 @@ public class Q050_01_FirstNotRepeatingChar {
         String str = "abaccdeff";
         char c = solution.firstRepeating(str);
         System.out.println(c);
+
+        int[] hashTable = new int[256];
+        int val = hashTable['a'];
+        System.out.println(val);
     }
 }

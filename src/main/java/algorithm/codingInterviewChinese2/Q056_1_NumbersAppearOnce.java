@@ -43,6 +43,7 @@ public class Q056_1_NumbersAppearOnce {
         int indexBit = 0;
         // (num & 1) == 0 说明不是1，继续右移
         while ((num & 1) == 0 && indexBit < 32) {
+            // 右移找到indexBit
             num = num >>> 1;
             indexBit++;
         }
@@ -54,6 +55,7 @@ public class Q056_1_NumbersAppearOnce {
      * 将其他数字都右移indexBit位
      */
     private boolean isBit1(int num, int indexBit) {
+        // 因为indexBit是右移找到的，所以num也要右移indexBit位
         num = num >> indexBit;
         return (num & 1) == 1;
     }

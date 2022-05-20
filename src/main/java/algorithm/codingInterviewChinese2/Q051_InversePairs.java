@@ -43,7 +43,7 @@ public class Q051_InversePairs {
             if (data[i] > data[j]) {
                 // 大数从后往前存入，此时i下标的数字大
                 temp[k--] = data[i--];
-                // 是逆序对，统计数量
+                // 是逆序对，统计数量，为什么是j - mid
                 count += j - mid;
             }
             /**

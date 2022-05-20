@@ -30,14 +30,16 @@ public class L174_LongestSubString {
             // 判断左侧窗口是否要收缩
             while (window.get(c) > 1) {
                 // 右移窗口
+                char d = S[left];
                 left++;
-                window.put(c, window.get(c) - 1);
+                // d肯定在window中
+                window.put(d, window.get(d) - 1);
             }
 
             res = (right - left > res) ? right - left : res;
         }
 
-        return res - 1;
+        return res;
     }
 
 
