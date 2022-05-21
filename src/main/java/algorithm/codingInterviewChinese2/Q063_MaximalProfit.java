@@ -8,6 +8,12 @@ package algorithm.codingInterviewChinese2;
  */
 public class Q063_MaximalProfit {
     public int maxDiff(int[] arr) {
+        /**
+         * 维护2个变量：
+         * 最小值，最大利润
+         *
+         * 每次循环，判断最小值是不是最小的，最大利润是不是最大的
+         */
         int min = arr[0];
         int maxDiff = arr[1] - min;
 
@@ -16,7 +22,9 @@ public class Q063_MaximalProfit {
             if (arr[i - 1] < min) {
                 min = arr[i -1];
             }
+            // 现在的最大利润
             int currMaxDiff = arr[i] - min;
+            // 与之前的最大利润比较
             if (currMaxDiff > maxDiff) {
                 maxDiff = currMaxDiff;
             }
