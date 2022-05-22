@@ -9,6 +9,11 @@ import algorithm.util.MyLinkList;
  * 1  2  3  3  4  4  5
  * 以上链表中的3和4都重复了，所以3全部删除，4全部删除，得到的链表：
  * 1  2  5
+ *
+ * 如果要求是：删除重复的元素，使得每个元素只出现一次
+ * 1 2 3 3 4 4 5
+ * 删除之后，得到的链表：
+ * 1 2 3 4 5
  */
 public class Q018_2_DeleteDuplicatedNode {
 
@@ -55,6 +60,30 @@ public class Q018_2_DeleteDuplicatedNode {
             }
         }
 
+        return head;
+    }
+
+    /**
+     * 删除重复的元素，使得每个元素只出现一次
+     *  * 1 2 3 3 4 4 5
+     *  * 删除之后，得到的链表：
+     *  * 1 2 3 4 5
+     */
+    ListNode deleteDup(ListNode head) {
+        if (head == null) return null;
+        ListNode slow = head, fast = head.next;
+        while (fast != null) {
+            if (fast.val != slow.val) {
+                //
+                slow.next = fast;
+                // slow++
+                slow = slow.next;
+            }
+            // fast++
+            fast = fast.next;
+        }
+        // 断开与后面重复元素的连接
+        slow.next = null;
         return head;
     }
 
