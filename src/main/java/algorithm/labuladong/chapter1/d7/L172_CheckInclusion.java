@@ -18,6 +18,7 @@ public class L172_CheckInclusion {
             need.put(ch, need.getOrDefault(ch, 0) + 1);
         }
         int left = 0, right = 0;
+        // 窗口中含有目标串的字母的个数
         int valid = 0;
         // 记录最小覆盖子串的起始索引及长度
         int start = 0, len = Integer.MAX_VALUE;
@@ -40,10 +41,11 @@ public class L172_CheckInclusion {
                     return true;
                 // d是将要移出窗口的字符
                 char d = S[left];
-                // 右移窗口
+                // 收缩窗口
                 left++;
                 // 进行窗口内数据的一系列更新
                 if (need.containsKey(d)) {
+                    // 因为收缩了窗口，d已经在窗口之外
                     if (window.get(d) == need.get(d))
                         valid--;
                     window.put(d, window.get(d) - 1);

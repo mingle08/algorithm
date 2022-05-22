@@ -39,6 +39,7 @@ public class L171_LeastSubString {
             // 进行窗口内数据的一系列操作
             if (need.containsKey(c)) {
                 window.put(c, window.getOrDefault(c, 0) + 1);
+                // 比较窗口中的该元素的个数与目标串中的个数是否相等
                 if (window.get(c) == need.get(c))
                     valid++;
             }
