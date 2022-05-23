@@ -1,6 +1,7 @@
 package algorithm.labuladong.chapter4.d401;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class L4011_Subsets {
@@ -34,17 +35,21 @@ public class L4011_Subsets {
     static List<List<Integer>> res = new ArrayList<List<Integer>>();
 
     public static List<List<Integer>> subsets2(int[] nums) {
-        List<Integer> temp = new ArrayList<Integer>();
+        LinkedList<Integer> temp = new LinkedList<Integer>();
         dfs(temp, nums, 0);
         return res;
     }
 
-    private static void dfs(List<Integer> temp, int[] nums, int start) {
-        res.add(new ArrayList<Integer>(temp));
+    private static void dfs(LinkedList<Integer> temp, int[] nums, int start) {
+        // 直接添加，不需要判断
+        res.add(new LinkedList<Integer>(temp));
         for (int i = start; i < nums.length; i++) {
-            temp.add(nums[i]);  //① 加入 nums[i]
-            dfs(temp, nums, i + 1);  //② 递归
-            temp.remove(temp.size() - 1);  //③ 移除 nums[i]
+            //① 加入 nums[i]
+            temp.add(nums[i]);
+            //② 递归
+            dfs(temp, nums, i + 1);
+            //③ 移除 nums[i]
+            temp.removeLast();
         }
     }
 

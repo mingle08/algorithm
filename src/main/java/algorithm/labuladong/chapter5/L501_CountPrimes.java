@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 /**
  * 高效寻找素数
- * 输入一个整数，输出区间[2, n)
+ * 输入一个整数，输出区间[2, n)的所有素数
  */
 public class L501_CountPrimes {
 
@@ -35,11 +35,11 @@ public class L501_CountPrimes {
     }
 
     public static void main(String[] args) {
-        int n = 10;
+        int n = 20;
         boolean[] res = countPrimes(n);
 
         for (int i = 2; i < n; i++) {
-            if (res[i]) System.out.println(i);
+            if (res[i]) System.out.print(i + " ");
         }
     }
 }

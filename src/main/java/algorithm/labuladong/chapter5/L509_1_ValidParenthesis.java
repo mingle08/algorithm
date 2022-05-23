@@ -32,12 +32,13 @@ public class L509_1_ValidParenthesis {
      */
     static boolean isValid2(String str) {
         char[] S = str.toCharArray();
+        // 栈用来保存左括号
         Stack<Character> left = new Stack<>();
         for (char c : S) {
             if (c == '(' || c == '[' || c == '{') {
                 left.push(c);
             } else {
-                // 字符c是右括号
+                // 字符c是右括号，计算出它的左括号，与栈顶的括号比较
                 if (!left.empty() && leftOf(c) == left.peek())
                     left.pop();
                 else
