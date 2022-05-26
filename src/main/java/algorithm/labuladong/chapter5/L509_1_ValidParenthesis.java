@@ -55,4 +55,10 @@ public class L509_1_ValidParenthesis {
         return '{';
     }
 
+    public static void main(String[] args) {
+        String str = "([]{()})";
+        boolean flag = isValid2(str);
+        System.out.println(flag);
+    }
+
 }

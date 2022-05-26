@@ -6,6 +6,9 @@ package algorithm.labuladong.chapter2;
  * 戳破第 i个气球，你可 以获得 nums[i - 1] * nums[i] * nums[i + 1] 枚硬币。
  * 这里的 i - 1 和 i + 1代表和 i 相邻的两个气球的序号。如果 i - 1或 i + 1 超出了数组的边界，那么就当它是一个数字为 1 的气球。
  * 求所能获得硬币的最大数量。
+ * 
+ * 状态方程：
+ * dp[i][j]代表从i到j区间获得硬币的最大数量
  */
 public class L214_MaxCoins {
 
@@ -13,7 +16,9 @@ public class L214_MaxCoins {
         int n = nums.length;
         // 添加两侧的虚拟气球
         int[] points = new int[n + 2];
+        // 虚拟气球初始化为1
         points[0] = points[n + 1] = 1;
+
         for (int i = 1; i <= n; i++) {
             points[i] = nums[i-1];
         }

@@ -33,7 +33,6 @@ public class ComparisonSort {
      * （2）算法适用于少量数据的排序，时间复杂度为O(n^2)。
      * （3）稳定的排序方法
      */
-
     public static void insertSort(int[] arr) {
         /*
         for(int i = 1;i < arr.length;i++) {
@@ -53,7 +52,7 @@ public class ComparisonSort {
         // 拿第2张牌，跟第1张牌比较，下次循环拿第3张牌跟前面的2张牌比较，下次拿第4张牌与前面的3张牌比较，依次类推
         for (int i = 1; i < arr.length; i++) {
             // 只有要排序的牌小于前面的牌，才交换
-            // j必须>=1
+            // j必须>=1，遍历到j = 1时，j - 1是第一张牌，本轮比较结束
             for (int j = i; j >= 1 && arr[j - 1] > arr[j]; j--) {
                 swap(arr, j, j - 1);
             }
@@ -219,6 +218,7 @@ public class ComparisonSort {
     public static void sink(int[] arr, int start, int end) {
         // 当前(parentent)节点的大小
         int tmp = arr[start];
+        // leftChild的步长是2 * leftChild + 1，也就是一直找左子节点
         for (int leftChild = 2 * start + 1; leftChild <= end; leftChild = 2 * leftChild + 1) {
             if (leftChild + 1 <= end && arr[leftChild] < arr[leftChild + 1]) {
                 leftChild++;

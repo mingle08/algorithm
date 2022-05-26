@@ -44,7 +44,7 @@ public class L174_LongestSubString {
 
 
     public static int lengthOfLongestSubstring(String s) {
-        int max = 0, temp = 0, i = 0, j = 0;
+        int max = 0, i = 0, j = 0;
         int length = s.length();
         Set<Character> set = new HashSet<>();	//滑动窗口的 set 解法
 

@@ -57,7 +57,7 @@ public class L171_LeastSubString {
                 left++;
                 // 进行窗口内数据的一系列更新
                 if (need.containsKey(d)) {
-                    // 如果个数一样，有效值减1
+                    // 因为收缩了窗口，d已经在窗口之外
                     if (window.get(d) == need.get(d))
                         valid--;
                     // 只要目标串包含，就减1

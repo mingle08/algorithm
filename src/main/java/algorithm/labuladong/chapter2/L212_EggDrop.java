@@ -13,10 +13,10 @@ public class L212_EggDrop {
                  * 当楼层数j为0时，不需要扔鸡蛋
                  */
                 if (i == 1) {
-                    memo[i][j] = j;
+                    memo[1][j] = j;
                 }
                 if (j == 0) {
-                    memo[i][j] = 0;
+                    memo[i][0] = 0;
                 }
                 // 初始化为-1
                 if (i != 1 && j != 0) {

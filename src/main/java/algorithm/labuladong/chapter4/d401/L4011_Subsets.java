@@ -32,7 +32,7 @@ public class L4011_Subsets {
     /**
      * 回溯法
      */
-    static List<List<Integer>> res = new ArrayList<List<Integer>>();
+    static List<List<Integer>> res = new LinkedList<List<Integer>>();
 
     public static List<List<Integer>> subsets2(int[] nums) {
         LinkedList<Integer> temp = new LinkedList<Integer>();
