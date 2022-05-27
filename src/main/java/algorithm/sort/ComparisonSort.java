@@ -213,7 +213,6 @@ public class ComparisonSort {
      * <p>
      * start -- 被下调节点的起始位置(一般为0，表示从第1个开始)
      * end   -- 截至范围(一般为数组中最后一个元素的索引)
-     * 注意， < end ，不是<=，
      */
     public static void sink(int[] arr, int start, int end) {
         // 当前(parentent)节点的大小
