@@ -10,28 +10,28 @@ package algorithm.codingInterviewChinese2;
 public class Q053_01_NumberOfK {
 
     // 查找第一个k的下标
-    private int getFirstK(int[] data, int len, int k, int start, int end){
-        if (start > end)
-            return -1;
+    // private int getFirstK(int[] data, int len, int k, int start, int end){
+    //     if (start > end)
+    //         return -1;
 
-        int mid = start + (end - start) / 2;
-        if (data[mid] == k){
-            /**
-             * 如果前面一个数不等于k，说明midData是第一个k
-             * 与getLastK方法不同之处：data[mid - 1]，往前找
-             *  end = mid - 1
-             */
-            if (mid > 0 && data[mid - 1] != k || mid == 0){
-                return mid;
-            } else  // 在前半段，因为数组是递增的
-                end = mid - 1;
-        } else if (data[mid] > k)
-            end = mid - 1;
-        else
-            start = mid + 1;
+    //     int mid = start + (end - start) / 2;
+    //     if (data[mid] == k){
+    //         /**
+    //          * 如果前面一个数不等于k，说明midData是第一个k
+    //          * 与getLastK方法不同之处：data[mid - 1]，往前找
+    //          *  end = mid - 1
+    //          */
+    //         if (mid > 0 && data[mid - 1] != k || mid == 0){
+    //             return mid;
+    //         } else  // 在前半段，因为数组是递增的
+    //             end = mid - 1;
+    //     } else if (data[mid] > k)
+    //         end = mid - 1;
+    //     else
+    //         start = mid + 1;
 
-        return getFirstK(data, len, k, start, end);
-    }
+    //     return getFirstK(data, len, k, start, end);
+    // }
 
     // 查找最后一个k的下标
     private int getLastK(int[] data, int len, int k, int start, int end){

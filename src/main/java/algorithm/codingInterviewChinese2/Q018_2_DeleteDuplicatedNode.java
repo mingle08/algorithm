@@ -33,6 +33,7 @@ public class Q018_2_DeleteDuplicatedNode {
             if (nextNode != null && nextNode.val == curNode.val) {
                 needDelete = true;
             }
+            // 如果不是相同节点，右移继续寻找
             if (!needDelete) {
                 preNode = curNode;
                 curNode = curNode.next;
@@ -44,7 +45,7 @@ public class Q018_2_DeleteDuplicatedNode {
                 while (toBeDeleted != null && toBeDeleted.val == value) {
                     // 下一个节点往后移动
                     nextNode = toBeDeleted.next;
-                    // 下一个节点也要删除，进入while判断
+                    // 下一个节点是否要删除，进入while判断
                     toBeDeleted = nextNode;
                 }
                 // 跳出循环，说明nextNode不是重复节点
@@ -56,6 +57,7 @@ public class Q018_2_DeleteDuplicatedNode {
                     // 当前节点和下一个节点是重复节点，被删除，此时的nextNode不是重复节点
                     preNode.next = nextNode;
                 }
+                // 重新设置curNode，进入下一次循环
                 curNode = nextNode;
             }
         }

@@ -44,6 +44,7 @@ public class Q023_EntryNodeInListLoop {
         return null;
     }
 
+    // 方法1
     public ListNode entryNodeOfLoop(ListNode head) {
         ListNode meetingNode = meetingNode(head);
         if (meetingNode == null)
@@ -74,6 +75,8 @@ public class Q023_EntryNodeInListLoop {
     }
 
     /**
+     * 方法2
+     * 
      * 当快、慢指针相遇时，让其中任何一个指针指向头节点，然后让2个指针以相同速度前进，再次相遇时所在的节点位置就是环开始的位置
      * 第一次相遇时，假设慢指针slow走了k步，那么快指针fast一定走了2k步，也就是说，比slow指针多走了k步（环长度的整数倍）
      * 设相遇点与环的起点的距离为m，那么环的起点与头节点head的距离为(k - m)，也就是说从head前进(k - m)步就能到达环的起点。

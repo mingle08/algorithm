@@ -2,9 +2,9 @@ package algorithm.BeautyOfProgramming;
 
 public class Q2_09_Fibonacci {
     // 单位矩阵
-    private static final int[][] UNIT = {{1,1}, {1,0}};
+    private final int[][] UNIT = {{1,1}, {1,0}};
 
-    public static int fibo(int n){
+    public int fibo(int n){
         if (n == 0){
             return 0;
         }
@@ -12,7 +12,7 @@ public class Q2_09_Fibonacci {
         return res[0][1];
     }
 
-    private static int[][] fibonacci(int n){
+    private int[][] fibonacci(int n){
         if (n == 1){
             return UNIT;
         }
@@ -26,7 +26,7 @@ public class Q2_09_Fibonacci {
     }
 
     /*矩阵乘法*/
-    private static int[][] matrixMultiply(int[][] a, int[][] b){
+    private int[][] matrixMultiply(int[][] a, int[][] b){
         int rows = a.length;
         int cols = b[0].length;
         int[][] matrix = new int[rows][cols];

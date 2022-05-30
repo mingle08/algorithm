@@ -28,75 +28,31 @@ package algorithm.codingInterviewChinese2;
  */
 public class Q044_DigitsInSequence {
 
-    // 方法1
-    public int digitAtIndex(int index) {
-        if (index < 0)
-            return -1;
-
+    public char digitAtIndex(int n) {
+        // 每个区间的起始数字
+        int start = 1;
         // 几位数
         int digits = 1;
-        while (true) {
-            int numbers = countOfIntegers(digits);
-            if (index < numbers * digits)
-                return digitAtIndex(index, digits);
-
-            // 因为1位数有10个，总共就占10位；2位数有90个，占180位；3位数有900个，占2700位
-            index -= digits * numbers;
+        // 例如 n = 15
+        while (n > 9 * digits * start) {
+            n -= 9 * digits * start;
+            start *= 10;
             digits++;
         }
-    }
-
-    /**
-     * m位的数字总共有多少个，例如，输入2，返回二位数（10~99）的个数90；输入3，则返回三位数（100~199）的个数900
-     *
-     * @param digits
-     * @return
-     */
-    private int countOfIntegers(int digits) {
-        if (digits == 1)
-            return 10;
-
-        int count = (int) Math.pow(10, digits - 1);
-        return 9 * count;
-    }
-
-    /**
-     * 当我们知道要找的那一位数字位于某m位数之中后，就可以找出那一位数字
-     *
-     * @param index
-     * @param digits
-     * @return
-     */
-    private int digitAtIndex(int index, int digits) {
-        // 对应的数值
-        int number = beginNumber(digits) + index / digits;
-
-        String str = Integer.toString(number);
-        int idx = index % digits;
-
-        char c = str.charAt(idx);
-        System.out.println("数值是：" + number + ", 下标" + idx + "对应的数字是：" + c);
-        // 求个位数字
-        return Character.getNumericValue(c);
-    }
-
-    /**
-     * m位数的第1个数字：例如，第一个二位数是10，第一个三位数是100.
-     *
-     * @param digits
-     * @return
-     */
-    private int beginNumber(int digits) {
-        if (digits == 1)
-            return 0;
-
-        return (int) Math.pow(10, digits - 1);
+        // 如果是2位数，(n - 1) / digits表示在2位数中排第几，加上start就得出是哪个2位数
+        // n 现在是 6， num = 10 + 5 / 2 = 12
+        int num = start + (n - 1) / digits;
+        // index = 5 % 2 = 1
+        int index = (n - 1) % digits;
+        String numStr = String.valueOf(num);
+        // 字符串12的下标1对应的数字是2
+        return numStr.charAt(index);
     }
 
     public static void main(String[] args) {
         Q044_DigitsInSequence solution = new Q044_DigitsInSequence();
-        int index = 11;
-        int num = solution.digitAtIndex(index);
+        int index = 15;
+        char num = solution.digitAtIndex(index);
         System.out.println(num);
     }
 }

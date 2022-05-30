@@ -20,8 +20,8 @@ import algorithm.util.TreeNode;
  */
 public class Q008_NextNodeInBinaryTree {
 
-    public static TreeNode getNext(TreeNode pNode){
-        if(pNode==null)
+    public static TreeNode getNext(TreeNode pNode) {
+        if(pNode == null)
             return null;
         TreeNode pNext = null;
         // 有右子树

@@ -72,10 +72,13 @@ public class Q014_CuttingRope {
         /**
          * 当绳子最后剩下的长度为4的时候，不能再剪去长度为3的绳子段
          * 此时更好的方法是把绳子剪成长度为2的两段，因为2 * 2 > 3 * 1
+         * 
+         * 因为有可能 == 2，不是1
           */
-        if (length - timesOf3 * 3 == 1)
-            timesOf3 = timesOf3 - 1;   // 退出一个3出来，与1组成长度为4的绳子段
-
+        if (length - timesOf3 * 3 == 1) {
+        // 退出一个3出来，与1组成长度为4的绳子段
+            timesOf3 = timesOf3 - 1;
+        }
         int timeOf2 = (length - timesOf3 * 3) / 2;
 
         return (int)(Math.pow(3, timesOf3)) * (int)(Math.pow(2, timeOf2));

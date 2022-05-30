@@ -19,10 +19,12 @@ package algorithm.codingInterviewChinese2;
  * 而且哈希表中存放的是对应字符的位置，而不是个数。
  */
 public class Q050_02_FirstCharacterInStream {
+    // 字符流的index，不断增加，不是某个字符出现的次数
     private int index;
     private int[] occurence;
 
-    public Q050_02_FirstCharacterInStream() {  //在构造函数中初始化成员变量
+    //在构造函数中初始化成员变量
+    public Q050_02_FirstCharacterInStream() {
         index = 0;
         occurence = new int[256];
         for (int i = 0; i < 256; i++) {
@@ -43,17 +45,18 @@ public class Q050_02_FirstCharacterInStream {
         } else if (occurence[ch] >= 0) {
             occurence[ch] = -2;   //已经出现过了
         }
+        // 字符流的长度在增加
         index++;
     }
 
     public char getFirst() {
-        int minIndex = Integer.MAX_VALUE;  // 非重复字符最早出现的位置
+        int min = Integer.MAX_VALUE;  // 非重复字符最早出现的位置
         char ch = '#';
         for (int i = 0; i < 256; i++) {
-            // minIndex是每次循环都可能更新的
-            if (occurence[i] >= 0 && occurence[i] < minIndex) {
+            // min是每次循环都可能更新的
+            if (occurence[i] >= 0 && occurence[i] < min) {
                 ch = (char) i;
-                minIndex = occurence[i];
+                min = occurence[i];
             }
         }
         return ch;

@@ -12,8 +12,8 @@ public class Q009_2_StackWithTwoQueues {
     Queue<Integer> q2 = new ArrayDeque<>();
 
     /**
-     始终用空的队列去加入新值，再把另一队列的元素转移过来，使该队列为空，
-     下次加入元素，又使用那个空队列，使新加入的元素在最前面，就可以后进先出
+     始终用空的队列A去加入新值，再把另一队列B的元素转移过来，使该队列B为空，
+     下次加入元素，又使用那个空队列B，使新加入的元素在最前面，就可以后进先出
      */
     public void push(int x) {
         if (q1.isEmpty() && !q2.isEmpty()) {  // 队列1为空，队列2不为空

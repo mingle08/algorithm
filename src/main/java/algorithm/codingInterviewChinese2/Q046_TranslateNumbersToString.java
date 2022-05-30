@@ -37,7 +37,9 @@ package algorithm.codingInterviewChinese2;
  *  * 此时i和i+1的数字是24，在10到25范围内，所以值是1
  */
 public class Q046_TranslateNumbersToString {
-    public int getTranslationCount(int number) {
+
+    // 方法1
+    public int getTranslationCount1(int number) {
         if (number < 0)
             return 0;
 
@@ -58,9 +60,9 @@ public class Q046_TranslateNumbersToString {
                 cnt = 1;
 
             if (i < len - 1) {
-                int digit1 = S[i] - '0';
-                int digit2 = S[i + 1] - '0';
-                int converted = digit1 * 10 + digit2;
+                int num1 = S[i] - '0';
+                int num2 = S[i + 1] - '0';
+                int converted = num1 * 10 + num2;
                 if (converted >= 10 && converted <= 25) {
                     if (i < len - 2)
                         //f(i) = f(i+1) + f(i+2)
@@ -75,7 +77,8 @@ public class Q046_TranslateNumbersToString {
         return cnt;
     }
 
-    private int getCount2(int number) {
+    // 方法2
+    public int getTranslationCount2(int number) {
         if (number < 0) return 0;
 
         char[] numChar = String.valueOf(number).toCharArray();
@@ -92,8 +95,8 @@ public class Q046_TranslateNumbersToString {
          */
         for (int i = length - 2; i >= 0; i--) {
             f_i = f_i1;
-            int digit = (numChar[i] - '0') * 10 + (numChar[i + 1] - '0');
-            if (digit > 9 && digit < 26) {
+            int num = (numChar[i] - '0') * 10 + (numChar[i + 1] - '0');
+            if (num > 9 && num < 26) {
                 f_i += f_i2;
             }
             // 前移，类似Fibbonacci自下而上递归的方法
@@ -107,8 +110,8 @@ public class Q046_TranslateNumbersToString {
     public static void main(String[] args) {
         Q046_TranslateNumbersToString solution = new Q046_TranslateNumbersToString();
         int number = 12258;
-        int cnt = solution.getTranslationCount(number);
-        int cnt2 = solution.getCount2(number);
+        int cnt = solution.getTranslationCount1(number);
+        int cnt2 = solution.getTranslationCount2(number);
         System.out.println(cnt);
         System.out.println(cnt2);
     }

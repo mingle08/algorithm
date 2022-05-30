@@ -8,7 +8,7 @@ package algorithm.codingInterviewChinese2;
  */
 public class Q004_FindInPartiallySortedMatrix {
 
-    public boolean find(int[][] matrix, int num){
+    public boolean find(int[][] matrix, int num) {
         int rows = matrix.length;
         int cols = matrix[0].length;
 
@@ -16,12 +16,12 @@ public class Q004_FindInPartiallySortedMatrix {
         int row = 0;
         int col = cols - 1;
 
-        while (row < rows && col >= 0){ // 因为row是递增，col是递减
+        while (row < rows && col >= 0) { // 因为row是递增，col是递减
 
             // matrix[row][col] 是右上角的元素
-            if (matrix[row][col] > num){  // 1. 如果右上角的元素比目标大，删除右上角元素所在的这一列，往前找
+            if (matrix[row][col] > num) { // 1. 如果右上角的元素比目标大，删除右上角元素所在的这一列，往前找
                 col--;
-            } else if (matrix[row][col] < num){  // 2. 如果右上角的元素比目标小，删除右上角元素所在的这一行，往下找
+            } else if (matrix[row][col] < num) { // 2. 如果右上角的元素比目标小，删除右上角元素所在的这一行，往下找
                 row++;
             } else {
                 return true;
@@ -31,17 +31,16 @@ public class Q004_FindInPartiallySortedMatrix {
         return false;
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
         Q004_FindInPartiallySortedMatrix solution = new Q004_FindInPartiallySortedMatrix();
 
-        int[][] nums = {{1, 2, 8, 9},
-                        {2, 4, 9, 12},
-                        {4, 7, 10, 13},
-                        {6, 8, 11, 15}};
+        int[][] nums = { { 1, 2, 8, 9 },
+                { 2, 4, 9, 12 },
+                { 4, 7, 10, 13 },
+                { 6, 8, 11, 15 } };
 
         boolean flag = solution.find(nums, 7);
         System.out.println(flag);
-
 
     }
 }

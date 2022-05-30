@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * 输入一个不包含重复数字的数组，要求算法输出这些数字的所有子集
+ */
 public class L4011_Subsets {
 
     /**
@@ -59,6 +62,19 @@ public class L4011_Subsets {
         List<List<Integer>> res = subsets(nums);
         List<List<Integer>> res2 = subsets2(nums);
         System.out.println("子集的个数：" + res.size() + ", " + res2.size());
+        for (List<Integer> list : res) {
+            for (Integer i : list) {
+                System.out.print(i + " ");
+            }
+            System.out.println();
+        }
+
+        for (List<Integer> list : res2) {
+            for (Integer i : list) {
+                System.out.print(i + " ");
+            }
+            System.out.println();
+        }
     }
 
 }

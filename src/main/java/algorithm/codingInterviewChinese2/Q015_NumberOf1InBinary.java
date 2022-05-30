@@ -11,7 +11,7 @@ public class Q015_NumberOf1InBinary {
      * @param num
      * @return
      */
-    private int getNumber1(int num){
+    /* private int getNumber1(int num){
         int count = 0;
         while (num != 0){
             if ((num & 1) == 1){
@@ -20,14 +20,14 @@ public class Q015_NumberOf1InBinary {
             num = num >> 1;
         }
         return count;
-    }
+    } */
 
     /**
      * 方法2：为了避免死循环的发生，我们不右移数字n。我们左移
      * @param num
      * @return
      */
-    private int numberOf1(int num){
+    /* private int numberOf1(int num){
         int count = 0;
         int flag = 1;
         while (flag != 0){
@@ -38,7 +38,7 @@ public class Q015_NumberOf1InBinary {
             flag = flag << 1;
         }
         return count;
-    }
+    } */
 
     /**
      * 方法3

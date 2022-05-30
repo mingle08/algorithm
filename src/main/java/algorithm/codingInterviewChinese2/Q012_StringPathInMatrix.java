@@ -5,25 +5,33 @@ package algorithm.codingInterviewChinese2;
  *
  * 如果一条路径经过了矩阵的某一格，那么该路径不能再次进入该格子。例如，在下面的3×4的矩阵中包含一条字符串“bfce”的路径（路径中的字母用加粗标出）。
  *
- * [[“a”,”b“,”c”,”e”],
- * [“s”,”f“,”c“,”s”],
- * [“a”,”d”,”e“,”e”]]
+ * [
+ *   [“a”,”b“,”c”,”e”],
+ *   [“s”,”f“,”c“,”s”],
+ *   [“a”,”d”,”e“,”e”]
+ * ]
+ * 
+ * boolean[] visited = new boolean[rows * cols];
+ * 此数组的长度为 3 * 4 = 12
+ * row为0的a, b, c, e的下标不变，
+ * s, f, c, s的下标分别是4, 5, 6, 7，其中s的下标：row * cols + col = 1 * 4 + 0
+ * a, d, e, e的下标分别是8, 9, 10, 11，期中a的下标：row * cols + col = 2 * 4 + 0
  *
  * 但矩阵中不包含字符串“abfb”的路径，因为字符串的第一个字符b占据了矩阵中的第一行第二个格子之后，路径不能再次进入这个格子。
  */
 public class Q012_StringPathInMatrix {
 
-    private static boolean hasPath(char[][] matrix, char[] str) {
+    private static boolean hasPath(char[][] matrix, char[] chs) {
         int rows = matrix.length;
         int cols = matrix[0].length;
-        if (matrix == null || rows < 1 || cols < 1 || str == null)
+        if (matrix == null || rows < 1 || cols < 1 || chs == null)
             return false;
         // 注意数组长度是 rows * cols
         boolean[] visited = new boolean[rows * cols];
         int pathLength = 0;
         for (int row = 0; row < rows; row++) {
             for (int col = 0; col < cols; col++) {
-                if (hasPathCore(matrix, rows, cols, row, col, str, pathLength, visited)) {
+                if (hasPathCore(matrix, rows, cols, row, col, chs, pathLength, visited)) {
                     return true;
                 }
             }
@@ -31,21 +39,21 @@ public class Q012_StringPathInMatrix {
         return false;
     }
 
-    static boolean hasPathCore(char[][] matrix, int rows, int cols, int row, int col, char[] str, int pathLength, boolean[] visited) {
-        if (pathLength == str.length) {
+    static boolean hasPathCore(char[][] matrix, int rows, int cols, int row, int col, char[] chs, int pathLength, boolean[] visited) {
+        if (pathLength == chs.length) {
             return true;
         }
 
         boolean hasPath = false;
         if (row >= 0 && row < rows && col >= 0 && col < cols
-                && matrix[row][col] == str[pathLength]
+                && matrix[row][col] == chs[pathLength]
                 && !visited[row * cols + col]) {
             pathLength++;
             visited[row * cols + col] = true;
-            hasPath = hasPathCore(matrix, rows, cols, row, col - 1, str, pathLength, visited)
-                    || hasPathCore(matrix, rows, cols, row - 1, col, str, pathLength, visited)
-                    || hasPathCore(matrix, rows, cols, row, col + 1, str, pathLength, visited)
-                    || hasPathCore(matrix, rows, cols, row + 1, col, str, pathLength, visited);
+            hasPath = hasPathCore(matrix, rows, cols, row, col - 1, chs, pathLength, visited)
+                    || hasPathCore(matrix, rows, cols, row - 1, col, chs, pathLength, visited)
+                    || hasPathCore(matrix, rows, cols, row, col + 1, chs, pathLength, visited)
+                    || hasPathCore(matrix, rows, cols, row + 1, col, chs, pathLength, visited);
 
             if (!hasPath) {
                 pathLength--;

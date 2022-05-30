@@ -5,10 +5,10 @@ import java.util.Stack;
 
 public class BinaryTree {
 
-    private TreeNode root = null;
+    private TreeNode<String> root = null;
 
     public BinaryTree() {
-        root = new TreeNode(1, "A");
+        root = new TreeNode<String>(1, "A");
     }
 
     /**
@@ -19,11 +19,11 @@ public class BinaryTree {
      *         D     E          G
      */
     public void createBinaryTree() {
-        TreeNode nodeB = new TreeNode(2, "B");
-        TreeNode nodeC = new TreeNode(3, "C");
-        TreeNode nodeD = new TreeNode(4, "D");
-        TreeNode nodeE = new TreeNode(5, "E");
-        TreeNode nodeG = new TreeNode(6, "G");
+        TreeNode<String> nodeB = new TreeNode<String>(2, "B");
+        TreeNode<String> nodeC = new TreeNode<String>(3, "C");
+        TreeNode<String> nodeD = new TreeNode<String>(4, "D");
+        TreeNode<String> nodeE = new TreeNode<String>(5, "E");
+        TreeNode<String> nodeG = new TreeNode<String>(6, "G");
         root.leftChild = nodeB;
         root.rightChild = nodeC;
         nodeB.leftChild = nodeD;
@@ -32,12 +32,12 @@ public class BinaryTree {
     }
 
     public void createFullBinaryTree() {
-        TreeNode nodeB = new TreeNode(2, "B");
-        TreeNode nodeC = new TreeNode(3, "C");
-        TreeNode nodeD = new TreeNode(4, "D");
-        TreeNode nodeE = new TreeNode(5, "E");
-        TreeNode nodeF = new TreeNode(5, "F");
-        TreeNode nodeG = new TreeNode(6, "G");
+        TreeNode<String> nodeB = new TreeNode<String>(2, "B");
+        TreeNode<String> nodeC = new TreeNode<String>(3, "C");
+        TreeNode<String> nodeD = new TreeNode<String>(4, "D");
+        TreeNode<String> nodeE = new TreeNode<String>(5, "E");
+        TreeNode<String> nodeF = new TreeNode<String>(5, "F");
+        TreeNode<String> nodeG = new TreeNode<String>(6, "G");
         root.leftChild = nodeB;
         root.rightChild = nodeC;
         nodeB.leftChild = nodeD;
@@ -55,7 +55,7 @@ public class BinaryTree {
         return getHeight(root);
     }
 
-    private int getHeight(TreeNode node) {
+    private int getHeight(TreeNode<String> node) {
         if (node == null) {
             return 0;
         } else {
@@ -72,7 +72,7 @@ public class BinaryTree {
         return getSize(root);
     }
 
-    private int getSize(TreeNode node) {
+    private int getSize(TreeNode<String> node) {
         if (node == null) {
             return 0;
         } else {
@@ -83,7 +83,7 @@ public class BinaryTree {
     /**
      * 前序遍历：迭代
      */
-    public void preOrder(TreeNode node) {
+    public void preOrder(TreeNode<String> node) {
         if (node == null) {
             return;
         } else {
@@ -96,7 +96,7 @@ public class BinaryTree {
     /**
      * 中序遍历：迭代
      */
-    public void midOrder(TreeNode node) {
+    public void midOrder(TreeNode<String> node) {
         if (node == null) {
             return;
         } else {
@@ -109,7 +109,7 @@ public class BinaryTree {
     /**
      * 后序遍历：迭代
      */
-    public void postOrder(TreeNode node) {
+    public void postOrder(TreeNode<String> node) {
         if (node == null) {
             return;
         } else {
@@ -120,10 +120,10 @@ public class BinaryTree {
     }
 
 
-    // 前序  非递归
-    public void nonRecPreOrder(TreeNode root) {
-        Stack<TreeNode> stack = new Stack<>();
-        TreeNode cur = root;
+    // 前序  非递归：查找顺序和遍历顺序是相同的
+    public void nonRecPreOrder(TreeNode<String> root) {
+        Stack<TreeNode<String>> stack = new Stack<>();
+        TreeNode<String> cur = root;
         stack.push(cur);
         while (!stack.isEmpty()) {
             cur = stack.pop();
@@ -139,10 +139,10 @@ public class BinaryTree {
         }
     }
 
-    // 中序  非递归
-    public void nonRecInOrder (TreeNode root) {
-        Stack<TreeNode> stack = new Stack<>();
-        TreeNode cur = root;
+    // 中序  非递归：查找顺序与遍历顺序不同
+    public void nonRecInOrder (TreeNode<String> root) {
+        Stack<TreeNode<String>> stack = new Stack<>();
+        TreeNode<String> cur = root;
         while (!stack.isEmpty() || cur != null) {
             while (cur != null) {
                 stack.push(cur);
@@ -155,14 +155,19 @@ public class BinaryTree {
         }
     }
 
-    // 后序  非递归
-    public void nonRecPostOrder(TreeNode root) {
-        Stack<TreeNode> stack = new Stack<TreeNode>();
-        Stack<TreeNode> output = new Stack<TreeNode>();  //按出栈顺序将元素装入此栈中
-        TreeNode cur = root;
+    /**
+     * 后序  非递归：查找顺序和遍历顺序是相同的
+     * 与前序遍历（非递归）的操作正好相反
+     */
+    public void nonRecPostOrder(TreeNode<String> root) {
+        Stack<TreeNode<String>> stack = new Stack<TreeNode<String>>();
+        //按出栈顺序将元素装入此栈中
+        Stack<TreeNode<String>> output = new Stack<TreeNode<String>>();
+        TreeNode<String> cur = root;
         stack.push(cur);
         while (!stack.isEmpty()) {
             cur = stack.pop();
+            // 存放到辅助栈
             output.push(cur);
             if (cur.leftChild != null) {
                 stack.push(cur.leftChild);
@@ -173,7 +178,7 @@ public class BinaryTree {
         }
 
         // 访问
-        TreeNode out = null;
+        TreeNode<String> out = null;
         while (output.size() > 0) {
             out = output.pop();
             System.out.print(out.data + " ");
@@ -194,19 +199,19 @@ public class BinaryTree {
         createBinaryTree(data.size(), data);
     }
 
-    private TreeNode createBinaryTree(int size, ArrayList<String> data) {
+    private TreeNode<String> createBinaryTree(int size, ArrayList<String> data) {
         if (data.size() == 0) {
             return null;
         }
         String d = data.get(0);
-        TreeNode node;
+        TreeNode<String> node;
         int index = size - data.size();
         if (d.equals("#")) {
             node = null;
             data.remove(0);
             return node;
         }
-        node = new TreeNode(index, d);
+        node = new TreeNode<String>(index, d);
         if (index == 0) {
             // 根结点
             root = node;
@@ -257,7 +262,7 @@ public class BinaryTree {
 
     }
 
-    public static void printTreeNode(TreeNode node) {
+    public static void printTreeNode(TreeNode<String> node) {
         System.out.print(node.data + " ");
 
     }

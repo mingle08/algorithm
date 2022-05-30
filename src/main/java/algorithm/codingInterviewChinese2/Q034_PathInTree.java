@@ -29,7 +29,7 @@ public class Q034_PathInTree {
 
     private void findPathCore(BinaryTreeNode root, LinkedList<Integer> path, int expectedSum) {
         if (root == null) return;
-
+        // 减去根节点的值
         expectedSum -= root.val;
         // 做选择
         path.add(root.val);
@@ -68,8 +68,9 @@ public class Q034_PathInTree {
 
         for (List<Integer> list : solution.res) {
             for (Integer i : list) {
-                System.out.println(i);
+                System.out.print(i + " ");
             }
+            System.out.println();
         }
     }
 }

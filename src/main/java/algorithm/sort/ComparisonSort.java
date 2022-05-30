@@ -48,8 +48,10 @@ public class ComparisonSort {
 
         /*
          参考Arrays归并排序时 当length < INSERTIONSORT_THRESHOLD， 则用插入排序
+
+         拿第2张牌，跟第1张牌比较，下次循环拿第3张牌跟第2张牌比较，再与第1张牌比较，
+         下次拿第4张牌与前面的三张牌比较，依次类推
          */
-        // 拿第2张牌，跟第1张牌比较，下次循环拿第3张牌跟前面的2张牌比较，下次拿第4张牌与前面的3张牌比较，依次类推
         for (int i = 1; i < arr.length; i++) {
             // 只有要排序的牌小于前面的牌，才交换
             // j必须>=1，遍历到j = 1时，j - 1是第一张牌，本轮比较结束
@@ -68,6 +70,7 @@ public class ComparisonSort {
      */
     public static void shellSort(int[] arr) {
         int length = arr.length;
+        // 初始化step为1
         int step = 1;
         while (step < length / 3) {
             step = 3 * step + 1;
@@ -78,7 +81,7 @@ public class ComparisonSort {
             for (int i = step; i < arr.length; i++) {
                 // 根据后面的索引j，找它前面的组员j-step
                 for (int j = i; j - step >= 0; j -= step) {
-                    if (arr[j] < arr[j - step]) {
+                    if (arr[j - step] > arr[j]) {
                         swap(arr, j, j - step);
                     }
                 }
@@ -213,6 +216,7 @@ public class ComparisonSort {
      * <p>
      * start -- 被下调节点的起始位置(一般为0，表示从第1个开始)
      * end   -- 截至范围(一般为数组中最后一个元素的索引)
+     * 注意， < end ，不是<=，
      */
     public static void sink(int[] arr, int start, int end) {
         // 当前(parentent)节点的大小

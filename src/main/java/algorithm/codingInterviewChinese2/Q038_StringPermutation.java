@@ -2,8 +2,6 @@ package algorithm.codingInterviewChinese2;
 
 import java.util.*;
 
-import jdk.internal.org.objectweb.asm.commons.StaticInitMerger;
-
 import static algorithm.util.SwapUtil.swap;
 
 /**
@@ -145,18 +143,19 @@ public class Q038_StringPermutation {
 
     public static List<String> solution1(String str) {
         List<String> list = new ArrayList<>();
-        permutation(0, str.toCharArray(), list);
+        permutation(list, str.toCharArray(), 0);
         Collections.sort(list);
         return list;
     }
 
     /**
      * 固定第一位，排列后面的位
-     * @param S
+     * 
      * @param list
+     * @param S
      * @param begin
      */
-    private static void permutation(int begin, char[] S, List<String> list) {
+    private static void permutation(List<String> list, char[] S, int begin) {
         if (begin == S.length - 1) {
             list.add(new String(S));
             return;
@@ -171,8 +170,10 @@ public class Q038_StringPermutation {
             if (i != begin && S[i] == S[begin]) {
                 continue;
             }
+            // 做选择
             if (i != begin) swap(S, begin, i);
-            permutation(begin + 1,S, list);
+            permutation(list, S, begin + 1);
+            // 撤消选择
             if (i != begin) swap(S, begin, i);
 
         }

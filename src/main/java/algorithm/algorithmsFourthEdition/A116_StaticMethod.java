@@ -20,7 +20,7 @@ public class A116_StaticMethod {
         return t;
     }
 
-    // 计算调和级数
+    // 计算调和级数 Harmonic series
     public static double H(int N) {
         double sum = 0.0;
         for (int i = 1; i <= N; i++) {

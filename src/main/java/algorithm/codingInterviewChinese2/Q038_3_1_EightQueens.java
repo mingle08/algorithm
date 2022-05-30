@@ -36,9 +36,11 @@ public class Q038_3_1_EightQueens {
             }
         } else {
             for (int i = index; i < length; i++) {
+                // 做选择
                 if (i != index) swap(cols, index, i);
                 permutation(cols, length, index + 1);
-                if (i != index) swap(cols, index, i);    // 归位，防止重复计算
+                // 撤消选择
+                if (i != index) swap(cols, index, i);
             }
         }
     }
@@ -56,6 +58,19 @@ public class Q038_3_1_EightQueens {
     public void eightQueen() {
         int queens = 8;
         int[] cols = new int[queens];
+        /*
+          初始化之后：
+          cols[0] = 0;
+          cols[1] = 1;
+          cols[2] = 2;
+          cols[3] = 3;
+          cols[4] = 4;
+          cols[5] = 5;
+          cols[6] = 6;
+          cols[7] = 7;
+
+          之后的全排列就是把这7个数两两交换位置，选择符合条件的排列方式
+         */
         for (int i = 0; i < queens; i++) {
             cols[i] = i;
         }

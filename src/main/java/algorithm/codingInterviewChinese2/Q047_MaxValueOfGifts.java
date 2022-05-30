@@ -9,6 +9,7 @@ package algorithm.codingInterviewChinese2;
  * 定义dp的意义：dp[row][col] 是走到 [row][col] 位置时的最大值
  */
 public class Q047_MaxValueOfGifts {
+
     public int getMaxValue1(int[][] grid, int rows, int cols) {
         if (grid == null || rows <= 0 || cols <= 0)
             return 0;
@@ -42,7 +43,6 @@ public class Q047_MaxValueOfGifts {
      * 也就是说，该数组前面j个数字分别是当前第i行前面j个格子礼物的最大价值，
      * 而之后的数字分别保存前面第i-1行n-j个格子礼物的最大价值
      */
-
     public int getMaxValue2(int[][] grid, int rows, int cols) {
         if (grid == null || rows <= 0 || cols <= 0)
             return 0;
@@ -52,10 +52,10 @@ public class Q047_MaxValueOfGifts {
             for (int j = 0; j < cols; j++) {
                 int left = 0;
                 int up = 0;
-                // 此刻是grid[i][j]，只要i > 0，up的横坐标 i-1才不报错
+                // 此刻是grid[i - 1][j]，只要i > 0，up的横坐标 i-1才不报错
                 if (i > 0)
                     up = dp[j];
-                // 同样此刻是grid[i][j]，只要j > 0，left的纵坐标 j-1才不报错
+                // 同样此刻是grid[i][j - 1]，只要j > 0，left的纵坐标 j-1才不报错
                 if (j > 0)
                     left = dp[j - 1];
 

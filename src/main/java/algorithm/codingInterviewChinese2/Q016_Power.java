@@ -31,16 +31,25 @@ public class Q016_Power {
             return 1;
         }
 
+        /*
+          base case 递归终止条件
+          无论指数是奇是偶，右移一位都能达到指数为1
+        */ 
         if (exponent == 1){
             return base;
         }
 
-        // 用右移 >> 代替除以2
+        // 用右移 >> 1 代替除以2
         double res = powerWithUnsignedExponent(base, exponent >> 1);
-        // 1，先平方
+        // 1，做平方运算的是res
         res *= res;
-        // 2，如果是奇数，再乘以base
-        if ((exponent & 0x1) == 1){  // 位与判断一个数是奇数还是偶数
+        /*
+          2，如果是奇数，再乘以base
+          与1运算判断一个数是奇数还是偶数
+          如果指数是5，只有递归返回到最上面一层，才会执行这个if
+          如果是偶数，不会执行此if
+         */
+        if ((exponent & 0x1) == 1){  //
             res *= base;
         }
 
@@ -49,11 +58,7 @@ public class Q016_Power {
 
     /**
      * 快速幂的循环写法
-     * 比如 3^8, 8的二进制是 1000
-     * 3^8
-     * = 3^(1 * 2^3 + 0 * 2^2 + 0 * 2^1 + 0 * 2^0)
-     * = (3^(2^3))^1 * (3^(2^2))^0 * (3^(2^1))^0 * (3^(2^0))^0
-     * = 3^(2^3) * 1 * 1 * 1
+     * 
      * @param base
      * @param exponent
      * @return
@@ -61,15 +66,22 @@ public class Q016_Power {
     public static double quickPower(double base, int exponent) {
         double res = 1;
         while(exponent != 0) {
-            if ((exponent & 1) == 1) { // 只有二进制的位是1，才记入结果
-                res *= base;    // 循环第一次执行到这里，相当于最右位：base^(2^0)
+            /*
+              如果指数是5，第一次循环会执行这里，还有最后一次循环会执行这里
+              因为5右移一位是2，2右移一位是1。
+              偶数：只有最后2右移一位变成1才会执行这个if，总共1次
+              奇数：第一次循环会执行这个if，最后2右移一位变成1，也会执行这个if，总共2次
+              所以无论奇偶，最后指数右移都会变成1，都会执行这里
+              比如3^5，第一次执行 base是3，res是3；第二次执行，base已经变成81了，res是3，结果是3 * 81
+              做平方运算的是base
+            */
+            if ((exponent & 1) == 1) { 
+                res *= base;
             }
             /*
-               循环第一次走到base *= base，就是base^2，第二次执行到这里就是4次方，
-               第三次执行到这里就是8次方，只有二进制的位上是1才记入结果，
-               不然只是计算平方，供后面是1的使用
+               base平方，对比递归写法，是res平方
              */
-            base *= base;   // base^2, base^4, base^8 ……  只有二进制是1的才记住结果
+            base *= base;
             // 指数右移
             exponent = exponent >> 1;
         }

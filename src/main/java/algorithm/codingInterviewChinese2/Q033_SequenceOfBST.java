@@ -12,6 +12,8 @@ package algorithm.codingInterviewChinese2;
  *      5    7     9    11
  *
  * 思路：二叉搜索树的特点：左子树的节点值小于根节点的值，右子树的节点值大于根节点的值
+ * 
+ * 注意：二叉树与二叉搜索树的不同点
  */
 public class Q033_SequenceOfBST {
     public boolean verifySequenceOfBST(int[] sequence, int start, int end) {

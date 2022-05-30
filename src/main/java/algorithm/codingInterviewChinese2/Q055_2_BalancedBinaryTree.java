@@ -1,7 +1,6 @@
 package algorithm.codingInterviewChinese2;
 
 import algorithm.util.BinaryTreeNode;
-import algorithm.util.TreeNode;
 
 /**
  * 判断一棵树是不是平衡二叉树

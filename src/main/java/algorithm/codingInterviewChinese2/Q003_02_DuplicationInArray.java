@@ -23,27 +23,28 @@ package algorithm.codingInterviewChinese2;
  *
  */
 public class Q003_02_DuplicationInArray {
-    public int getDup(int[] nums){
-        if(nums == null || nums.length == 0){
+    public int getDup(int[] nums) {
+        if (nums == null || nums.length == 0) {
             return -1;
         }
         int start = 1;
         int end = nums.length - 1;
-        while(end >= start){
+        while (end >= start) {
             // mid是中位数，跟数组最中间的数字没关系，是理想数组的中间数
             int mid = ((end - start) >> 1) + start;
             // 比如第一次mid是4，统计整个数组在1到4之前的数
             int count = countRange(nums, start, mid);
             System.out.println("比" + mid + "小的数字个数为：" + count);
-            if(end == start){
-                if(count > 1){
+            // 当start == end时，如果count > 1就找到了一个重复数字
+            if (end == start) {
+                if (count > 1) {
                     return start;
-                }else{
+                } else {
                     break;
                 }
             }
             // 小于中位数的个数大于
-            if (count > (mid - start + 1)){
+            if (count > (mid - start + 1)) {
                 System.out.println("count的个数大于" + (mid - start + 1) + "，重复的数在理想数组的前面");
                 end = mid;
             } else {
@@ -54,24 +55,24 @@ public class Q003_02_DuplicationInArray {
         return -1;
     }
 
-    int countRange(int[] nums, int start, int end){
-        if(nums == null){
+    int countRange(int[] nums, int start, int end) {
+        if (nums == null) {
             return 0;
         }
         int count = 0;
         // 遍历整个数组，统计理想数组的前半段或后半段这几个数字在数组中出现的次数
         for (int i = 0; i < nums.length; i++) {
-            if(nums[i] >= start && nums[i] <= end){
+            // 当start == end时，nums[i] == start == end的count > 1时，就是重复数字
+            if (nums[i] >= start && nums[i] <= end) {
                 ++count;
             }
         }
         return count;
     }
 
-
-    public static void main(String[] args){
+    public static void main(String[] args) {
         Q003_02_DuplicationInArray solution = new Q003_02_DuplicationInArray();
-        int[] arr = {4,3,5,2,3,2,6,7};
+        int[] arr = { 4, 3, 5, 2, 3, 2, 6, 7 };
         int dup = solution.getDup(arr);
         System.out.println(dup);
     }

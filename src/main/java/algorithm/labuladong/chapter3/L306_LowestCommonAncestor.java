@@ -1,4 +1,4 @@
-package algorithm.labuladong.chapter3.d306;
+package algorithm.labuladong.chapter3;
 
 import algorithm.util.TreeNode;
 

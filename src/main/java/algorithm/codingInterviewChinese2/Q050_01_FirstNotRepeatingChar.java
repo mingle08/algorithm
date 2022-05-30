@@ -21,12 +21,14 @@ public class Q050_01_FirstNotRepeatingChar {
         int size = 256;
         // 借助数组，模拟哈希表（256代表所有的数字与大小写字母的总和）
         int[] hashTable = new int[size];
+        // 第一次遍历数组
         for (int i = 0; i < S.length; i++) {
             /**
              * 比如hashTable[S[i]]有可能等于 hashTable['c']
              */
             hashTable[S[i]]++;  // 先查出hashTable中S[i]的值，再加1
         }
+        // 第二次遍历数组
         for (int i = 0; i < S.length; i++) {// 按字符数组从前往后遍历，保证字符的先后顺序
             if (hashTable[S[i]] == 1)
                 return S[i];

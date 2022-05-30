@@ -24,7 +24,7 @@ public class Q028_SymmetricalBinaryTree {
         if (root1.val != root2.val) {
             return false;
         }
-
+        // 走到这一步，说明root1 != null && root2 != null && root1 == root2，所以接下来，要比较左子树和右子树
         return isSymmetrical(root1.left, root2.right) && isSymmetrical(root1.right, root2.left);
     }
 }

@@ -53,11 +53,18 @@ public class Q010_Fibonacci {
         return helper(memo, n);
     }
 
+    /**
+     * 注意入参n，对应的memo就是memo[n]
+     * @param memo
+     * @param n
+     * @return
+     */
     private int helper(int[] memo, int n) {
         // base case
         if (n < 2) return n;
-        // 已经计算过了，不用再计算
+        // 如果已经计算过了（在memo中有值），直接取出并返回
         if (memo[n] != 0) return memo[n];
+        // 如果没计算过，则把计算结果保存到memo
         memo[n] = helper(memo, n - 1) + helper(memo, n - 2);
         return memo[n];
     }

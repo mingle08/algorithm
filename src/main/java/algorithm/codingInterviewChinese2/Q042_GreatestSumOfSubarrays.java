@@ -2,10 +2,12 @@ package algorithm.codingInterviewChinese2;
 
 /**
  * 题目：输入一个整形数组，数组里有正数也有负数。数组中的一个或连续多个整数组成一个子数组。
- * 求所有子数组的和的最大值。要求时间复杂度为O(n)
+ * 求所有子数组的和的最大值。
+ * 要求时间复杂度为O(n)
  */
 public class Q042_GreatestSumOfSubarrays {
 
+    // 方法1 循环
     public int findGreatestSumOfSubarrays(int[] arr) {
         if (arr == null || arr.length <= 0) {
             return 0;
@@ -28,7 +30,7 @@ public class Q042_GreatestSumOfSubarrays {
         return greatestSum;
     }
 
-    // 动态规划
+    // 方法2 动态规划
     public int findGreatestSum(int[] arr) {
         // 使用max记录最大值
         int max = Integer.MIN_VALUE;

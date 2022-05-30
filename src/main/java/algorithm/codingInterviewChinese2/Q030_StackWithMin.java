@@ -12,10 +12,14 @@ public class Q030_StackWithMin {
 
     Stack<Integer> stack = new Stack<>();
     Stack<Integer> minStack = new Stack<>();
+
     // stack,minStack同步push
-    public void push(int num){
+    public void push(int num) {
         stack.push(num);
-        // 此处比较大小，保证辅助栈的数值是最小的
+        /*
+          此处比较大小，保证辅助栈的数值是最小的
+          同步push，要么存当前num，要么再存一下已有的最小值
+        */ 
         if (num < min())
             minStack.push(num);
         else
@@ -23,29 +27,29 @@ public class Q030_StackWithMin {
     }
 
     // stack, minStack同步pop
-    public int pop(){
+    public int pop() {
         int val = stack.pop();
         minStack.pop();
         return val;
     }
 
     // 只是peek，返回一个值，并不做大小判断
-    public int min(){
+    public int min() {
         if (minStack.isEmpty())
             return 0;
 
         return minStack.peek();
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
         Q030_StackWithMin solution = new Q030_StackWithMin();
-        int[] arr = {3, 4, 2, 1};
-        for (int num : arr){
+        int[] arr = { 3, 4, 2, 1 };
+        for (int num : arr) {
             solution.push(num);
             System.out.println(solution.min());
         }
         // 连续二次栈顶
-        for (int i=0; i < 2; i++){
+        for (int i = 0; i < 2; i++) {
             solution.pop();
             System.out.println(solution.min());
         }

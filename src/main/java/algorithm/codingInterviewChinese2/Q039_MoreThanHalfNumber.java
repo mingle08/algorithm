@@ -18,20 +18,22 @@ public class Q039_MoreThanHalfNumber {
      * 当遍历到下一个数字的时候，如果下一个数字和之前保存的数字相同，则次数加1；
      * 如果不同，则次数减1
      * 由于要找的数字出现的次数比其他所有数字出现的次数之和还要多，那么要找的数字肯定是最后一次把次数设为1时对应的数字
+     * 
      * @param numbers
      * @return
      */
-    public static int numMoreThanHalf(int[] numbers){
+    public static int numMoreThanHalf(int[] numbers) {
         int len = numbers.length;
         if (checkInputInvalid(numbers, len))
             return 0;
-
+        // result初始化为第一个元素
         int result = numbers[0];
         int times = 1;
         for (int i = 1; i < len; i++) {
             /**
-             *  如果次数为0，则保存下一个数字，即numbers[i]，并把次数设为1
-             *  因为次数是被上次循环减到0的，保存下一个数字，也就是判断次数是否为0时，已是进入了下次循环
+             * 如果次数为0，则保存下一个数字，即numbers[i]，并把次数设为1
+             * 因为次数是被上次循环减到0的，保存下一个数字，也就是判断次数是否为0时，已是进入了下次循环
+             * result的值被更改
              */
             if (times == 0) {
                 result = numbers[i];
@@ -42,6 +44,7 @@ public class Q039_MoreThanHalfNumber {
                 times--;
         }
 
+        // 验证result是不是目标元素：数目超过一半
         if (!checkMoreThanHalf(numbers, len, result))
             return 0;
 
@@ -49,7 +52,7 @@ public class Q039_MoreThanHalfNumber {
 
     }
 
-    private static boolean checkInputInvalid(int[] numbers, int length){
+    private static boolean checkInputInvalid(int[] numbers, int length) {
         isInputInvalid = false;
         if (numbers == null || length < 0)
             isInputInvalid = true;
@@ -57,15 +60,17 @@ public class Q039_MoreThanHalfNumber {
         return isInputInvalid;
     }
 
-    private static boolean checkMoreThanHalf(int[] numbers, int len, int num){
+    // 验证num是不是目标元素：超过一半
+    private static boolean checkMoreThanHalf(int[] numbers, int len, int num) {
         int times = 0;
         for (int i = 0; i < len; i++) {
-            if(num == numbers[i])
+            if (num == numbers[i])
                 times++;
         }
 
         boolean isMoreThanHalf = true;
-        if (times * 2 <= len){
+        // 如果num数目超过一半，2 * times 应该大于 len
+        if (times * 2 <= len) {
             isInputInvalid = true;
             isMoreThanHalf = false;
         }
@@ -75,7 +80,7 @@ public class Q039_MoreThanHalfNumber {
     }
 
     public static void main(String[] args) {
-        int[] nums = {1,2,1,3,1,1,2,1,5};
+        int[] nums = { 1, 2, 1, 3, 1, 1, 2, 1, 5 };
         int res = numMoreThanHalf(nums);
         System.out.println(res);
     }

@@ -16,20 +16,20 @@ public class Q011_MinNumberInRotatedArray {
         int left = 0;
         int right = len - 1;
         int mid = left;
-        while (left < right){
+        while (left < right) {
             /**
              * 2个指针的距离是1时，表明第一个指针已经指向第一个递增子数组的末尾，
              * 而第二个指针指向第二个递增子数组的开头
              */
-            if (right - left == 1){
+            if (right - left == 1) {
                 mid = right;
                 break;
             }
             mid = left + (right - left) / 2;
 
             // 如果left, right, mid指向的三个数字相等，只能顺序查找，比如{1, 1, 1, 0, 1}
-            if (num[left] == num[mid] && num[mid] == num[right]){
-                return midInOrder(num, left, right);
+            if (num[left] == num[mid] && num[mid] == num[right]) {
+                return findMin(num, left, right);
             }
 
             // {3, 4, 5, 1, 2}
@@ -44,8 +44,9 @@ public class Q011_MinNumberInRotatedArray {
     }
 
     // 处理两个指针所在的数相等，中间数也相等的情况：比如{1, 1, 1, 0, 1}
-    private int midInOrder(int[] numbers, int low, int high){
+    private int findMin(int[] numbers, int low, int high) {
         int min = numbers[low];
+        // 因为下标low的数已经赋值给min，for循环的 i 初始值为low + 1
         for (int i = low + 1; i <= high; i++) {
             if (min > numbers[i])
                 min = numbers[i];
@@ -57,7 +58,7 @@ public class Q011_MinNumberInRotatedArray {
     public static void main(String[] args) throws Exception {
         Q011_MinNumberInRotatedArray solution = new Q011_MinNumberInRotatedArray();
 
-        int[] arr = {3, 4, 5, 1, 2};
+        int[] arr = { 3, 4, 5, 1, 2 };
         int length = arr.length;
         int min = solution.minNumber(arr, length);
         System.out.println(min);

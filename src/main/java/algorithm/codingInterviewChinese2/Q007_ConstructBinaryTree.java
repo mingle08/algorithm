@@ -36,6 +36,7 @@ public class Q007_ConstructBinaryTree {
         root.right = null;
         // 2，求出左子树的个数
         int leftNum = 0;
+        // 拿root到中序遍历序列中查找
         for (int j : inOrder) {
             if (root.val == j) {
                 break;

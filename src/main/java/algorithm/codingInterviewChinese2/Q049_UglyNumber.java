@@ -25,7 +25,9 @@ public class Q049_UglyNumber {
             int num2 = res[i2] * 2;
             int num3 = res[i3] * 3;
             int num5 = res[i5] * 5;
+            // 确定最小值
             int min = Math.min(num2, Math.min(num3, num5));
+            // 把最小值放在下一个位置
             res[next] = min;
 
             // 判定刚才的min是谁产生的，就将谁加1
@@ -35,6 +37,7 @@ public class Q049_UglyNumber {
 
             if (res[i5] * 5 == min) i5++;
 
+            // 下标往后移
             next++;
         }
         return res[index - 1];

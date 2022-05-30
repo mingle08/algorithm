@@ -20,7 +20,7 @@ import algorithm.util.ListNode;
 public class Q018_1_DeleteNodeInList {
 
     /**
-     * curr与dummy都指向原链表的头节点，所以删除的时候，不用判断删除的是头节点还是尾节点
+     * cur 与 dummy 都指向原链表的头节点，所以删除的时候，不用判断删除的是头节点还是尾节点
      * @param head
      * @param toBeDeleted
      * @return
@@ -47,6 +47,7 @@ public class Q018_1_DeleteNodeInList {
         // 2.2 链表中有多个节点，删除尾节点
         else {
             ListNode cur = head;
+            // 找到待删除节点的前一个节点
             while (cur.next != toBeDeleted) {
                 cur = cur.next;
             }
@@ -65,17 +66,17 @@ public class Q018_1_DeleteNodeInList {
     }
 
     public static void main(String[] args) {
-        ListNode node1 = new ListNode(5);
-        /*ListNode node2 = new ListNode(2);
-        ListNode node3 = new ListNode(4);
-        ListNode node4 = new ListNode(9);
+        ListNode node1 = new ListNode(1);
+        ListNode node2 = new ListNode(2);
+        ListNode node3 = new ListNode(3);
+        ListNode node4 = new ListNode(4);
         node1.next = node2;
         node2.next = node3;
-        node3.next = node4;*/
+        node3.next = node4;
 
         printNode(node1);
 
-        ListNode newNode = deleteNode(node1, node1);
+        ListNode newNode = deleteNode(node1, node3);
 
         printNode(newNode);
     }

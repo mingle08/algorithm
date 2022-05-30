@@ -1,6 +1,5 @@
 package algorithm.codingInterviewChinese2;
 
-
 import algorithm.util.TreeNode;
 
 import java.util.LinkedList;

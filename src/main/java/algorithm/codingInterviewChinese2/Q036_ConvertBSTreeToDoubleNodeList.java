@@ -1,13 +1,8 @@
 package algorithm.codingInterviewChinese2;
 
-import algorithm.binarytree.BinaryTree;
 import algorithm.util.BinaryTreeNode;
 
 import java.util.Stack;
-
-import javax.activation.MailcapCommandMap;
-
-import com.sun.org.apache.xpath.internal.WhitespaceStrippingElementMatcher;
 
 /**
  * 将搜索二叉树转换成有序的双向链表
@@ -19,40 +14,47 @@ import com.sun.org.apache.xpath.internal.WhitespaceStrippingElementMatcher;
  */
 public class Q036_ConvertBSTreeToDoubleNodeList {
 
-    public static BinaryTreeNode convert(BinaryTreeNode root) {
-        BinaryTreeNode lastNode = null;
-        lastNode = convertNode(root, lastNode);
-        BinaryTreeNode head = lastNode;
-        while (head != null && head.left != null) {
-            head = head.left;
+    static BinaryTreeNode head, tail;
+
+    public static BinaryTreeNode treeToNodeList(BinaryTreeNode root) {
+        if (root == null) {
+            return null;
         }
+
+        // 递归
+        dfs(root);
+        // 头尾节点相连
+        // tail.right = head;
+        // head.left = tail;
+
         return head;
     }
 
     // 方法1：递归
-    private static BinaryTreeNode convertNode(BinaryTreeNode root, BinaryTreeNode lastNode) {
-        if (root == null)
-            return lastNode;
+    private static void dfs(BinaryTreeNode cur) {
+        if (cur == null) {
+            return;
+        }
 
-        BinaryTreeNode cur = root;
-        // 中序遍历：1，处理左子节点
-        if (cur.left != null)
-            lastNode = convertNode(cur.left, lastNode);
-        cur.left = lastNode;    // 双向链接第1步
+        // 递归左子树
+        dfs(cur.left);
 
-        // 中序遍历：2，处理根节点
-        // 把根节点连接到链表中
-        if (lastNode != null)
-            lastNode.right = cur;   // 双向链接第2步，至此，完成双向链接
+        // 中序遍历的位置
+        if (tail == null) {
+            // head只设置这一次，而tail在往右移
+            head = cur;
+        } else {
+            // tail 节点的右指针是cur
+            tail.right = cur;
+            // cur的左指针是 tail
+            cur.left = tail;
+        }
+        
+        // tail右移至cur
+        tail = cur;
 
-        // 最后节点往右移动
-        lastNode = cur;
-        // 中序遍历：3，处理右子节点
-        if (cur.right != null)
-            lastNode = convertNode(cur.right, lastNode);
-
-        return lastNode;
-
+        // 递归右子树
+        dfs(cur.right);
     }
 
     /**
@@ -94,7 +96,7 @@ public class Q036_ConvertBSTreeToDoubleNodeList {
         root.right.left = new BinaryTreeNode(12);
         root.right.right = new BinaryTreeNode(16);
 
-        BinaryTreeNode head = convert(root);
+        BinaryTreeNode head = treeToNodeList(root);
         while (head != null) {
             System.out.print(head.val + " ");
             head = head.right;
