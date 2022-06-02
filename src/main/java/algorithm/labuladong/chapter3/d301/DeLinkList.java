@@ -16,10 +16,13 @@ public class DeLinkList {
     }
 
     public void addLast(Node x) {
+        // 处理x的前后指针
         x.prev = tail.prev;
         x.next = tail;
+        // 处理tail的指向
         tail.prev.next = x;
         tail.prev = x;
+        // size自增1
         size++;
     }
 

@@ -12,7 +12,7 @@ public class Q009_1_QueueWithTwoStacks {
     Stack<Integer> s2 = new Stack<>();
 
     // 栈1做插入
-    public void appendTail(Integer num){
+    public void appendTail(Integer num) {
         s1.push(num);
     }
 
@@ -22,12 +22,13 @@ public class Q009_1_QueueWithTwoStacks {
      * 队列是先进先出，1先进，所以1要先出
      * 把s1的元素依次弹出，并压入s2，3先入栈，1在栈顶
      * s2弹出1，就实现了1先出来
+     * 
      * @return
      */
-    public Integer deleteHead(){
+    public Integer deleteHead() {
         // 如果栈2为空，则把栈1元素全部弹出，压入栈2
-        if (s2.isEmpty()){
-            while (s1.size() > 0){
+        if (s2.isEmpty()) {
+            while (s1.size() > 0) {
                 s2.push(s1.pop());
             }
         }

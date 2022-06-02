@@ -61,6 +61,7 @@ public class Q054_KthNodeInBST {
                 cur = cur.left;
             } else {
                 cur = stack.pop();
+                // 统计数量
                 count++;
                 if (count == k)
                     return cur;

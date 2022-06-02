@@ -150,6 +150,7 @@ public class BinaryTree {
             }
 
             cur = stack.pop();
+            // 打印，对比剑指offer 54题，此处是统计数字，比较count是不是等于k
             printTreeNode(cur);
             cur = cur.rightChild;
         }

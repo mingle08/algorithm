@@ -15,7 +15,7 @@ public class L501_CountPrimes {
         // 注意 i * i
         for (int i = 2; i * i < n; i++) {
             if (checkPrime[i]) {
-                // 注意 i * i
+                // i的倍数不可能是素数了，注意 i * i
                 for (int j = i * i; j < n; j += i)
                     checkPrime[j] = false;
             }

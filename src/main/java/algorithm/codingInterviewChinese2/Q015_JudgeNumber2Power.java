@@ -43,6 +43,18 @@ package algorithm.codingInterviewChinese2;
  *      11 的二进制表示  1 0 1 1  （三个1）
  *      10 的二进制表示  1 0 1 0
  * 11和10作 与运算 得到  1 0 1 0 （只剩左边的1，最右边的1，与运算之后变成0）
+ * 
+ * netty源码中是这样判断的：
+ * val & -val == val
+ * 关键是：负数是正数的反码+1
+ * 
+ * +4的二进制表示  0000 0100，取反变成 1111 1011，再加1，得到1111 1100，这就是-4，即：
+ * -4的二进制表示  1111 1100
+ * & 结果是       0000 0100  这就是+4
+ * 
+ * +5的二进制表示  0000 0101，取反变成 1111 1010，再加1，得到1111 1011，这就是-5，即：
+ * -5的二进制表示  1111 1011
+ * & 结果是       0000 0001  这是+1
  */
 public class Q015_JudgeNumber2Power {
 
@@ -55,10 +67,20 @@ public class Q015_JudgeNumber2Power {
         return flag;
     }
 
+    // netty源码
+    // io.netty.util.concurrent.DefaultEventExecutorChooserFactory#newChooser
+    private static boolean isPowerOfTwo(int val) {
+        return (val & -val) == val;
+    }
+
     public static void main(String[] args) {
         // 直接使用二进制表示
         int num = 0b0100;
         boolean flag = numberIs2Power(num);
+        System.out.println(flag);
+
+        num = 8;
+        flag = isPowerOfTwo(num);
         System.out.println(flag);
     }
 }

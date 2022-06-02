@@ -22,41 +22,40 @@ public class Q058_02_LeftRotateString {
     }
 
     public String leftRotateString(char[] chars, int n) {
-        if(chars==null || chars.length <= 0)
+        if (chars == null || chars.length <= 0)
             return null;
-        if(n<=0 || n > chars.length)
+        if (n <= 0 || n > chars.length)
             return null;
 
         // 翻转字符串的前n个字符
-        reverse(chars,0,n-1);
+        reverse(chars, 0, n - 1);
 
         // 翻转字符串的后面部分
-        reverse(chars,n,chars.length-1);
+        reverse(chars, n, chars.length - 1);
 
         // 翻转整个字符串
-        reverse(chars,0,chars.length-1);
+        reverse(chars, 0, chars.length - 1);
 
         return String.valueOf(chars);
     }
 
-
     /*
-    public static String leftRotate(String str, int n) {
-        StringBuilder sb = new StringBuilder();
-        sb.append(str, n, str.length()).append(str, 0, n);
-        return sb.toString();
-    }
-
+     * public static String leftRotate(String str, int n) {
+     * StringBuilder sb = new StringBuilder();
+     * sb.append(str, n, str.length()).append(str, 0, n);
+     * return sb.toString();
+     * }
+     * 
      */
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
         Q058_02_LeftRotateString solution = new Q058_02_LeftRotateString();
         String str = "abcdefg";
         char[] S = str.toCharArray();
         String rotateStr = solution.leftRotateString(S, 2);
         System.out.println(rotateStr);
 
-//        String s = leftRotate(str, 2);
-//        System.out.println(s);
+        // String s = leftRotate(str, 2);
+        // System.out.println(s);
     }
 }

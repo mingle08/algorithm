@@ -19,7 +19,7 @@ public class Q059_02_QueueWithMax {
 
     public Integer max_value() {
         if (deque.isEmpty()) return -1;
-        // max只量peek，并不删除
+        // max只是peek，并不删除
         return deque.peek();
     }
 

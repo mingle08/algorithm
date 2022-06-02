@@ -5,6 +5,18 @@ import java.util.List;
 
 public class L406_4_NSum {
 
+    /**
+     * 每次递归，各参数的变化：
+     * n -> n - 1
+     * start -> i + 1
+     * target -> target - nums[i]
+     * 
+     * @param nums
+     * @param n
+     * @param start
+     * @param target
+     * @return
+     */
     static List<List<Integer>> nSumTarget(int[] nums, int n, int start, int target) {
         int sz = nums.length;
         List<List<Integer>> res = new ArrayList<>();
@@ -18,12 +30,10 @@ public class L406_4_NSum {
                 int l = nums[left], r = nums[right];
                 int sum = l + r;
                 if (sum > target) {
-                    right--;
-                    // 跳过重复元素
+                    // 跳过重复元素（第一次进入就是true，因为r的初始值就是nums[right]）
                     while (left < right && nums[right] == r) right--;
                 } else if (sum < target) {
-                    left++;
-                    // 跳过重复元素
+                    // 跳过重复元素（第一次进入就是true，因为l的初始值就是nums[left]）
                     while (left < right && nums[left] == l) left++;
                 } else {
                     temp.add(l);

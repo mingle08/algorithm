@@ -42,7 +42,7 @@ public class L308_MonotonicQueue {
 
         for (int i = 0; i < nums.length; i++) {
             if (i < k - 1) {
-                //
+                // 初始化窗口，先处理前面k个数
                 window.push(nums[i]);
             } else {
                 // 

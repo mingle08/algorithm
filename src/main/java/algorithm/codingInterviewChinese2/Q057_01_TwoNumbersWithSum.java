@@ -32,7 +32,7 @@ public class Q057_01_TwoNumbersWithSum {
 
     public static void main(String[] args) {
         Q057_01_TwoNumbersWithSum solution = new Q057_01_TwoNumbersWithSum();
-        int[] arr = {1, 2, 4, 7, 11, 15};
+        int[] arr = { 1, 2, 4, 7, 8, 11, 15 };
         int length = arr.length;
         int[] res = solution.findNumbersWithSum(arr, length, 15);
 

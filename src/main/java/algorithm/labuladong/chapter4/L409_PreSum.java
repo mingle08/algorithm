@@ -11,6 +11,7 @@ import java.util.HashMap;
  */
 public class L409_PreSum {
     
+    // 求和为k的子数组的个数
     int subArraySum(int[] nums, int k) {
         int n = nums.length;
         // map: 前缀和 -> 该前缀和出现的次数
@@ -26,7 +27,10 @@ public class L409_PreSum {
             // 如果前面有这个前缀和，则直接给出答案
             if (preSum.containsKey(sum0_c))
                 ans += preSum.get(sum0_c);
-            // 把前缀和 nums[0...i] 加入并记录出现次数
+            /*
+              把前缀和 nums[0...i] 加入并记录出现次数
+              如果没有出现过，就存为1；如果出现过，在原值上加1
+            */ 
             preSum.put(sum0_i, preSum.getOrDefault(sum0_i, 0) + 1);
         }
         return ans;

@@ -23,6 +23,7 @@ public class L502_SuperPower {
 
     private int myPow(int a, int k) {
         if (k == 0) return 1;
+        // a对base取余
         a %= base;
 
         if (k % 2 == 1) {
