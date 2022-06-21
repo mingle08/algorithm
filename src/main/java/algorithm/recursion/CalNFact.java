@@ -1,5 +1,8 @@
 package algorithm.recursion;
 
+/**
+ * 求n的阶乘
+ */
 public class CalNFact {
 
 	public static void main(String[] args) {

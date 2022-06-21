@@ -37,6 +37,7 @@ public class L504_TrapWater {
         int left_max = height[0];
         int right_max = height[n - 1];
         while (left < right) {
+            // 动态更新left_max, right_max
             left_max = Math.max(left_max, height[left]);
             right_max = Math.max(right_max, height[right]);
             // ans += Math.min(left_max, right_max) - height[i]

@@ -3,9 +3,9 @@ package algorithm.number;
 public class FloatBinary {
 
 	/**
-	 *    s    eeee eeee  mmmm mmmm mmmm mmmm mmmm mmm
-	 *   符号位               8位                                                   23个
-	 *           表示指数                                             尾数
+	 *    seee eeee  emmm mmmm mmmm mmmm mmmm mmmm
+	 *   符号位   8位                23个
+	 *           表示指数            尾数
 	 *   小数点在最后一个e和第一个m之间
 	 *   e 如果全是0，尾数附加位为0，否则尾数附加位为1（附加位的计算：0 或者 1 * 2^0)
 	 *   s * m * 2^(e-127)
