@@ -65,4 +65,16 @@ public class Q009_2_StackWithTwoQueues {
             return true;
         return false;
     }
+
+    public static void main(String[] args) {
+        Q009_2_StackWithTwoQueues stackWithTwoQueues = new Q009_2_StackWithTwoQueues();
+        stackWithTwoQueues.push(1);
+        stackWithTwoQueues.push(2);
+        stackWithTwoQueues.push(3);
+
+        int a = stackWithTwoQueues.top();
+        System.out.println(a);
+        int b = stackWithTwoQueues.pop();
+        System.out.println(b);
+    }
 }
