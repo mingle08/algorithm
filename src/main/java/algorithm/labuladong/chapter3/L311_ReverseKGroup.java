@@ -3,12 +3,13 @@ package algorithm.labuladong.chapter3;
 import algorithm.util.ListNode;
 
 public class L311_ReverseKGroup {
-    
+
     ListNode reverseKGroup(ListNode head, int k) {
         if (head == null) return null;
         // 区间[a, b)包含 k 个待反转元素
         ListNode a, b;
         a = b = head;
+        // 算出第k个节点
         for (int i = 0; i < k; i++) {
             // 不足k个，不需要反转，base case
             if (b == null) return head;

@@ -64,6 +64,7 @@ public class L206_MinDistance {
         int m = s.length(), n = t.length();
         char[] S = s.toCharArray();
         char[] T = t.toCharArray();
+        // 注意，m要加1，n要加1
         int[][] dp = new int[m + 1][n + 1];
         // base case
         for (int i = 0; i < m + 1; i++) {

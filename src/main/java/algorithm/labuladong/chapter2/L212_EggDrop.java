@@ -1,6 +1,7 @@
 package algorithm.labuladong.chapter2;
 
 public class L212_EggDrop {
+    // 全局变量
     private int[][] memo;
 
     public int eggDrop(int k, int n) {

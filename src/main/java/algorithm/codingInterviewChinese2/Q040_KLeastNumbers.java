@@ -7,7 +7,7 @@ public class Q040_KLeastNumbers {
 
     /**
      * 题目：输入n个整数，找出其中最小的k个数。例如，输入4、5、1、6、2、7、3、8这8个数字，则最小的4个数字是1、2、3、4
-     * 
+     *
      * 分析1：O(n)的算法，只有当我们可以修改输入的数组时可用
      * 我们可以基于Partition函数来解决这个问题。可以基于数组的第k个数字来调整，使得比第k个数字小的所有数字
      * 都位于数组的左边，比第k个数字大的所有数字都位于数组的右边。这样调整之后，位于数组中左边的k个数字就是
@@ -22,6 +22,7 @@ public class Q040_KLeastNumbers {
         int low = 0;
         int high = numbers.length - 1;
         int index = partition(numbers, low, high);
+        // 只要不等于k-1
         while (index != k - 1) {
             if (index > k - 1) {
                 high = index - 1;

@@ -3,7 +3,7 @@ package algorithm.codingInterviewChinese2;
 /**
  * 题目一：数字在排序数组中出现的次数
  * 统计一个数字在排序数组中出现的次数。例如，输入排序数组{1, 2, 3, 3, 3, 3, 4, 5}和数字3，由于3在这个数组中出现了4次，因此输出4.
- *
+ * <p>
  * 可以只用查找右边界的方法
  * getLastOne(k) - getLastOne(k-1) == getLastOne(k) - getFirstK(k) + 1
  */
@@ -34,18 +34,18 @@ public class Q053_01_NumberOfK {
     // }
 
     // 查找最后一个k的下标
-    private int getLastOne(int[] data, int len, int start, int end, int k){
+    private int getLastOne(int[] data, int len, int start, int end, int k) {
         if (start > end)
             return -1;
 
         int mid = start + ((end - start) >> 1);
 
-        if (data[mid] == k){
+        if (data[mid] == k) {
             /**
              * 如果后面一个数不等于k，说明midData是最后一个k
              * 与getFirstK方法不同之处：data[mid + 1]，往后找
              * start = mid + 1
-              */
+             */
             if (mid < len - 1 && data[mid + 1] != k || mid == len - 1) {
                 // 只有此处是返回找到的值
                 return mid;
@@ -61,9 +61,9 @@ public class Q053_01_NumberOfK {
     }
 
     // 计算目标出现的次数
-    public int getNumberOfK(int[] data, int len, int k){
+    public int getNumberOfK(int[] data, int len, int k) {
         int number = 0;
-        if (data != null && len > 0){
+        if (data != null && len > 0) {
 //            int first = getFirstK(data, len, k, 0, len - 1);
             // getLastOne传入k-1，找k-1右边界，相当于getFirstK传入k，找k的左边界
             int first = getLastOne(data, len, 0, len - 1, k - 1);
@@ -78,7 +78,7 @@ public class Q053_01_NumberOfK {
         return number;
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
         Q053_01_NumberOfK solution = new Q053_01_NumberOfK();
         int[] num = {1, 2, 3, 3, 3, 3, 4, 5};
         int len = num.length;

@@ -27,11 +27,13 @@ public class L403_GenerateParenthesis {
         // 尝试放一个左括号
         track.append(arr[0]);
         backtrack(left - 1, right, track);
+        // 删除最后一个
         track.deleteCharAt(track.length() - 1);
 
         // 尝试放一个右括号
         track.append(arr[1]);
         backtrack(left, right - 1, track);
+        // 删除最后一个
         track.deleteCharAt(track.length() - 1);
     }
 

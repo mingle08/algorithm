@@ -44,7 +44,10 @@ public class L310_ReverseNode {
     // 后继节点
     ListNode successor = null;
 
-    /* 2，反转链表前N个节点 */
+    /**
+     * 2，反转链表前N个节点
+     * 与反转整个链表相比，方法多了一个参数 int N
+    */
     public ListNode reverseN(ListNode head, int n) {
         if (n == 1) {
             // 记录第 n + 1 个节点，后面再用
@@ -60,10 +63,14 @@ public class L310_ReverseNode {
         return last;
     }
 
-    /* 3，反转链表的一部分 */
+    /**
+     *  3，反转链表的一部分
+     *  指定反转的索引区间[m, n)
+     */
     public ListNode reverseBetween(ListNode head, int m, int n) {
         // base case
         if (m == 1) {
+            // 相当于反转前n个元素
             return reverseN(head, n);
         }
         // 对于 head.next 来说，就是反转区间 [m - 1, n - 1]

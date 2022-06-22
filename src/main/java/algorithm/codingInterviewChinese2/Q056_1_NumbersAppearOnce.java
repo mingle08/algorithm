@@ -63,7 +63,11 @@ public class Q056_1_NumbersAppearOnce {
         return (num & 1) == 1;
     }
 
-    // 为什么要用以上那么复杂的异或运算
+    /**
+     * 为什么要用以上那么复杂的异或运算？
+     * 用set空间复杂度是O(N)，“异或”计算空间复杂度是O(1)，
+     * 而无论是遍历1次还是遍历2次，时间复杂度都是O(N)，所以综合来说，位运算算法更优。
+      */
     public Set<Integer> findNums(int[] arr) {
         Set<Integer> set = new HashSet<>();
         for (int i : arr) {
@@ -89,9 +93,7 @@ public class Q056_1_NumbersAppearOnce {
             System.out.println(num2[0]);
         }
 
-        Set<Integer> res = solution.findNums(data);
-        for (Integer i : res) {
-            System.out.println(i);
-        }
+//        Set<Integer> res = solution.findNums(data);
+//        res.forEach(System.out::println);
     }
 }

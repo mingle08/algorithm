@@ -38,6 +38,7 @@ public class L4011_Subsets {
     static List<List<Integer>> res = new LinkedList<List<Integer>>();
 
     public static List<List<Integer>> subsets2(int[] nums) {
+        // LinkedList可以方便地removeLast
         LinkedList<Integer> temp = new LinkedList<Integer>();
         dfs(temp, nums, 0);
         return res;
