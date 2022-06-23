@@ -30,9 +30,16 @@ public class L503_2_ShipWithinDays {
     boolean canFinish(int[] w, int D, int cap) {
         int i = 0;
         for (int day = 0; day < D; day++) {
+            // 每1天，都是这个载重
             int maxCap = cap;
+            /**
+             * 每次减去一个货物的重量
+             * 如果装得下w[i]，索引i再往后走，
+             * 如果下一个i装不下，就等待另一天的装载
+              */
             while ((maxCap -= w[i]) >= 0) {
                 i++;
+                //
                 if (i == w.length)
                     return true;
             }

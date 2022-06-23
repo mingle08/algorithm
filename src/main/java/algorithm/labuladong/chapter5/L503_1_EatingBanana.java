@@ -9,7 +9,7 @@ package algorithm.labuladong.chapter5;
  *
  * 请你写一个算法，计算Koko每小时至少吃几根香蕉，才能在H小时内把这些香蕉都吃完
  */
-public class L503_EatingBanana {
+public class L503_1_EatingBanana {
 
     /**
      *

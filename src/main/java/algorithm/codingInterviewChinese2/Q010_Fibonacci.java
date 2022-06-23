@@ -33,18 +33,18 @@ public class Q010_Fibonacci {
         if(n < 2){
             return res[n];
         }
-        long fib1 = 0;
-        long fib2 = 1;
-        long fibN = 0;
+        long f0 = 0;
+        long f1 = 1;
+        long f2 = 0;
 
         for (int i = 2; i <= n; i++) {
-            fibN = fib1 + fib2;
+            f2 = f0 + f1;
             // 与第65题的逻辑很像
-            fib1 = fib2;
-            fib2 = fibN;
+            f0 = f1;
+            f1 = f2;
         }
 
-        return fibN;
+        return f2;
     }
 
     // 带备忘录的递归
