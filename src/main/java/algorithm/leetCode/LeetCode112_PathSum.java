@@ -20,12 +20,12 @@ public class LeetCode112_PathSum {
         // 左子树
         result = hasPath(root.left, sum - root.val);
         if (result == true)
-            return result;
+            return true;
 
         // 右子树
         result = hasPath(root.right, sum - root.val);
         if (result == true)
-            return result;
+            return true;
 
         return false;
     }
