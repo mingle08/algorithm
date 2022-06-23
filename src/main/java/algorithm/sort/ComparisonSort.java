@@ -96,7 +96,6 @@ public class ComparisonSort {
      * （2）时间复杂度 O(n^2)。
      * （3）不稳定的排序方法。
      */
-
     public static void selectionSort(int[] arr) {
         for (int a = 0; a < arr.length - 1; a++) {
             // 参照物
