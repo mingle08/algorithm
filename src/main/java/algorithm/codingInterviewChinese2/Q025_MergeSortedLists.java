@@ -9,6 +9,7 @@ import algorithm.util.ListNode;
 public class Q025_MergeSortedLists {
 
     public static ListNode merge(ListNode head1, ListNode head2) {
+        // 这2个判断也是很重要的
         if (head1 == null) return head2;
         if (head2 == null) return head1;
         ListNode mergedHead = null;

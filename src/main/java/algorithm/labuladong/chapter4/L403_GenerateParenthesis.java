@@ -27,7 +27,12 @@ public class L403_GenerateParenthesis {
         // 尝试放一个左括号
         track.append(arr[0]);
         backtrack(left - 1, right, track);
-        // 删除最后一个
+        /*
+         删除最后一个
+         注意StringBuilder的2个方法
+         删除指定索引的元素：deleteCharAt(int index)
+         获取长度：length()
+         */
         track.deleteCharAt(track.length() - 1);
 
         // 尝试放一个右括号

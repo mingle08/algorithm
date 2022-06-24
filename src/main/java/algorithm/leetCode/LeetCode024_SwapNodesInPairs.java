@@ -41,6 +41,28 @@ public class LeetCode024_SwapNodesInPairs {
         return ptr.next;
     }
 
+    public static ListNode swap(ListNode head) {
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        ListNode p = dummy;
+        while(p.next != null && p.next.next != null) {
+            // 以 1 -> 2 -> 3 ->4 为例，要变成 2 -> 1 -> 4 -> 3
+            // a是1
+            ListNode a = p.next;
+            // b是2
+            ListNode b = a.next;
+            // 原来p的后继节点是1，现在改为2
+            p.next = b;
+            // 1原来后面是2，现在改为2的后面，即3
+            a.next = b.next;
+            // 现在2的后面改为1，此时2指向1，到此1和2已经交换位置
+            b.next = a;
+            // p移到交换后的a上，即交换后的第二个节点，对于3 -> 4来说，p是指向3的
+            p = a;
+        }
+        return dummy.next;
+    }
+
     public static void main(String[] args){
         ListNode node1 = new ListNode(1);
         ListNode node2 = new ListNode(2);
@@ -50,9 +72,12 @@ public class LeetCode024_SwapNodesInPairs {
         node2.next = node3;
         node3.next = node4;
 
-        ListNode newNode = swapPairs(node1);
+        ListNode newNode = swap(node1);
 
-        System.out.println(newNode);
+        while (newNode != null) {
+            System.out.println(newNode.val);
+            newNode = newNode.next;
+        }
     }
 
 }

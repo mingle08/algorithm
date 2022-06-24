@@ -34,7 +34,7 @@ public class Q053_01_NumberOfK {
     // }
 
     // 查找最后一个k的下标
-    private int getLastOne(int[] data, int len, int start, int end, int k) {
+    private int getLastOne(int[] data, int start, int end, int k) {
         if (start > end)
             return -1;
 
@@ -46,7 +46,7 @@ public class Q053_01_NumberOfK {
              * 与getFirstK方法不同之处：data[mid + 1]，往后找
              * start = mid + 1
              */
-            if (mid < len - 1 && data[mid + 1] != k || mid == len - 1) {
+            if (mid < data.length - 1 && data[mid + 1] != k || mid == data.length - 1) {
                 // 只有此处是返回找到的值
                 return mid;
             } else
@@ -57,17 +57,17 @@ public class Q053_01_NumberOfK {
             end = mid - 1;
 
         // 如果没有找到，就递归查找,start和end在变化
-        return getLastOne(data, len, start, end, k);
+        return getLastOne(data, start, end, k);
     }
 
     // 计算目标出现的次数
-    public int getNumberOfK(int[] data, int len, int k) {
+    public int getNumberOfK(int[] data, int k) {
         int number = 0;
-        if (data != null && len > 0) {
+        if (data != null && data.length > 0) {
 //            int first = getFirstK(data, len, k, 0, len - 1);
             // getLastOne传入k-1，找k-1右边界，相当于getFirstK传入k，找k的左边界
-            int first = getLastOne(data, len, 0, len - 1, k - 1);
-            int last = getLastOne(data, len, 0, len - 1, k);
+            int first = getLastOne(data,0, data.length - 1, k - 1);
+            int last = getLastOne(data,0, data.length - 1, k);
 
             if (first > -1 && last > -1)
 //                number = last - first + 1;
@@ -82,7 +82,7 @@ public class Q053_01_NumberOfK {
         Q053_01_NumberOfK solution = new Q053_01_NumberOfK();
         int[] num = {1, 2, 3, 3, 3, 3, 4, 5};
         int len = num.length;
-        int number = solution.getNumberOfK(num, len, 3);
+        int number = solution.getNumberOfK(num, 3);
         System.out.println(number);
     }
 }

@@ -29,7 +29,7 @@ public class L507_Jump {
      * @param nums
      * @return
      */
-    int jump(int[] nums) {
+    static int jump(int[] nums) {
         int n = nums.length;
         // 从索引[i...end]起跳，最远能到的距离
         int farthest = 0;
@@ -47,5 +47,11 @@ public class L507_Jump {
             }
         }
         return count;
+    }
+
+    public static void main(String[] args) {
+        int[] nums = {2, 3, 1, 1, 4};
+        int count = jump(nums);
+        System.out.println(count);
     }
 }
