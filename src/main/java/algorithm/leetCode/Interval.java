@@ -1,5 +1,8 @@
 package algorithm.leetCode;
 
+/**
+ * 表示一个区间
+ */
 public class Interval {
     int start;
     int end;

@@ -18,6 +18,7 @@ public class LeetCode111_MinimumDepthOfBinaryTree {
         int right = minDepth(root.right);
         if (left == 0 || right == 0)
             return left + right + 1;
+        // min函数
         return Math.min(left, right) + 1;
     }
 
