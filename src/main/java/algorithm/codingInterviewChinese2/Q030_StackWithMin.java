@@ -19,11 +19,16 @@ public class Q030_StackWithMin {
         /*
           此处比较大小，保证辅助栈的数值是最小的
           同步push，要么存当前num，要么再存一下已有的最小值
-        */ 
-        if (num < min())
+        */
+        if (minStack.isEmpty()) {
             minStack.push(num);
-        else
-            minStack.push(min());
+        } else {
+            if (num < min())
+                minStack.push(num);
+            else
+                minStack.push(min());
+        }
+
     }
 
     // stack, minStack同步pop
@@ -43,19 +48,19 @@ public class Q030_StackWithMin {
 
     public static void main(String[] args) {
         Q030_StackWithMin solution = new Q030_StackWithMin();
-        int[] arr = { 3, 4, 2, 1 };
+        int[] arr = {2, 0, 3, 0};
         for (int num : arr) {
             solution.push(num);
             System.out.println(solution.min());
         }
         // 连续二次栈顶
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 3; i++) {
             solution.pop();
             System.out.println(solution.min());
         }
 
         // 压入0
-        solution.push(0);
+//        solution.push(0);
         System.out.println(solution.min());
 
     }

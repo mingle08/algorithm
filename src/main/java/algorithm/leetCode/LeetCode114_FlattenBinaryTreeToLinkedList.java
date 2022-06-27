@@ -69,14 +69,26 @@ public class LeetCode114_FlattenBinaryTreeToLinkedList {
         LeetCode114_FlattenBinaryTreeToLinkedList solution = new LeetCode114_FlattenBinaryTreeToLinkedList();
 
         TreeNode root = new TreeNode(1);
-        root.left = new TreeNode(2);
-        root.right = new TreeNode(5);
-        root.left.left = new TreeNode(3);
-        root.left.right = new TreeNode(4);
-        root.right.right = new TreeNode(6);
+        TreeNode node2 = new TreeNode(2);
+        TreeNode node3 = new TreeNode(5);
+        TreeNode node4 = new TreeNode(3);
+        TreeNode node5 = new TreeNode(4);
+        TreeNode node6 = new TreeNode(6);
 
-        root = solution.flattenBT(root);
+        root.left = node2;
+        root.right = node3;
+        node2.left = node4;
+        node2.right = node5;
+        node3.right = node6;
 
-        System.out.println(root.val);
+//        root = solution.flattenBT(root);
+//
+//        System.out.println(root.val);
+
+        solution.flatten_1(root);
+        while (root != null) {
+            System.out.println(root.val);
+            root = root.right;
+        }
     }
 }

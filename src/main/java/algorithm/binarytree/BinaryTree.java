@@ -8,7 +8,7 @@ public class BinaryTree {
     private TreeNode<String> root = null;
 
     public BinaryTree() {
-        root = new TreeNode<String>(1, "A");
+        root = new TreeNode<String>(1, "1");
     }
 
     /**
@@ -19,11 +19,11 @@ public class BinaryTree {
      *         D     E          G
      */
     public void createBinaryTree() {
-        TreeNode<String> nodeB = new TreeNode<String>(2, "B");
-        TreeNode<String> nodeC = new TreeNode<String>(3, "C");
-        TreeNode<String> nodeD = new TreeNode<String>(4, "D");
-        TreeNode<String> nodeE = new TreeNode<String>(5, "E");
-        TreeNode<String> nodeG = new TreeNode<String>(6, "G");
+        TreeNode<String> nodeB = new TreeNode<String>(2, "2");
+        TreeNode<String> nodeC = new TreeNode<String>(3, "3");
+        TreeNode<String> nodeD = new TreeNode<String>(4, "4");
+        TreeNode<String> nodeE = new TreeNode<String>(5, "5");
+        TreeNode<String> nodeG = new TreeNode<String>(6, "7");
         root.leftChild = nodeB;
         root.rightChild = nodeC;
         nodeB.leftChild = nodeD;
@@ -32,12 +32,12 @@ public class BinaryTree {
     }
 
     public void createFullBinaryTree() {
-        TreeNode<String> nodeB = new TreeNode<String>(2, "B");
-        TreeNode<String> nodeC = new TreeNode<String>(3, "C");
-        TreeNode<String> nodeD = new TreeNode<String>(4, "D");
-        TreeNode<String> nodeE = new TreeNode<String>(5, "E");
-        TreeNode<String> nodeF = new TreeNode<String>(5, "F");
-        TreeNode<String> nodeG = new TreeNode<String>(6, "G");
+        TreeNode<String> nodeB = new TreeNode<String>(2, "2");
+        TreeNode<String> nodeC = new TreeNode<String>(3, "3");
+        TreeNode<String> nodeD = new TreeNode<String>(4, "4");
+        TreeNode<String> nodeE = new TreeNode<String>(5, "5");
+        TreeNode<String> nodeF = new TreeNode<String>(6, "6");
+        TreeNode<String> nodeG = new TreeNode<String>(7, "7");
         root.leftChild = nodeB;
         root.rightChild = nodeC;
         nodeB.leftChild = nodeD;
@@ -290,10 +290,12 @@ public class BinaryTree {
 		}
 		bt.createBinaryTreePre(data);*/
         bt.createFullBinaryTree();
-//		bt.nonRecPreOrder(bt.root);
-//		bt.midOrder(bt.root);
+		bt.nonRecPreOrder(bt.root);
+        System.out.println();
+		// bt.midOrder(bt.root);
 		bt.nonRecInOrder(bt.root);
-//        bt.nonRecPostOrder(bt.root);
-    }
+        System.out.println();
+        bt.nonRecPostOrder(bt.root);
+    } 
 
 }

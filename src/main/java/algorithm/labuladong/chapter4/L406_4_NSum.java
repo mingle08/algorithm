@@ -1,7 +1,6 @@
 package algorithm.labuladong.chapter4;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class L406_4_NSum {
 
@@ -10,7 +9,7 @@ public class L406_4_NSum {
      * n -> n - 1
      * start -> i + 1
      * target -> target - nums[i]
-     * 
+     *
      * @param nums
      * @param n
      * @param start
@@ -59,5 +58,61 @@ public class L406_4_NSum {
             }
         }
         return res;
+    }
+
+    public List<List<Integer>> threeSum(int[] nums) {
+        List<List<Integer>> res = new LinkedList<>();
+        if (nums.length == 0) return res;
+        Arrays.sort(nums);
+        int n = nums.length;
+
+        // 穷举第一个数
+        for (int i = 0; i < n; i++) {
+            List<List<Integer>> ans = twoSum(nums, i + 1, -nums[i]);
+            for (List<Integer> list : ans) {
+                // nums[i]是最前面，即最小的，所以要从头部压入
+                ((LinkedList)list).push(nums[i]);
+                res.add(list);
+            }
+            while (i < n - 1 && nums[i] == nums[i + 1]) i++;
+        }
+        return res;
+    }
+
+    private List<List<Integer>> twoSum(int[] nums, int start, int target) {
+        List<List<Integer>> res = new LinkedList<>();
+        int left = start, right = nums.length - 1;
+        List<Integer> temp = new LinkedList<>();
+        while (left < right) {
+            int sum = nums[left] + nums[right];
+            int l = nums[left], r = nums[right];
+            if (sum < target) {
+                while (left < right && nums[left] == l) left++;
+            } else if (sum > target) {
+                while (left < right && nums[right] == r) right--;
+            } else {
+                temp.add(nums[left]);
+                temp.add(nums[right]);
+                res.add(new LinkedList<>(temp));
+                temp.clear();
+                while (left < right && nums[left] == l) left++;
+                while (left < right && nums[right] == r) right--;
+            }
+        }
+        return res;
+    }
+
+    public static void main(String[] args) {
+        L406_4_NSum solution = new L406_4_NSum();
+        int[] arr = {-1,0,1,2,-1,-4};
+        List<List<Integer>> res = solution.threeSum(arr);
+        for (List<Integer> list : res) {
+//            Collections.sort(list);
+            for (Integer i : list) {
+                System.out.print(i + " ");
+            }
+            System.out.println();
+        }
+
     }
 }
