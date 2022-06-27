@@ -351,7 +351,8 @@ public class ComparisonSort {
             if (arr[left] < arr[right]) {
                 temp[k++] = arr[left++];
             } else {
-                temp[k++] = arr[right--];
+                // right是右半边的第一个，也要++
+                temp[k++] = arr[right++];
             }
         }
         // 把左边剩余的数移入临时数组
@@ -360,7 +361,8 @@ public class ComparisonSort {
         }
         // 把右边剩余的数移入临时数组
         while (right <= high) {
-            temp[k++] = arr[right--];
+            // right是右半边的第一个，也要++
+            temp[k++] = arr[right++];
         }
         // 用临时数组中的数覆盖原数组
         for (int i = 0; i < temp.length; i++) {
@@ -382,8 +384,8 @@ public class ComparisonSort {
 //        insertSort(nums);
 //        shellSort(nums);
 //        heapSort(nums);
-//        mergeSort(nums, 0, nums.length - 1);
-        quickSort(nums, 0, nums.length - 1);
+        mergeSort(nums, 0, nums.length - 1);
+//        quickSort(nums, 0, nums.length - 1);
         for (int num : nums) {
             System.out.print(num + "\t");
         }
