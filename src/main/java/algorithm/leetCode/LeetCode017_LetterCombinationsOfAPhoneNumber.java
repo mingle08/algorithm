@@ -1,7 +1,9 @@
 package algorithm.leetCode;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Input: "23"
@@ -42,11 +44,46 @@ public class LeetCode017_LetterCombinationsOfAPhoneNumber {
         }
     }
 
+    // 方法2
+    public static List<String> letterCombinations2(String digits) {
+        List<String> res = new ArrayList<>();
+        if (digits.length() == 0) return res;
+        Map<Character, String> phoneMap = new HashMap<>();
+        phoneMap.put('2', "abc");
+        phoneMap.put('3', "def");
+        phoneMap.put('4', "ghi");
+        phoneMap.put('5', "jkl");
+        phoneMap.put('6', "mno");
+        phoneMap.put('7', "pqrs");
+        phoneMap.put('8', "tuv");
+        phoneMap.put('9', "wxyz");
+
+
+        combinate(phoneMap, digits, 0, new StringBuilder(), res);
+
+        return res;
+    }
+
+    private static void combinate(Map<Character, String> phoneMap, String digits, int index, StringBuilder sb, List<String> res) {
+        if (index == digits.length()) {
+            res.add(sb.toString());
+            return;
+        }
+        char digit = digits.charAt(index);
+        String str = phoneMap.get(digit);
+        for (int i = 0; i < str.length(); i++) {
+            sb.append(str.charAt(i));
+            combinate(phoneMap, digits, index + 1, sb, res);
+            sb.deleteCharAt(index);
+        }
+
+    }
+
     public static void main(String[] args){
 
         String str = "23";
 
-        List<String> list = letterCombinations(str);
+        List<String> list = letterCombinations2(str);
         for (int i = 0; i < list.size(); i++) {
             System.out.print(list.get(i) + ", ");
         }

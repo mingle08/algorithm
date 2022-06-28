@@ -9,6 +9,7 @@ public class L506_LongestPalindrome {
         // 初始化为原字符串第一个字母
         String res = str.substring(0, 1);
         int maxLength = 1;
+        // i是从0开始的，遍历整个字符串
         for (int i = 0; i < str.length(); i++) {
             // 奇数
             String s1 = palindrome(str, i, i);

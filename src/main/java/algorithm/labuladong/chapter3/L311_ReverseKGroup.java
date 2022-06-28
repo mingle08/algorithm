@@ -2,6 +2,9 @@ package algorithm.labuladong.chapter3;
 
 import algorithm.util.ListNode;
 
+/**
+ * k个一组反转链表
+ */
 public class L311_ReverseKGroup {
 
     ListNode reverseKGroup(ListNode head, int k) {
@@ -41,5 +44,25 @@ public class L311_ReverseKGroup {
         // 返回反转后的头节点
         return pre;
 
+    }
+
+    public static void main(String[] args) {
+        L311_ReverseKGroup solution = new L311_ReverseKGroup();
+        ListNode node1 = new ListNode(1);
+        ListNode node2 = new ListNode(2);
+        ListNode node3 = new ListNode(3);
+        ListNode node4 = new ListNode(4);
+        ListNode node5 = new ListNode(5);
+
+        node1.next = node2;
+        node2.next = node3;
+        node3.next = node4;
+        node4.next = node5;
+
+        ListNode hat = solution.reverseKGroup(node1, 2);
+        while (hat != null) {
+            System.out.print(hat.val);
+            hat = hat.next;
+        }
     }
 }
