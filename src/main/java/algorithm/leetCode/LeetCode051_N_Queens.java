@@ -54,7 +54,9 @@ public class LeetCode051_N_Queens {
         }
     }
 
+    // 为什么要用for循环？
     private boolean isValid(int[] queen, int row, int col) {
+        // for循环是判断row之前的所有行的皇后位置，是否与当前要放置的位置冲突
         for (int i = 0; i < row; i++) {
             // i代表行，pos代表列
             int pos = queen[i];
@@ -71,6 +73,7 @@ public class LeetCode051_N_Queens {
                 return false;
             }
         }
+        // 与之前所有行放置的皇后都不冲突，表示可以放在此位置
         return true;
     }
 
