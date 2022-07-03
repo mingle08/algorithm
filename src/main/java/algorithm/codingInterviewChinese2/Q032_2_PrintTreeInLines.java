@@ -2,60 +2,72 @@ package algorithm.codingInterviewChinese2;
 
 import algorithm.util.TreeNode;
 
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.*;
 
 /**
  * 分行从上到下打印二叉树
- * 思路：增加2个变量，一个是当前层还未打印的节点数，另一个是下一层的节点数
+ * 思路：
+ * （1）队列
+ * （2）用一个变量size记录当前层有没有处理完
  */
 public class Q032_2_PrintTreeInLines {
 
-    public void print(TreeNode root){
-        if (root == null)
-            return ;
-        Queue<TreeNode> queue = new LinkedList<>();
-        queue.add(root);
+    public List<List<Integer>> levelOrder(TreeNode root) {
+        List<List<Integer>> res = new ArrayList<>();
+        List<Integer> temp = new ArrayList<>();
+        if (root == null) return res;
 
-        int toBePrinted = 1;  // 当前层还未打印的节点数
-        int nextLevelCount = 0;  // 下一层的节点数
+        Queue<TreeNode> q = new LinkedList<>();
+        int size = 0;
+        q.add(root);
+        while (!q.isEmpty()) {
+            size = q.size();
+            while (size > 0) {
+                TreeNode cur = q.poll();
+                temp.add(cur.val);
 
-        while (!queue.isEmpty()){
-            TreeNode node = queue.poll();
-            System.out.print(node.val + " ");
-            if (node.left != null){
-                queue.add(node.left);
-                nextLevelCount++;
-            }
-            if (node.right != null){
-                queue.add(node.right);
-                nextLevelCount++;
-            }
+                if (cur.left != null) {
+                    q.add(cur.left);
+                }
+                if (cur.right != null) {
+                    q.add(cur.right);
+                }
 
-            toBePrinted--;
-            // 每打印完一层，另起一行，重新给2个变量赋值
-            if (toBePrinted == 0){
-                // 另起一行打印
-                System.out.println();
-                // 换行之后，待打印的节点数，初始化为nextLevelCount
-                toBePrinted = nextLevelCount;
-                // 再下一行，节点数初始化为0
-                nextLevelCount = 0;
+
+                size--;
             }
+            // 循环结束，说明这层已遍历完成
+            res.add(new ArrayList<>(temp));
+            temp.clear();
         }
+
+        return res;
     }
 
     public static void main(String[] args){
         Q032_2_PrintTreeInLines solution = new Q032_2_PrintTreeInLines();
 
-        TreeNode root = new TreeNode(8);
-        root.left = new TreeNode(6);
-        root.right = new TreeNode(10);
-        root.left.left = new TreeNode(5);
-        root.left.right = new TreeNode(7);
-        root.right.left = new TreeNode(9);
-        root.right.right = new TreeNode(11);
+        TreeNode root = new TreeNode(1);
+        TreeNode node2 = new TreeNode(2);
+        TreeNode node3 = new TreeNode(3);
+        TreeNode node4 = new TreeNode(4);
+        TreeNode node5 = new TreeNode(5);
+        TreeNode node6 = new TreeNode(6);
+        TreeNode node7 = new TreeNode(7);
+        root.left = node2;
+        root.right = node3;
+        node2.left = node4;
+        node2.right = node5;
+        node3.left = node6;
+        node3.right = node7;
 
-        solution.print(root);
+
+        List<List<Integer>> res = solution.levelOrder(root);
+        for (List<Integer> list : res) {
+            for (Integer i : list) {
+                System.out.print(i + " ");
+            }
+            System.out.println();
+        }
     }
 }
