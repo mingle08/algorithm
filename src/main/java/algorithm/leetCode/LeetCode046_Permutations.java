@@ -23,23 +23,21 @@ public class LeetCode046_Permutations {
     public List<List<Integer>> permute(int[] nums) {
         List<List<Integer>> list = new ArrayList<>();
         List<Integer> array = new ArrayList<>();
-
-        int n = nums.length;
-        backtracking(list, array, 0, n, nums);
+        backtracking(list, array, 0, nums);
         return list;
     }
 
-    public void backtracking(List<List<Integer>> list, List<Integer> array, int t, int n, int[] nums) {
-        if (t > n) return;
-        else if (t == n) {
-            list.add(new ArrayList<>(array));
+    public void backtracking(List<List<Integer>> list, List<Integer> temp, int t, int[] nums) {
+        if (t > nums.length) return;
+        else if (t == nums.length) {
+            list.add(new ArrayList<>(temp));
         } else {
-            for (int i = 0; i < n; i++) {
-                if ((!array.contains(nums[i]))) {
-                    array.add(nums[i]);
-                    backtracking(list, array, t + 1, n, nums);
+            for (int i = 0; i < nums.length; i++) {
+                if ((!temp.contains(nums[i]))) {
+                    temp.add(nums[i]);
+                    backtracking(list, temp, t + 1, nums);
                     // 去掉最后面的元素
-                    array.remove(array.size() - 1);
+                    temp.remove(temp.size() - 1);
                 }
             }
         }
