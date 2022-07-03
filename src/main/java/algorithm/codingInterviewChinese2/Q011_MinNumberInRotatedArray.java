@@ -16,7 +16,8 @@ public class Q011_MinNumberInRotatedArray {
         int left = 0;
         int right = len - 1;
         int mid = left;
-        while (left < right) {
+        // 注意，不是left < right
+        while (num[left] >= num[right]) {
             /**
              * 2个指针的距离是1时，表明第一个指针已经指向第一个递增子数组的末尾，
              * 而第二个指针指向第二个递增子数组的开头
@@ -33,10 +34,10 @@ public class Q011_MinNumberInRotatedArray {
             }
 
             // {3, 4, 5, 1, 2}
-            if (num[mid] > num[right]) // 说明最小数在后面
+            if (num[mid] >= num[right]) // 说明最小数在后面
                 left = mid;
             // {4, 5, 1, 2, 3}
-            else if (num[mid] < num[right])
+            else if (num[mid] <= num[right])
                 right = mid;
         }
 
@@ -58,7 +59,7 @@ public class Q011_MinNumberInRotatedArray {
     public static void main(String[] args) throws Exception {
         Q011_MinNumberInRotatedArray solution = new Q011_MinNumberInRotatedArray();
 
-        int[] arr = { 3, 4, 5, 1, 2 };
+        int[] arr = {3, 3, 1, 3};
         int length = arr.length;
         int min = solution.minNumber(arr, length);
         System.out.println(min);
