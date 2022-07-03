@@ -2,7 +2,16 @@ package algorithm.labuladong.chapter4;
 
 import java.util.*;
 
+/**
+ * 使用LinkedList，因为递归出来，加入前面的数时，要从头插入，需使用LinkedList的push方法
+ */
 public class L406_4_NSum {
+
+    List<List<Integer>> nSum(int[] nums, int target) {
+        Arrays.sort(nums);
+        List<List<Integer>> res = nSumTarget(nums, 4, 0, 0);
+        return res;
+    }
 
     /**
      * 每次递归，各参数的变化：
@@ -16,15 +25,15 @@ public class L406_4_NSum {
      * @param target
      * @return
      */
-    static List<List<Integer>> nSumTarget(int[] nums, int n, int start, int target) {
+    List<List<Integer>> nSumTarget(int[] nums, int n, int start, int target) {
         int sz = nums.length;
-        List<List<Integer>> res = new ArrayList<>();
-        List<Integer> temp = new ArrayList<>();
+        List<List<Integer>> res = new LinkedList<>();
+        LinkedList<Integer> temp = new LinkedList<>();
         if (n < 2 || sz < n) return res;
         // 2Sum是base case
         if (n == 2) {
             // 双指针
-            int left = 0, right = nums.length - 1;
+            int left = start, right = nums.length - 1;
             while (left < right) {
                 int l = nums[left], r = nums[right];
                 int sum = l + r;
@@ -37,7 +46,7 @@ public class L406_4_NSum {
                 } else {
                     temp.add(l);
                     temp.add(r);
-                    res.add(new ArrayList<>(temp));
+                    res.add(new LinkedList<>(temp));
                     // 要清空temp
                     temp.clear();
                     // 跳过所有重复元素
@@ -51,8 +60,9 @@ public class L406_4_NSum {
                 List<List<Integer>> sub = nSumTarget(nums, n - 1, i + 1, target - nums[i]);
                 for (List<Integer> arr : sub) {
                     // (n-1)Sum 加上 nums[i] 就是 nSum
-                    arr.add(nums[i]);
-                    res.add(new ArrayList<>(arr));
+                    // 要从前面插入，所以先强转成LinkedList，再使用push方法
+                    ((LinkedList)arr).push(nums[i]);
+                    res.add(new LinkedList<>(arr));
                 }
                 while (i < sz - 1 && nums[i] == nums[i + 1]) i++;
             }
@@ -104,8 +114,8 @@ public class L406_4_NSum {
 
     public static void main(String[] args) {
         L406_4_NSum solution = new L406_4_NSum();
-        int[] arr = {-1,0,1,2,-1,-4};
-        List<List<Integer>> res = solution.threeSum(arr);
+        int[] arr = {1,0,-1,0,-2,2};
+        List<List<Integer>> res = solution.nSum(arr, 0);
         for (List<Integer> list : res) {
 //            Collections.sort(list);
             for (Integer i : list) {
