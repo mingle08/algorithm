@@ -22,10 +22,10 @@ public class L406_4_NSum {
      * @param nums
      * @param n
      * @param start
-     * @param target
+     * @param target   long 防止溢出
      * @return
      */
-    List<List<Integer>> nSumTarget(int[] nums, int n, int start, int target) {
+    List<List<Integer>> nSumTarget(int[] nums, int n, int start, long target) {
         int sz = nums.length;
         List<List<Integer>> res = new LinkedList<>();
         LinkedList<Integer> temp = new LinkedList<>();
@@ -114,8 +114,8 @@ public class L406_4_NSum {
 
     public static void main(String[] args) {
         L406_4_NSum solution = new L406_4_NSum();
-        int[] arr = {1,0,-1,0,-2,2};
-        List<List<Integer>> res = solution.nSum(arr, 0);
+        int[] arr = {1000000000,1000000000,1000000000,1000000000};
+        List<List<Integer>> res = solution.nSum(arr, -294967296);
         for (List<Integer> list : res) {
 //            Collections.sort(list);
             for (Integer i : list) {
