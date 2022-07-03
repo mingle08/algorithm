@@ -7,7 +7,7 @@ package algorithm.codingInterviewChinese2;
  *
  */
 public class Q063_MaximalProfit {
-    public int maxDiff(int[] arr) {
+    public static int maxDiff(int[] arr) {
         /**
          * 维护2个变量：
          * 最小值，最大利润
@@ -30,5 +30,11 @@ public class Q063_MaximalProfit {
             }
         }
         return maxDiff;
+    }
+
+    public static void main(String[] args) {
+        int[] arr = {7, 1, 5, 3, 6, 4};
+        int res = maxDiff(arr);
+        System.out.println(res);
     }
 }
