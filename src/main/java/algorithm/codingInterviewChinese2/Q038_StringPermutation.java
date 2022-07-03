@@ -150,7 +150,7 @@ public class Q038_StringPermutation {
 
     /**
      * 固定第一位，排列后面的位
-     * 
+     *
      * @param list
      * @param S
      * @param begin
@@ -166,10 +166,6 @@ public class Q038_StringPermutation {
          *
          */
         for (int i = begin; i < S.length; i++) {
-            // 如果值相等，不交换
-            if (i != begin && S[i] == S[begin]) {
-                continue;
-            }
             // 做选择
             if (i != begin) swap(S, begin, i);
             permutation(list, S, begin + 1);
@@ -193,8 +189,11 @@ public class Q038_StringPermutation {
      * 	  已选列表.remove(元素)
      * @param s
      * @return
+     *
+     * 不含重复元素，包含重复元素，都可以实现
+     * 能去重，是因为使用了HashSet
      */
-    public String[] solution2(String s) {
+    public static String[] solution2(String s) {
         // Set去重
         Set<String> set = new HashSet<>();
         char[] S = s.toCharArray();
@@ -210,7 +209,7 @@ public class Q038_StringPermutation {
     }
 
     // 回溯法
-    private void backTrace(int index, char[] S, Set<String> set, boolean[] visited, char[] temp) {
+    private static void backTrace(int index, char[] S, Set<String> set, boolean[] visited, char[] temp) {
         if (index == S.length) {
             set.add(new String(temp));
             return;
@@ -229,6 +228,7 @@ public class Q038_StringPermutation {
     /**
      * labuladong的解法
      * 简单易懂，但效率并不高
+     * 只适合不含重复元素的
      */
     static List<List<Character>> res = new LinkedList<>();
 
@@ -254,11 +254,18 @@ public class Q038_StringPermutation {
     }
 
     public static void main(String[] args) {
-        String abc = "abc";
+        String abc = "abb";
         List<String> list = solution1(abc);
         for (String str : list) {
-            System.out.println(str);
+            System.out.print(str + " ");
         }
+
+        System.out.println("-----------");
+        String[] r = solution2(abc);
+        for (String s : r) {
+            System.out.print(s + " ");
+        }
+        System.out.println("===========");
 
         List<List<Character>> res = solution3(abc);
         for (List<Character> S : res) {
