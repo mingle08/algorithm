@@ -16,13 +16,7 @@ package algorithm.leetCode;
  */
 public class LeetCode043_MultiplyStrings {
 
-    public static void main(String[] args) {
-        LeetCode043_MultiplyStrings solution = new LeetCode043_MultiplyStrings();
-        String str1 = "123";
-        String str2 = "45";
-        String res = solution.multiply(str1, str2);
-        System.out.println(res);
-    }
+
 
     public String multiply(String num1, String num2){
         int m = num1.length(), n = num2.length();
@@ -31,6 +25,7 @@ public class LeetCode043_MultiplyStrings {
         for (int i = m - 1; i >= 0; i--) {// 乘数123
             for(int j = n - 1; j >= 0; j--){// 被乘数45
                 int mul = (num1.charAt(i) - '0') * (num2.charAt(j) - '0');
+                // p1看作十位，p2看作个位
                 int p1 = i + j, p2 = i + j + 1;
                 int sum = mul + pos[p2];  // 乘积加上低位已有的值
 
@@ -49,4 +44,11 @@ public class LeetCode043_MultiplyStrings {
         return sb.length() == 0 ? "0" : sb.toString();
     }
 
+    public static void main(String[] args) {
+        LeetCode043_MultiplyStrings solution = new LeetCode043_MultiplyStrings();
+        String str1 = "123";
+        String str2 = "45";
+        String res = solution.multiply(str1, str2);
+        System.out.println(res);
+    }
 }
