@@ -13,7 +13,9 @@ public class L310_ReverseNode {
         ListNode last = reverse(head.next);
         /*
         1 -> 2 -> 3 -> 4 -> 5 -> 6
-        last为6时，head为5，
+        递归到最后一个节点6时，因为head.next == null，返回6，
+        用last接收，一直是6，递归继续往上层返回。
+        当head为5时，
         head.next是6，head.next.next就是6.next，本来是null，被赋值为5，就是向后的指针，改为向前指。
         也可以说，5.next就是6，经过head.next.next = head之后，得到6.next指向5，即 5 -> 6被改为 5 <- 6
         完成了节点的反转
@@ -58,8 +60,14 @@ public class L310_ReverseNode {
         ListNode last = reverseN(head.next, n - 1);
 
         head.next.next = head;
-        // 让反转之后的head节点和后面的节点连起来
+        /**
+         * 让反转之后的head节点和后面的节点连起来
+         * debug之后得知，递归返回过程中，5会指向successor，上一层4也会指向successor，
+         * 3，2，1依次都会指向successor
+         * 也就是说successor的前驱节点一直在替换，走到最后的节点1（原head）指向之后反转结束，不再替换
+          */
         head.next = successor;
+        // last一经返回，一直保持不变，本例中一直是4（reverseN(head, 4);）
         return last;
     }
 
@@ -133,7 +141,7 @@ public class L310_ReverseNode {
         node4.next = node5;
         node5.next = node6;
 
-        ListNode newHead = solution.reverse(head);
+        ListNode newHead = solution.reverseN(head, 4);
         while (newHead != null) {
             System.out.print(newHead.val + " ");
             newHead = newHead.next;
