@@ -79,6 +79,44 @@ public class L310_ReverseNode {
         return head;
     }
 
+    /**
+     * 反转第left个和right个节点之间的链表
+     * @param head
+     * @param left
+     * @param right
+     * @return
+     */
+    public ListNode reverseBetween2(ListNode head, int left, int right) {
+        ListNode dummy = new ListNode(-1);
+        dummy.next = head;
+        ListNode h = dummy;
+        // 从dummy开始，到达left的前驱节点
+        for (int a = 0; a < left - 1; a++) {
+            h = h.next;
+        }
+        ListNode leftNode = h.next;
+        ListNode rightNode = leftNode;
+        // 从left开始，到达right节点
+        for (int b = 0; b < right - left; b++) {
+            rightNode = rightNode.next;
+        }
+
+        // 最后一段的头节点
+        ListNode last = rightNode.next;
+        // 截断
+        h.next = null;
+        rightNode.next = null;
+
+        // 反转leftNode到rightNode的链表
+        reverse(leftNode);
+        // rightNode是头，leftNode是尾
+        h.next = rightNode;
+        leftNode.next = last;
+
+        return dummy.next;
+    }
+
+
     public static void main(String[] args) {
         L310_ReverseNode solution = new L310_ReverseNode();
 

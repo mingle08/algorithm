@@ -6,42 +6,52 @@ import algorithm.util.MyLinkList;
 /**
  * 输入: 1->2->3->4->5->NULL, m = 2, n = 4
  * 输出: 1->4->3->2->5->NULL
+ *
+ * 先拿到left-1处的节点，right节点，然后都断开；
+ * 反转left到right的链表
+ * 重新连接
  */
 public class LeetCode092_ReverseLinkedListII {
 
-    public ListNode reverse(ListNode head, int m, int n){
-        if (head == null)
-            return null;
+    public ListNode reverse(ListNode head, int left, int right){
         ListNode dummy = new ListNode(-1);
         dummy.next = head;
-        ListNode pre = dummy;
-
-        int i = 1;
-        while (pre.next != null && i < m){
-            pre = pre.next;
-            i++;
+        ListNode h = dummy;
+        // 从dummy开始，到达left的前驱节点
+        for (int a = 0; a < left - 1; a++) {
+            h = h.next;
         }
-        if (i < m)
-            return head;
-
-        ListNode mNode = pre.next;
-        ListNode cur = mNode.next;
-        /**
-         * 每次循环的结果是：
-         * 1. 把cur指向的元素移到m位置；
-         * 2. mNode和cur各向后移动一步
-         */
-        for (int j = 0; j < n - m; j++) {
-            mNode.next = cur.next;  // mNode不再指向cur，而是指向cur的下一个元素，因为cur的元素需要移动位置
-            cur.next = pre.next;  // 反转方向
-            pre.next = cur;      // 将cur指向的元素移到m位置
-
-            cur = mNode.next;
-
+        ListNode leftNode = h.next;
+        ListNode rightNode = leftNode;
+        // 从left开始，到达right节点
+        for (int b = 0; b < right - left; b++) {
+            rightNode = rightNode.next;
         }
+
+        // 最后一段的头节点
+        ListNode last = rightNode.next;
+        // 截断
+        h.next = null;
+        rightNode.next = null;
+
+        // 反转leftNode到rightNode的链表
+        reverseNode(leftNode);
+        // rightNode是头，leftNode是尾
+        h.next = rightNode;
+        leftNode.next = last;
 
         return dummy.next;
 
+    }
+
+    private void reverseNode(ListNode node) {
+        ListNode pre = null, cur = node;
+        while (cur != null) {
+            ListNode nxt = cur.next;
+            cur.next = pre;
+            pre = cur;
+            cur = nxt;
+        }
     }
 
     public static void main(String[] args){
@@ -56,7 +66,10 @@ public class LeetCode092_ReverseLinkedListII {
 
         ListNode node = solution.reverse(linkList.head, 2, 4);
 
-        System.out.println(node.next);
+        while (node != null) {
+            System.out.println(node.val);
+            node = node.next;
+        }
 
     }
 }
