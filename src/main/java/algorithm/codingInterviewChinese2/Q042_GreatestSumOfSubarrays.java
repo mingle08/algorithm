@@ -33,7 +33,7 @@ public class Q042_GreatestSumOfSubarrays {
     // 方法2 动态规划
     public int findGreatestSum(int[] arr) {
         // 使用max记录最大值
-        int max = Integer.MIN_VALUE;
+        int max = arr[0];
         int len = arr.length;
         // curSum[i] 表示以第i个数字结尾的子数组的最大和
         int[] curSum = new int[len];
@@ -57,7 +57,7 @@ public class Q042_GreatestSumOfSubarrays {
 
     public static void main(String[] args) {
         Q042_GreatestSumOfSubarrays solution = new Q042_GreatestSumOfSubarrays();
-        int[] num = {1, -2, 3, 10, -4, 7, 2, -5};
+        int[] num = {-1, -2};
         int sum = solution.findGreatestSumOfSubarrays(num);
         int sum2 = solution.findGreatestSum(num);
         System.out.println(sum + ", " + sum2);
