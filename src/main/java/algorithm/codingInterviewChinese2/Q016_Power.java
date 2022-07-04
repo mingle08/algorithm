@@ -13,11 +13,22 @@ public class Q016_Power {
     public static double power(double base, int exponent) {
         // 情况1：base为0
         if (base == 0) return 0;
+        // 如果exponent是-2147483648
+        int h = exponent / 2;
         // 情况2：指数是零或负数
-        if (exponent < 0) base = 1 / base;
+        if (exponent < 0) {
+            base = 1 / base;
+            // 负数要转成正数
+            h = -h;
+        }
         double res = 0;
-        res = powerWithUnsignedExponent(base, exponent);
-        return res;
+        // 指数是原来的一半
+        res = powerLoop(base, h);
+        // 所以要 res的平方
+        if (exponent % 2 == 0)
+            return res * res;
+        // 指数如果是奇数，则要多乘一次基数
+        return res * res * base;
     }
 
     /**
@@ -26,7 +37,7 @@ public class Q016_Power {
      * @param exponent
      * @return
      */
-    private static double powerWithUnsignedExponent(double base, int exponent){
+    private static double powerRecursively(double base, int exponent){
         if (exponent == 0){
             return 1;
         }
@@ -34,13 +45,13 @@ public class Q016_Power {
         /*
           base case 递归终止条件
           无论指数是奇是偶，右移一位都能达到指数为1
-        */ 
+        */
         if (exponent == 1){
             return base;
         }
 
         // 用右移 >> 1 代替除以2
-        double res = powerWithUnsignedExponent(base, exponent >> 1);
+        double res = powerRecursively(base, exponent >> 1);
         // 1，做平方运算的是res
         res *= res;
         /*
@@ -58,12 +69,12 @@ public class Q016_Power {
 
     /**
      * 快速幂的循环写法
-     * 
+     *
      * @param base
      * @param exponent
      * @return
      */
-    public static double quickPower(double base, int exponent) {
+    public static double powerLoop(double base, int exponent) {
         double res = 1;
         while(exponent != 0) {
             /*
@@ -75,7 +86,7 @@ public class Q016_Power {
               比如3^5，第一次执行 base是3，res是3；第二次执行，base已经变成81了，res是3，结果是3 * 81
               做平方运算的是base
             */
-            if ((exponent & 1) == 1) { 
+            if ((exponent & 1) == 1) {
                 res *= base;
             }
             /*
@@ -89,7 +100,7 @@ public class Q016_Power {
     }
 
     public static void main(String[] args) {
-        double res = power(3, 5);
+        double res = power(2, -2147483648);
 //        double res = quickPower(3, 5);
         System.out.println("幂运算的结果：" + res);
     }
