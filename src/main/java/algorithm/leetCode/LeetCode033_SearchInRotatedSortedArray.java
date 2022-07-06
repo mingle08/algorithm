@@ -1,14 +1,6 @@
 package algorithm.leetCode;
 
 public class LeetCode033_SearchInRotatedSortedArray {
-    public static void main(String[] args) {
-        int[] arr = {4,5,6,7,0,1,2,3};
-        int target = 2;
-//		int index = search(arr, target);
-        int index = search_2(arr, target);
-        System.out.println(index);
-
-    }
 
     public static int search(int[] nums, int target) {
         return search(nums, target, 0, nums.length-1);
@@ -68,13 +60,15 @@ public class LeetCode033_SearchInRotatedSortedArray {
             }
 
             if (A[mid] >= A[left]) {
-                if (A[mid] > target && A[left] <= target) {// target在左半边
+                // target在左半边
+                if (A[left] <= target && target <= A[mid]) {
                     right = mid - 1;
                 } else { // target在右半边
                     left = mid + 1;
                 }
             } else {
-                if (A[mid] < target && A[right] >= target) {// target在右半边
+                // target在右半边
+                if (A[mid] < target && target <= A[right]) {
                     left = mid + 1;
                 } else { // target在左半边
                     right = mid - 1;
@@ -83,5 +77,14 @@ public class LeetCode033_SearchInRotatedSortedArray {
         }
 
         return -1;
+    }
+
+    public static void main(String[] args) {
+        int[] arr = {4,5,6,7,0,1,2};
+        int target = 4;
+//		int index = search(arr, target);
+        int index = search_2(arr, target);
+        System.out.println(index);
+
     }
 }
