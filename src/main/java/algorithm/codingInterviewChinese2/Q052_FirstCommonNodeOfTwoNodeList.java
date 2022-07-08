@@ -87,6 +87,8 @@ public class Q052_FirstCommonNodeOfTwoNodeList {
      * 可见公共节点6会被遍历4次，前2次在各自链表的遍历中，没相遇。
      * 这是2个链表长度不等的情况。
      * 如果2个链表长度相同，公共节点在前2次遍历中就会相遇
+     *
+     * 当2个链表没有公共节点时，会无限循环，需优化
      * @param node1
      * @param node2
      * @return
@@ -114,24 +116,64 @@ public class Q052_FirstCommonNodeOfTwoNodeList {
         return cur1;
     }
 
+    /**
+     * 当2个链表没有公共节点时，不会无限循环
+     * 优化：先记录2个链表的长度，找公共节点时，如果循环次数达到2个链表长度之和，还没有找到，说明没有交点
+     * @param headA
+     * @param headB
+     * @return
+     */
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        if (headA == null || headB == null) return null;
+        ListNode p1 = headA, p2 = headB;
+        int m = 0, n = 0;
+        while (p1 != null) {
+            m++;
+            p1 = p1.next;
+        }
+        while (p2 != null) {
+            n++;
+            p2 = p2.next;
+        }
+
+        ListNode p11 = headA, p22 = headB;
+        int count = 0;
+        // 不能比较val，因为有多个节点的val相同，却不是公共节点
+        while (p11.val != p22.val && count <= m + n) {
+            p11 = p11.next;
+            if (p11 == null) {
+                p11 = headB;
+            }
+            p22 = p22.next;
+            if (p22 == null) {
+                p22 = headA;
+            }
+            count++;
+            if (count > m + n - 1) {
+                return null;
+            }
+        }
+        return p11;
+    }
+
     public static void main(String[] args) {
         Q052_FirstCommonNodeOfTwoNodeList solution = new Q052_FirstCommonNodeOfTwoNodeList();
 
         MyLinkList link1 = new MyLinkList();
-        link1.add(1);
+//        link1.add(1);
         link1.add(2);
-        link1.add(3);
+//        link1.add(3);
         link1.add(6);
-        link1.add(7);
+        link1.add(4);
 
         MyLinkList link2 = new MyLinkList();
 //        link2.add(3);
-        link2.add(4);
+        link2.add(1);
         link2.add(5);
-        link2.add(6);
-        link2.add(7);
+//        link2.add(6);
+//        link2.add(7);
 
-        ListNode firstCommonNode = solution.findFirstCommonNode(link1.head, link2.head);
+        ListNode firstCommonNode = solution.getCommon(link1.head, link2.head);
 
         System.out.println(firstCommonNode.val);
 
