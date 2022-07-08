@@ -8,7 +8,8 @@ import java.util.Scanner;
 public class BigMultiply {
 
     /**
-     * 大数相乘基本思想，输入字符串，转成char数组，转成int数组。采用分治思想，每一位的相乘;<br> 公式：AB*CD = AC (BC+AD) BD ,
+     * 大数相乘基本思想，输入字符串，转成char数组，转成int数组。采用分治思想，每一位的相乘;<br> 公式：AB *
+     * CD = AC (BC+AD) BD ,
      * 然后从后到前满十进位(BD,(BC+AD),AC)。
      *
      * @param num1
