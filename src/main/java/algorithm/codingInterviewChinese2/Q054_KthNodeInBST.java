@@ -2,6 +2,8 @@ package algorithm.codingInterviewChinese2;
 
 import algorithm.util.TreeNode;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Stack;
 
 /**
@@ -14,6 +16,11 @@ import java.util.Stack;
  * 2       4      6        8
  *
  * 中序遍历
+ *
+ * 与Leetcode上的第k大的意思正好相反：
+ * 如果k=1，就是第1大，也就是最大的，所以是中序遍历的倒数第1个
+ * 如果k=2，就是第2大，也就是倒数第2大，所以还是中序遍历的倒数第2个
+ * 所以，以Leetcode为准
  */
 public class Q054_KthNodeInBST {
 
@@ -55,6 +62,7 @@ public class Q054_KthNodeInBST {
         Stack<TreeNode> stack = new Stack<>();
         TreeNode cur = root;
         int count = 0;
+        List<TreeNode> res = new ArrayList<>();
         while (!stack.isEmpty() || cur != null) {
             if (cur != null) {
                 stack.push(cur);
@@ -62,14 +70,14 @@ public class Q054_KthNodeInBST {
             } else {
                 cur = stack.pop();
                 // 统计数量
-                count++;
-                if (count == k)
-                    return cur;
-
+//                count++;
+//                if (count == k)
+//                    return cur;
+                res.add(cur);
                 cur = cur.right;
             }
         }
-        return null;
+        return res.get(res.size() - k);
     }
 
     public static void main(String[] args) {
@@ -93,9 +101,10 @@ public class Q054_KthNodeInBST {
 //        System.out.println(solution.kthNode(root, 4).val);  // 2
 //        System.out.println(solution.kthNode(root, 6).val);  // 3
 
-        System.out.println(solution.findKthNode(node1, 3).val);  // 4
-        System.out.println(solution.findKthNode(node1, 4).val);  // 5
-        System.out.println(solution.findKthNode(node1, 6).val);  // 7
+//        System.out.println(solution.findKthNode(node1, 3).val);  // 4
+//        System.out.println(solution.findKthNode(node1, 4).val);  // 5
+//        System.out.println(solution.findKthNode(node1, 6).val);  // 7
 
+        System.out.println(solution.findKthNode(node1, 1).val);
     }
 }
