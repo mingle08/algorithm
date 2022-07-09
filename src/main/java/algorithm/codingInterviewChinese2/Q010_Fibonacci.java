@@ -39,7 +39,10 @@ public class Q010_Fibonacci {
 
         for (int i = 2; i <= n; i++) {
             f2 = f0 + f1;
-            // 与第65题的逻辑很像
+            /**
+             * f0,f1都向后移一位
+             * 与65题相似
+             */
             f0 = f1;
             f1 = f2;
         }
